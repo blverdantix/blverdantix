@@ -8,623 +8,97 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --primary: #2d5016;
-      --primary-light: #4a7c2c;
-      --primary-dark: #1a3009;
-      --accent: #f4a259;
-      --accent-dark: #e68a3d;
-      --bg: #faf8f3;
-      --card-bg: #ffffff;
-      --text: #1a1a1a;
-      --text-muted: #666666;
-      --border: #e0ddd4;
-      --success: #4a7c2c;
-      --warning: #f4a259;
+      --primary: #2d5016; --primary-light: #4a7c2c; --primary-dark: #1a3009;
+      --accent: #f4a259; --accent-dark: #e68a3d; --bg: #faf8f3;
+      --card-bg: #ffffff; --text: #1a1a1a; --text-muted: #666666;
+      --border: #e0ddd4; --success: #4a7c2c; --warning: #f4a259;
       --error: #c94c4c;
       --gradient: linear-gradient(135deg, #2d5016 0%, #4a7c2c 100%);
       --gradient-accent: linear-gradient(135deg, #f4a259 0%, #e68a3d 100%);
     }
-
-    body {
-      font-family: 'Work Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: 
-        repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(45, 80, 22, 0.02) 35px, rgba(45, 80, 22, 0.02) 70px),
-        repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(74, 124, 44, 0.02) 35px, rgba(74, 124, 44, 0.02) 70px);
-      z-index: -1;
-      animation: patternSlide 60s linear infinite;
-    }
-
-    @keyframes patternSlide {
-      0% { transform: translate(0, 0); }
-      100% { transform: translate(70px, 70px); }
-    }
-
-    header {
-      background: var(--gradient);
-      color: white;
-      padding: 2rem 2rem 3rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    header::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      right: -10%;
-      width: 60%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-      animation: float 20s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translate(0, 0) rotate(0deg); }
-      50% { transform: translate(-20px, 20px) rotate(5deg); }
-    }
-
-    .header-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
-    }
-
-    h1 {
-      font-family: 'Crimson Pro', serif;
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      letter-spacing: -0.02em;
-      animation: slideDown 0.6s ease-out;
-    }
-
-    @keyframes slideDown {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .tagline {
-      font-size: 1.1rem;
-      opacity: 0.95;
-      font-weight: 400;
-      animation: slideDown 0.6s ease-out 0.2s backwards;
-    }
-
-    .ai-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: rgba(255,255,255,0.2);
-      padding: 0.5rem 1rem;
-      border-radius: 50px;
-      margin-top: 1rem;
-      font-size: 0.9rem;
-      backdrop-filter: blur(10px);
-      animation: slideDown 0.6s ease-out 0.4s backwards;
-    }
-
-    .ai-badge::before {
-      content: '✨';
-      font-size: 1.2rem;
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.2); opacity: 0.8; }
-    }
-
-    .lang-toggle {
-      position: absolute;
-      top: 2rem;
-      right: 2rem;
-      display: flex;
-      gap: 0.5rem;
-      z-index: 10;
-    }
-
-    .lang-toggle button {
-      padding: 0.5rem 1rem;
-      border: 2px solid rgba(255,255,255,0.3);
-      background: rgba(255,255,255,0.1);
-      color: white;
-      border-radius: 20px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-    }
-
-    .lang-toggle button:hover {
-      background: rgba(255,255,255,0.2);
-      transform: translateY(-2px);
-    }
-
-    .lang-toggle button.active {
-      background: white;
-      color: var(--primary);
-      border-color: white;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: -2rem auto 3rem;
-      padding: 0 2rem;
-      position: relative;
-      z-index: 2;
-    }
-
-    .workflow {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
-
-    .card {
-      background: var(--card-bg);
-      border-radius: 16px;
-      padding: 2rem;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      border: 1px solid var(--border);
-      transition: all 0.3s ease;
-      animation: fadeInUp 0.6s ease-out backwards;
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .card:nth-child(1) { animation-delay: 0.1s; }
-    .card:nth-child(2) { animation-delay: 0.2s; }
-    .card:nth-child(3) { animation-delay: 0.3s; }
-
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 30px rgba(45, 80, 22, 0.15);
-    }
-
-    .card.disabled {
-      opacity: 0.5;
-      pointer-events: none;
-    }
-
-    .card-number {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      background: var(--gradient);
-      color: white;
-      border-radius: 50%;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      font-size: 1.2rem;
-    }
-
-    h3 {
-      font-family: 'Crimson Pro', serif;
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      color: var(--primary-dark);
-    }
-
-    select, input, textarea {
-      width: 100%;
-      padding: 0.875rem 1rem;
-      border: 2px solid var(--border);
-      border-radius: 10px;
-      font-size: 1rem;
-      font-family: 'Work Sans', sans-serif;
-      transition: all 0.3s ease;
-      background: white;
-      color: var(--text);
-    }
-
-    select:focus, input:focus, textarea:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(45, 80, 22, 0.1);
-    }
-
-    select {
-      cursor: pointer;
-      appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%232d5016' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 0.75rem center;
-      background-size: 1.25rem;
-      padding-right: 3rem;
-    }
-
-    .button-group {
-      display: flex;
-      gap: 1rem;
-      margin-top: 1.5rem;
-    }
-
-    button {
-      padding: 1rem 2rem;
-      border: none;
-      border-radius: 10px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-family: 'Work Sans', sans-serif;
-      position: relative;
-      overflow: hidden;
-    }
-
-    button::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.3);
-      transform: translate(-50%, -50%);
-      transition: width 0.6s, height 0.6s;
-    }
-
-    button:hover::before {
-      width: 300px;
-      height: 300px;
-    }
-
-    .btn-primary {
-      background: var(--gradient);
-      color: white;
-      flex: 1;
-      box-shadow: 0 4px 15px rgba(45, 80, 22, 0.3);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(45, 80, 22, 0.4);
-    }
-
-    .btn-primary:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-      box-shadow: none;
-    }
-
-    .btn-store {
-      background: var(--gradient-accent);
-      color: white;
-      box-shadow: 0 4px 15px rgba(244, 162, 89, 0.3);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      text-decoration: none;
-      padding: 1.25rem 2.5rem;
-      font-size: 1.1rem;
-      margin-top: 1.5rem;
-      border-radius: 12px;
-    }
-
-    .btn-store:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 25px rgba(244, 162, 89, 0.5);
-    }
-
-    .btn-store::after {
-      content: '→';
-      font-size: 1.3rem;
-      transition: transform 0.3s ease;
-    }
-
-    .btn-store:hover::after {
-      transform: translateX(5px);
-    }
-
-    .results-section {
-      background: var(--card-bg);
-      border-radius: 16px;
-      padding: 2rem;
-      margin-top: 2rem;
-      border: 1px solid var(--border);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      animation: fadeInUp 0.6s ease-out;
-    }
-
-    .loading {
-      text-align: center;
-      padding: 3rem;
-    }
-
-    .spinner {
-      width: 50px;
-      height: 50px;
-      border: 4px solid var(--border);
-      border-top-color: var(--primary);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 1rem;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    .disease-card {
-      background: linear-gradient(to right, #f9f9f9, white);
-      border-left: 4px solid var(--primary);
-      padding: 1.5rem;
-      margin: 1rem 0;
-      border-radius: 10px;
-      transition: all 0.3s ease;
-    }
-
-    .disease-card:hover {
-      transform: translateX(5px);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
-
-    .disease-name {
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: var(--primary-dark);
-      margin-bottom: 0.5rem;
-      font-family: 'Crimson Pro', serif;
-    }
-
-    .confidence-bar {
-      height: 8px;
-      background: var(--border);
-      border-radius: 10px;
-      overflow: hidden;
-      margin: 1rem 0;
-    }
-
-    .confidence-fill {
-      height: 100%;
-      background: var(--gradient);
-      border-radius: 10px;
-      transition: width 1s ease-out;
-    }
-
-    .medicine-card {
-      background: linear-gradient(135deg, #fff9f0 0%, #ffffff 100%);
-      border: 2px solid var(--accent);
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin: 1.5rem 0;
-    }
-
-    .medicine-title {
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: var(--primary-dark);
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .medicine-title::before {
-      content: '💊';
-      font-size: 1.5rem;
-    }
-
-    .medicine-item {
-      background: white;
-      padding: 1rem;
-      margin: 0.75rem 0;
-      border-radius: 8px;
-      border-left: 3px solid var(--accent);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: all 0.3s ease;
-    }
-
-    .medicine-item:hover {
-      transform: translateX(5px);
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-
-    .medicine-info {
-      flex: 1;
-    }
-
-    .medicine-name {
-      font-weight: 600;
-      color: var(--primary-dark);
-      font-size: 1.1rem;
-    }
-
-    .medicine-dosage {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      margin-top: 0.25rem;
-    }
-
-    .recommendation {
-      background: #f0f7ec;
-      border-left: 3px solid var(--success);
-      padding: 1rem;
-      margin: 1rem 0;
-      border-radius: 8px;
-    }
-
-    .recommendation-title {
-      font-weight: 600;
-      color: var(--primary-dark);
-      margin-bottom: 0.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .recommendation-title::before {
-      content: '💡';
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    .info-section {
-      background: linear-gradient(135deg, #f0f7ec 0%, #ffffff 100%);
-      border: 2px solid var(--primary-light);
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin: 1.5rem 0;
-    }
-
-    .info-title {
-      font-weight: 600;
-      color: var(--primary-dark);
-      margin-bottom: 0.75rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .symptom-list {
-      list-style: none;
-      padding: 0;
-    }
-
-    .symptom-list li {
-      padding: 0.5rem 0;
-      padding-left: 1.5rem;
-      position: relative;
-    }
-
-    .symptom-list li::before {
-      content: '🌿';
-      position: absolute;
-      left: 0;
-    }
-
-    .store-section {
-      background: var(--gradient-accent);
-      border-radius: 16px;
-      padding: 2rem;
-      margin-top: 2rem;
-      text-align: center;
-      color: white;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .store-section::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-      animation: float 15s ease-in-out infinite;
-    }
-
-    .store-section h3 {
-      color: white;
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .store-section p {
-      font-size: 1.1rem;
-      margin-bottom: 1.5rem;
-      opacity: 0.95;
-      position: relative;
-      z-index: 1;
-    }
-
-    footer {
-      text-align: center;
-      padding: 2rem;
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-
-    .trust-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: white;
-      padding: 0.75rem 1.5rem;
-      border-radius: 50px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      margin-top: 1rem;
-    }
-
-    .trust-badge::before {
-      content: '🔒';
-    }
-
-    @media (max-width: 768px) {
-      .workflow {
-        grid-template-columns: 1fr;
-      }
-
-      .lang-toggle {
-        top: 1rem;
-        right: 1rem;
-      }
-
-      h1 {
-        font-size: 2rem;
-      }
-
-      .container {
-        padding: 0 1rem;
-      }
-
-      .card {
-        padding: 1.5rem;
-      }
-
-      .btn-store {
-        padding: 1rem 2rem;
-        font-size: 1rem;
-      }
-    }
+    body { font-family: 'Work Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; overflow-x: hidden; }
+    body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(45,80,22,0.02) 35px, rgba(45,80,22,0.02) 70px), repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(74,124,44,0.02) 35px, rgba(74,124,44,0.02) 70px); z-index: -1; animation: patternSlide 60s linear infinite; }
+    @keyframes patternSlide { 0%{transform:translate(0,0)} 100%{transform:translate(70px,70px)} }
+    header { background: var(--gradient); color: white; padding: 2rem 2rem 3rem; position: relative; overflow: hidden; }
+    header::before { content: ''; position: absolute; top: -50%; right: -10%; width: 60%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); animation: float 20s ease-in-out infinite; }
+    @keyframes float { 0%,100%{transform:translate(0,0) rotate(0deg)} 50%{transform:translate(-20px,20px) rotate(5deg)} }
+    .header-content { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+    h1 { font-family: 'Crimson Pro', serif; font-size: clamp(2rem,5vw,3.5rem); font-weight: 700; margin-bottom: 0.5rem; letter-spacing: -0.02em; animation: slideDown 0.6s ease-out; }
+    @keyframes slideDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
+    .tagline { font-size: 1.1rem; opacity: 0.95; font-weight: 400; animation: slideDown 0.6s ease-out 0.2s backwards; }
+    .ai-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 50px; margin-top: 1rem; font-size: 0.9rem; backdrop-filter: blur(10px); animation: slideDown 0.6s ease-out 0.4s backwards; }
+    .ai-badge::before { content: '✨'; font-size: 1.2rem; animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.2);opacity:0.8} }
+    .lang-toggle { position: absolute; top: 2rem; right: 2rem; display: flex; gap: 0.5rem; z-index: 10; }
+    .lang-toggle button { padding: 0.5rem 1rem; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; border-radius: 20px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; backdrop-filter: blur(10px); }
+    .lang-toggle button:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
+    .lang-toggle button.active { background: white; color: var(--primary); border-color: white; }
+    .container { max-width: 1200px; margin: -2rem auto 3rem; padding: 0 2rem; position: relative; z-index: 2; }
+    .workflow { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+    .card { background: var(--card-bg); border-radius: 16px; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 1px solid var(--border); transition: all 0.3s ease; animation: fadeInUp 0.6s ease-out backwards; }
+    @keyframes fadeInUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+    .card:nth-child(1){animation-delay:0.1s} .card:nth-child(2){animation-delay:0.2s} .card:nth-child(3){animation-delay:0.3s}
+    .card:hover { transform: translateY(-5px); box-shadow: 0 8px 30px rgba(45,80,22,0.15); }
+    .card.disabled { opacity: 0.5; pointer-events: none; }
+    .card-number { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--gradient); color: white; border-radius: 50%; font-weight: 700; margin-bottom: 1rem; font-size: 1.2rem; }
+    h3 { font-family: 'Crimson Pro', serif; font-size: 1.5rem; margin-bottom: 1rem; color: var(--primary-dark); }
+    select, input, textarea { width: 100%; padding: 0.875rem 1rem; border: 2px solid var(--border); border-radius: 10px; font-size: 1rem; font-family: 'Work Sans', sans-serif; transition: all 0.3s ease; background: white; color: var(--text); }
+    select:focus, input:focus, textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(45,80,22,0.1); }
+    select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%232d5016' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 1.25rem; padding-right: 3rem; }
+    .button-group { display: flex; gap: 1rem; margin-top: 1.5rem; }
+    button { padding: 1rem 2rem; border: none; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-family: 'Work Sans', sans-serif; position: relative; overflow: hidden; }
+    button::before { content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0; border-radius: 50%; background: rgba(255,255,255,0.3); transform: translate(-50%,-50%); transition: width 0.6s, height 0.6s; }
+    button:hover::before { width: 300px; height: 300px; }
+    .btn-primary { background: var(--gradient); color: white; flex: 1; box-shadow: 0 4px 15px rgba(45,80,22,0.3); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(45,80,22,0.4); }
+    .btn-primary:disabled { background: #ccc; cursor: not-allowed; box-shadow: none; }
+    .btn-store { background: var(--gradient-accent); color: white; box-shadow: 0 4px 15px rgba(244,162,89,0.3); display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; padding: 1.25rem 2.5rem; font-size: 1.1rem; margin-top: 1.5rem; border-radius: 12px; }
+    .btn-store:hover { transform: translateY(-3px); box-shadow: 0 6px 25px rgba(244,162,89,0.5); }
+    .btn-store::after { content: '→'; font-size: 1.3rem; transition: transform 0.3s ease; }
+    .btn-store:hover::after { transform: translateX(5px); }
+    .results-section { background: var(--card-bg); border-radius: 16px; padding: 2rem; margin-top: 2rem; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,0,0,0.08); animation: fadeInUp 0.6s ease-out; }
+    .loading { text-align: center; padding: 3rem; }
+    .spinner { width: 50px; height: 50px; border: 4px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem; }
+    @keyframes spin { to{transform:rotate(360deg)} }
+    .disease-card { background: linear-gradient(to right, #f9f9f9, white); border-left: 4px solid var(--primary); padding: 1.5rem; margin: 1rem 0; border-radius: 10px; transition: all 0.3s ease; }
+    .disease-card:hover { transform: translateX(5px); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    .disease-name { font-size: 1.3rem; font-weight: 600; color: var(--primary-dark); margin-bottom: 0.5rem; font-family: 'Crimson Pro', serif; }
+    .confidence-bar { height: 8px; background: var(--border); border-radius: 10px; overflow: hidden; margin: 1rem 0; }
+    .confidence-fill { height: 100%; background: var(--gradient); border-radius: 10px; transition: width 1s ease-out; }
+    .medicine-card { background: linear-gradient(135deg, #fff9f0 0%, #ffffff 100%); border: 2px solid var(--accent); border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; }
+    .medicine-title { font-size: 1.2rem; font-weight: 600; color: var(--primary-dark); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+    .medicine-title::before { content: '💊'; font-size: 1.5rem; }
+    .medicine-item { background: white; padding: 1rem; margin: 0.75rem 0; border-radius: 8px; border-left: 3px solid var(--accent); display: flex; justify-content: space-between; align-items: center; transition: all 0.3s ease; }
+    .medicine-item:hover { transform: translateX(5px); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    .medicine-info { flex: 1; }
+    .medicine-name { font-weight: 600; color: var(--primary-dark); font-size: 1.1rem; }
+    .medicine-dosage { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem; }
+    .recommendation { background: #f0f7ec; border-left: 3px solid var(--success); padding: 1rem; margin: 1rem 0; border-radius: 8px; }
+    .recommendation-title { font-weight: 600; color: var(--primary-dark); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+    .recommendation-title::before { content: '💡'; }
+    .hidden { display: none; }
+    .info-section { background: linear-gradient(135deg, #f0f7ec 0%, #ffffff 100%); border: 2px solid var(--primary-light); border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; }
+    .info-title { font-weight: 600; color: var(--primary-dark); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+    .symptom-list { list-style: none; padding: 0; }
+    .symptom-list li { padding: 0.5rem 0; padding-left: 1.5rem; position: relative; }
+    .symptom-list li::before { content: '🌿'; position: absolute; left: 0; }
+    .store-section { background: var(--gradient-accent); border-radius: 16px; padding: 2rem; margin-top: 2rem; text-align: center; color: white; position: relative; overflow: hidden; }
+    .store-section::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); animation: float 15s ease-in-out infinite; }
+    .store-section h3 { color: white; font-size: 2rem; margin-bottom: 1rem; position: relative; z-index: 1; }
+    .store-section p { font-size: 1.1rem; margin-bottom: 1.5rem; opacity: 0.95; position: relative; z-index: 1; }
+    footer { text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.9rem; }
+    .trust-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: white; padding: 0.75rem 1.5rem; border-radius: 50px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-top: 1rem; }
+    .trust-badge::before { content: '🔒'; }
+    /* Disease tab navigation */
+    .disease-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .disease-tab { padding: 0.6rem 1.2rem; border: 2px solid var(--border); background: white; border-radius: 25px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.3s ease; color: var(--text-muted); }
+    .disease-tab.active { background: var(--gradient); color: white; border-color: transparent; box-shadow: 0 3px 10px rgba(45,80,22,0.3); }
+    .disease-tab:hover:not(.active) { border-color: var(--primary); color: var(--primary); }
+    .disease-panel { display: none; }
+    .disease-panel.active { display: block; animation: fadeInUp 0.4s ease-out; }
+    @media(max-width:768px) { .workflow{grid-template-columns:1fr} .lang-toggle{top:1rem;right:1rem} h1{font-size:2rem} .container{padding:0 1rem} .card{padding:1.5rem} .btn-store{padding:1rem 2rem;font-size:1rem} }
   </style>
 </head>
 <body>
@@ -642,7 +116,6 @@
 
   <div class="container">
     <div class="workflow">
-      <!-- Card 1: Crop Selection -->
       <div class="card" id="cropCard">
         <div class="card-number">1</div>
         <h3 data-en="Select Your Crop" data-hi="अपनी फसल चुनें">Select Your Crop</h3>
@@ -650,15 +123,11 @@
           <option value="" data-en="Choose crop..." data-hi="फसल चुनें...">Choose crop...</option>
         </select>
       </div>
-
-      <!-- Card 2: Variety Selection -->
       <div class="card disabled" id="varietyCard">
         <div class="card-number">2</div>
         <h3 data-en="Select Variety" data-hi="किस्म चुनें">Select Variety</h3>
         <select id="varietySelect"></select>
       </div>
-
-      <!-- Card 3: Soil Type -->
       <div class="card disabled" id="soilCard">
         <div class="card-number">3</div>
         <h3 data-en="Soil Type" data-hi="मिट्टी का प्रकार">Soil Type</h3>
@@ -668,12 +137,9 @@
       </div>
     </div>
 
-    <!-- Symptoms Input -->
     <div class="card hidden" id="symptomsCard">
       <h3 data-en="Describe the Problem" data-hi="समस्या का वर्णन करें">Describe the Problem</h3>
-      <p data-en="Describe any symptoms you're observing (leaf color, spots, wilting, etc.)" data-hi="आप जो भी लक्षण देख रहे हैं उनका वर्णन करें (पत्तियों का रंग, धब्बे, मुरझाना, आदि)">
-        Describe any symptoms you're observing (leaf color, spots, wilting, etc.)
-      </p>
+      <p data-en="Describe any symptoms you're observing (leaf color, spots, wilting, etc.)" data-hi="आप जो भी लक्षण देख रहे हैं उनका वर्णन करें (पत्तियों का रंग, धब्बे, मुरझाना, आदि)">Describe any symptoms you're observing</p>
       <textarea id="symptomsInput" rows="4" placeholder="e.g., Yellow spots on leaves, wilting stems..."></textarea>
       <div class="button-group">
         <button class="btn-primary" onclick="analyzeDiseases()" id="analyzeBtn">
@@ -682,710 +148,625 @@
       </div>
     </div>
 
-    <!-- Results Section -->
     <div id="resultsSection" class="hidden"></div>
   </div>
 
   <footer>
-    <div class="trust-badge" data-en="Trusted by 10,000+ farmers" data-hi="10,000+ किसानों द्वारा विश्वसनीय">
-      Trusted by 10,000+ farmers
-    </div>
-    <p style="margin-top: 1rem;">© 2026 B.L Verdantix. <span data-en="All rights reserved." data-hi="सर्वाधिकार सुरक्षित।">All rights reserved.</span></p>
+    <div class="trust-badge" data-en="Trusted by 10,000+ farmers" data-hi="10,000+ किसानों द्वारा विश्वसनीय">Trusted by 10,000+ farmers</div>
+    <p style="margin-top:1rem;">© 2026 B.L Verdantix. <span data-en="All rights reserved." data-hi="सर्वाधिकार सुरक्षित।">All rights reserved.</span></p>
   </footer>
 
   <script>
-    // Comprehensive crop database with 30+ crops and 20+ varieties each
     const cropDatabase = {
-      wheat: {
-        en: "Wheat / गेहूं",
-        hi: "गेहूं / Wheat",
-        varieties: ["HD-2967", "HD-3086", "PBW-343", "PBW-550", "DBW-17", "DBW-187", "WH-1105", "WH-542", "Raj-4079", "Lok-1", "GW-366", "GW-322", "MP-3288", "HI-1544", "Sharbati Sonora", "Sonalika", "UP-2338", "UP-2628", "C-306", "HD-2851", "PBW-725", "DBW-222"]
-      },
-      rice: {
-        en: "Rice / धान",
-        hi: "धान / Rice",
-        varieties: ["Pusa Basmati 1", "Pusa Basmati 1121", "Pusa Basmati 1509", "IR-64", "Swarna", "Pusa-44", "Samba Mahsuri", "MTU-1010", "BPT-5204", "Jaya", "Sarjoo-52", "Pant Dhan-12", "Narendra-359", "HKR-47", "Mahsuri", "Kavya", "PR-126", "PAU-201", "CSR-30", "Improved Samba Mahsuri", "Naveen", "CR Dhan 311"]
-      },
-      cotton: {
-        en: "Cotton / कपास",
-        hi: "कपास / Cotton",
-        varieties: ["Bt Cotton", "Desi Cotton", "Hybrid-4", "Hybrid-6", "MECH-184", "RCH-2", "RCH-791", "MRC-7017", "MRC-7918", "Bunny Bt", "Mallika", "Brahma", "Ajeet-155", "Ajeet-199", "Nuziveedu-151", "JK-Ishwar", "Ankur-651", "Ankur-3028", "Rasi-659", "PCH-2270", "Tulasi-6", "DHH-11"]
-      },
-      sugarcane: {
-        en: "Sugarcane / गन्ना",
-        hi: "गन्ना / Sugarcane",
-        varieties: ["Co-0238", "Co-86032", "CoJ-64", "Co-0403", "Co-98014", "Co-05009", "CoLk-94184", "CoS-8436", "CoS-767", "Co-94012", "Co-0118", "Co-06022", "CoJ-88", "Co-85019", "Co-87044", "Co-1148", "Co-419", "Co-62175", "BO-91", "CoSe-92423", "CoSnk-05103", "CoLk-8102"]
-      },
-      maize: {
-        en: "Maize / मक्का",
-        hi: "मक्का / Maize",
-        varieties: ["Hybrid Maize", "Sweet Corn", "Baby Corn", "DMH-117", "HQPM-1", "HQPM-5", "Vivek Hybrid-27", "Vivek Hybrid-9", "DHM-121", "Ganga-5", "Kanchan", "NK-6240", "Pioneer-3502", "Bio-9681", "DKC-9081", "Monsanto-900M Gold", "Kaveri-50", "CP-808", "CP-818", "900M-Gold", "Hishell", "Seedtech-2324"]
-      },
-      potato: {
-        en: "Potato / आलू",
-        hi: "आलू / Potato",
-        varieties: ["Kufri Jyoti", "Kufri Chandramukhi", "Kufri Pukhraj", "Kufri Sindhuri", "Kufri Badshah", "Kufri Ashoka", "Kufri Anand", "Kufri Bahar", "Kufri Chipsona-1", "Kufri Chipsona-2", "Kufri Chipsona-3", "Kufri Surya", "Kufri Khyati", "Kufri Himalini", "Kufri Swarna", "Kufri Lauvkar", "Kufri Lalima", "Kufri Girdhari", "Kufri Megha", "Kufri Neelkanth", "Kufri Gaurav", "Kufri Frysona"]
-      },
-      tomato: {
-        en: "Tomato / टमाटर",
-        hi: "टमाटर / Tomato",
-        varieties: ["Pusa Ruby", "Pusa Rohini", "Himsona", "Punjab Chhuhara", "Arka Vikas", "Arka Saurabh", "Arka Abha", "Arka Alok", "Pusa Gaurav", "Pusa Sheetal", "Pusa Hybrid-1", "Pusa Hybrid-2", "Pusa Hybrid-4", "Solan Gola", "Sioux", "Roma", "Cherry Tomato", "Naveen-2000+", "Abhinav", "Hisar Arun", "NS-501", "Lakshmi"]
-      },
-      onion: {
-        en: "Onion / प्याज",
-        hi: "प्याज / Onion",
-        varieties: ["Pusa Red", "Pusa White", "Nasik Red", "Agrifound Dark Red", "Agrifound Light Red", "Agrifound White", "Bhima Shakti", "Bhima Super", "Bhima Kiran", "Bhima Raj", "Bhima Dark Red", "Bhima Red", "Bhima Shweta", "Bhima Shubhra", "Arka Kalyan", "Arka Niketan", "Arka Pragati", "Pusa Ratnar", "Pusa Madhavi", "N-53", "N-2-4-1", "CO-3"]
-      },
-      soybean: {
-        en: "Soybean / सोयाबीन",
-        hi: "सोयाबीन / Soybean",
-        varieties: ["JS-335", "JS-95-60", "MAUS-71", "PS-1092", "PS-1347", "JS-93-05", "JS-97-52", "NRC-7", "NRC-12", "NRC-37", "Pusa-16", "Pusa-20", "Pusa-24", "Pusa-40", "Hardee", "Bragg", "Lee", "PK-262", "PK-308", "PK-327", "Ankur Amar", "RKS-18"]
-      },
-      chickpea: {
-        en: "Chickpea / चना",
-        hi: "चना / Chickpea",
-        varieties: ["Pusa-256", "Pusa-362", "JG-11", "Annigeri", "JAKI-9218", "JG-16", "JG-130", "GNG-146", "GNG-1581", "Vijay", "Vishal", "KAK-2", "C-235", "HC-1", "HC-3", "BG-256", "BG-362", "BG-372", "Pusa-547", "Pusa-1003", "CSJ-515", "Digvijay"]
-      },
-      mustard: {
-        en: "Mustard / सरसों",
-        hi: "सरसों / Mustard",
-        varieties: ["Pusa Bold", "Pusa Jai Kisan", "Pusa Mustard-25", "Pusa Mustard-26", "Pusa Mustard-27", "Varuna", "Kranti", "RH-30", "RH-406", "RH-725", "Pusa Agrani", "NPJ-112", "NPJ-113", "NRCHB-101", "GM-2", "GM-3", "Pusa Tarak", "DRMR-150", "DRMR-2035", "Maya", "Ashirwad", "Giriraj"]
-      },
-      bajra: {
-        en: "Pearl Millet / बाजरा",
-        hi: "बाजरा / Pearl Millet",
-        varieties: ["HHB-67", "HHB-197", "HHB-223", "Pusa-322", "Pusa-383", "RHB-121", "RHB-173", "GHB-538", "GHB-558", "GHB-732", "MH-169", "Proagro-9444", "Pioneer-86M86", "ICTP-8203", "WCC-75", "Raj-171", "ICMH-356", "ICMH-451", "Shradha", "Saburi", "Kaveri-1221", "9444"]
-      },
-      groundnut: {
-        en: "Groundnut / मूंगफली",
-        hi: "मूंगफली / Groundnut",
-        varieties: ["TMV-2", "TMV-7", "TMV-13", "JL-24", "TAG-24", "TG-37A", "Girnar-1", "Girnar-2", "GG-2", "GG-5", "TCGS-1043", "Kadiri-3", "Kadiri-4", "Kadiri-5", "Kadiri-6", "ICGS-11", "ICGS-44", "ICGS-76", "VRI-2", "VRI-3", "Co-1", "Co-2"]
-      },
-      sunflower: {
-        en: "Sunflower / सूरजमुखी",
-        hi: "सूरजमुखी / Sunflower",
-        varieties: ["KBSH-1", "KBSH-44", "KBSH-53", "MSFH-17", "MSFH-8", "Phule Bhaskar", "Phule Raviraj", "BSH-1", "DRSF-108", "DRSF-113", "Co-4", "PAC-36", "PAC-399", "Jwalamukhi", "SS-56", "Modern", "Surya", "APSH-11", "LSFH-171", "LSFH-35", "DRSH-1", "Bhanu"]
-      },
-      turmeric: {
-        en: "Turmeric / हल्दी",
-        hi: "हल्दी / Turmeric",
-        varieties: ["Salem", "Erode", "Rajendra Sonia", "Megha Turmeric-1", "Prabha", "Pratibha", "Krishna", "Surama", "Sudarsana", "Suguna", "Suroma", "Roma", "Co-1", "Co-2", "BSR-1", "BSR-2", "RH-2", "RH-5", "Alleppey", "Madras", "Lakadong", "Sangli"]
-      },
-      ginger: {
-        en: "Ginger / अदरक",
-        hi: "अदरक / Ginger",
-        varieties: ["Suprabha", "Suruchi", "Suravi", "Mahima", "Rejatha", "Rio-de-Janeiro", "Maran", "IISR-Varada", "IISR-Mahima", "Himachal", "Nadia", "Wynad Local", "Gorubathan", "Bhaisey", "Thingpui", "Jorhat", "Assam", "Narkhelam", "Himgiri", "V2S5", "V2S6", "GG-05-02"]
-      },
-      chilli: {
-        en: "Chilli / मिर्च",
-        hi: "मिर्च / Chilli",
-        varieties: ["Pusa Jwala", "Pusa Sadabahar", "Arka Lohit", "Arka Harita", "Arka Meghna", "G-4", "Byadgi", "Guntur Sannam", "Teja", "Sanam-334", "LCA-235", "LCA-305", "Wonder Hot", "Elephant Trunk", "Bhut Jolokia", "Kanthari", "Kashmiri Mirch", "KA-2", "Punjab Lal", "Pant C-1", "CO-1", "CO-2"]
-      },
-      coriander: {
-        en: "Coriander / धनिया",
-        hi: "धनिया / Coriander",
-        varieties: ["Pusa Coriander-1", "Pusa Coriander-2", "Rajendra Swati", "CS-6", "CS-287", "Sadhana", "Gujarat Coriander-1", "Gujarat Coriander-2", "CO-1", "CO-2", "CO-3", "CO-4", "Swati", "Sudha", "ACr-1", "RCr-20", "RCr-41", "RCr-436", "RCr-446", "RCr-480", "RCr-728", "Hisar Sugandh"]
-      },
-      garlic: {
-        en: "Garlic / लहसुन",
-        hi: "लहसुन / Garlic",
-        varieties: ["G-1", "G-50", "G-282", "G-323", "Agrifound White", "Agrifound Parvati", "Bhima Purple", "Bhima Omkar", "VL Garlic-1", "VL Garlic-2", "Yamuna Safed-1", "Yamuna Safed-2", "Yamuna Safed-3", "Yamuna Safed-4", "Godavari", "Phule Baswant", "GG-4", "Ujjain", "Selection-1", "Selection-10", "Agrifound Parvati G-313", "Bhima Omkar G-189"]
-      },
-      cabbage: {
-        en: "Cabbage / पत्तागोभी",
-        hi: "पत्तागोभी / Cabbage",
-        varieties: ["Golden Acre", "Pride of India", "Pusa Mukta", "Pusa Drum Head", "Early Drum Head", "Late Drum Head", "Copenhagen Market", "Pusa Synthetic", "Solan Green", "Hari Rani", "Rareball", "Red Cabbage", "Quisto", "Bajrang", "Green Challenger", "KK Cross", "Saint", "NS-25", "NS-60", "NS-75", "Unnati", "Mahyco"]
-      },
-      cauliflower: {
-        en: "Cauliflower / फूलगोभी",
-        hi: "फूलगोभी / Cauliflower",
-        varieties: ["Pusa Katki", "Pusa Deepali", "Pusa Shubhra", "Pusa Snowball K-1", "Pusa Snowball K-25", "Pusa Synthetic", "Pusa Himjyoti", "Pusa Meghna", "Early Kunwari", "Patna Early", "Snowball-16", "Pant Shubhra", "Pant Gobhi-2", "Pant Gobhi-3", "Improved Japanese", "Selection-327", "Pusa Hybrid-2", "KT-25", "Indam-9801", "NS-50", "NS-60", "PSB Kt-1"]
-      },
-      brinjal: {
-        en: "Brinjal / बैंगन",
-        hi: "बैंगन / Brinjal",
-        varieties: ["Pusa Purple Long", "Pusa Purple Round", "Pusa Kranti", "Pusa Purple Cluster", "Pusa Hybrid-5", "Pusa Hybrid-6", "Arka Shirish", "Arka Kusumakar", "Arka Keshav", "Arka Navneet", "Punjab Barsati", "Punjab Sadabahar", "Hisar Shyamal", "Pant Rituraj", "Pant Samrat", "Azad Kranti", "Kashi Taru", "Kashi Sandesh", "Suphal Shyamla", "Muktakeshi", "Pusa Uttam", "CO-2"]
-      },
-      peas: {
-        en: "Peas / मटर",
-        hi: "मटर / Peas",
-        varieties: ["Arkel", "Bonneville", "Lincoln", "Little Marvel", "Pusa Pragati", "Pusa Prabhat", "Arka Ajit", "Arka Karthik", "Rachna", "Vivek Matar-10", "Vivek Matar-11", "Azad P-1", "Azad P-3", "Swarna Rekha", "Swarna Mukti", "VL Ageti Matar-7", "VL Matar-42", "KPM-522", "Pant Matar-3", "AP-3", "HFP-4", "HFP-715"]
-      },
-      carrot: {
-        en: "Carrot / गाजर",
-        hi: "गाजर / Carrot",
-        varieties: ["Pusa Kesar", "Pusa Meghali", "Pusa Yamdagini", "Pusa Rudhira", "Nantes", "Chantenay", "Danvers", "Selection-223", "Hisar Gairic", "Hisar Rasili", "New Kuroda", "Kuroda Improved", "Early Nantes", "Imperator", "Pusa Asita Black", "Pusa Vrishti", "Pusa Nayanjyoti", "Punjab Carrot Red", "Punjab Black Beauty", "Arka Suraj", "Arka Garima", "Tropical Red"]
-      },
-      radish: {
-        en: "Radish / मूली",
-        hi: "मूली / Radish",
-        varieties: ["Pusa Chetki", "Pusa Himani", "Pusa Reshmi", "Japanese White", "White Icicle", "Pusa Desi", "Pusa Gulabi", "Arka Nishant", "Arka Neel", "Punjab Safed", "Punjab Pasand", "Punjab Ageti", "Hisar Muli No.1", "Rapid Red", "Long White", "Chinese Rose", "Selection-18", "CO-1", "CO-2", "Kashi Hans", "Kashi Sweta", "Pant Muli-1"]
-      },
-      okra: {
-        en: "Okra / भिंडी",
-        hi: "भिंडी / Okra",
-        varieties: ["Pusa Sawani", "Pusa A-4", "Pusa Makhmali", "Pusa Bhindi-5", "Arka Anamika", "Arka Abhay", "Punjab Padmini", "Punjab-7", "Hisar Unnat", "Parbhani Kranti", "Varsha Uphar", "Kashi Pragati", "Kashi Kranti", "Kashi Mohini", "Azad Kranti", "Azad Bhindi", "Priya", "Pant Bhindi", "VRO-6", "Prabhani Kranti", "Pusa-5", "Pusa Hybrid-8"]
-      },
-      bitter_gourd: {
-        en: "Bitter Gourd / करेला",
-        hi: "करेला / Bitter Gourd",
-        varieties: ["Pusa Do Mausami", "Pusa Vishesh", "Pusa Hybrid-1", "Pusa Rasdar", "Arka Harit", "CO-1", "CO-2", "MDU-1", "Priya", "Preethi", "Konkan Tara", "Phule Green Gold", "Phule Ujwala", "Kalyanpur Sona", "Kalyanpur Baramasi", "VROB-178", "Hirkani", "Pant Karela-1", "Kashi Urvashi", "Punjab-14", "Punjab Karela-1", "Azad Karela"]
-      },
-      bottle_gourd: {
-        en: "Bottle Gourd / लौकी",
-        hi: "लौकी / Bottle Gourd",
-        varieties: ["Pusa Naveen", "Pusa Meghdoot", "Pusa Manjari", "Pusa Sandesh", "Pusa Hybrid-3", "Arka Bahar", "Punjab Komal", "Punjab Long", "CO-1", "CO-2", "Samrat", "Narendra Shishir", "Kashi Ganga", "Kashi Bahar", "Azad Harit", "Pant Lauki-1", "Priya", "Preethi", "PSPL", "VL Lauki-1", "VL Lauki-2", "Ajay"]
-      },
-      cucumber: {
-        en: "Cucumber / खीरा",
-        hi: "खीरा / Cucumber",
-        varieties: ["Pusa Sanyog", "Pusa Uday", "Pusa Barkha", "Straight Eight", "Poinsett", "Japanese Long Green", "Arka Sheetal", "Arka Sujat", "Punjab Naveen", "Hisar Selection", "Swarna Ageti", "Swarna Sheetal", "Priya", "Preethi", "Hybrid-1", "Hybrid-2", "Pant Sankar Khira-1", "Sheetal", "Kashi Sheetal", "CO-1", "VL Khira-1", "PCKM-1"]
-      },
-      papaya: {
-        en: "Papaya / पपीता",
-        hi: "पपीता / Papaya",
-        varieties: ["Pusa Delicious", "Pusa Majesty", "Pusa Dwarf", "Pusa Giant", "CO-1", "CO-2", "CO-3", "CO-4", "CO-5", "CO-6", "CO-7", "CO-8", "Washington", "Ranchi", "Coorg Honey Dew", "Taiwan", "Thailand", "Red Lady-786", "Arka Surya", "Arka Prabhath", "Punjab Sweet", "Pant Papaya-1"]
-      },
-      banana: {
-        en: "Banana / केला",
-        hi: "केला / Banana",
-        varieties: ["Robusta", "Dwarf Cavendish", "Grand Naine", "Rasthali", "Poovan", "Nendran", "Monthan", "Red Banana", "Karpuravalli", "Ney Poovan", "Elakki", "Chini Champa", "Safed Velchi", "Harichal", "Ardhapuri", "Singapuri", "Rajeli", "Basrai", "Safed", "Lal Velchi", "Williams Hybrid", "G-9"]
-      },
-      mango: {
-        en: "Mango / आम",
-        hi: "आम / Mango",
-        varieties: ["Alphonso", "Kesar", "Dasheri", "Langra", "Chausa", "Safeda", "Totapuri", "Banganapalli", "Neelum", "Mallika", "Amrapali", "Ratna", "Arka Aruna", "Arka Puneet", "Arka Anmol", "Sindhu", "Bombay Green", "Himsagar", "Fajli", "Dussehri", "Rataul", "Jardalu"]
-      }
+      wheat:{en:"Wheat / गेहूं",hi:"गेहूं / Wheat",varieties:["HD-2967","HD-3086","PBW-343","PBW-550","DBW-17","DBW-187","WH-1105","WH-542","Raj-4079","Lok-1","GW-366","GW-322","MP-3288","HI-1544","Sharbati Sonora","Sonalika","UP-2338","UP-2628","C-306","HD-2851","PBW-725","DBW-222"]},
+      rice:{en:"Rice / धान",hi:"धान / Rice",varieties:["Pusa Basmati 1","Pusa Basmati 1121","Pusa Basmati 1509","IR-64","Swarna","Pusa-44","Samba Mahsuri","MTU-1010","BPT-5204","Jaya","Sarjoo-52","Pant Dhan-12","Narendra-359","HKR-47","Mahsuri","Kavya","PR-126","PAU-201","CSR-30","Improved Samba Mahsuri","Naveen","CR Dhan 311"]},
+      cotton:{en:"Cotton / कपास",hi:"कपास / Cotton",varieties:["Bt Cotton","Desi Cotton","Hybrid-4","Hybrid-6","MECH-184","RCH-2","RCH-791","MRC-7017","MRC-7918","Bunny Bt","Mallika","Brahma","Ajeet-155","Ajeet-199","Nuziveedu-151","JK-Ishwar","Ankur-651","Ankur-3028","Rasi-659","PCH-2270","Tulasi-6","DHH-11"]},
+      sugarcane:{en:"Sugarcane / गन्ना",hi:"गन्ना / Sugarcane",varieties:["Co-0238","Co-86032","CoJ-64","Co-0403","Co-98014","Co-05009","CoLk-94184","CoS-8436","CoS-767","Co-94012","Co-0118","Co-06022","CoJ-88","Co-85019","Co-87044","Co-1148","Co-419","Co-62175","BO-91","CoSe-92423","CoSnk-05103","CoLk-8102"]},
+      maize:{en:"Maize / मक्का",hi:"मक्का / Maize",varieties:["Hybrid Maize","Sweet Corn","Baby Corn","DMH-117","HQPM-1","HQPM-5","Vivek Hybrid-27","Vivek Hybrid-9","DHM-121","Ganga-5","Kanchan","NK-6240","Pioneer-3502","Bio-9681","DKC-9081","Monsanto-900M Gold","Kaveri-50","CP-808","CP-818","900M-Gold","Hishell","Seedtech-2324"]},
+      potato:{en:"Potato / आलू",hi:"आलू / Potato",varieties:["Kufri Jyoti","Kufri Chandramukhi","Kufri Pukhraj","Kufri Sindhuri","Kufri Badshah","Kufri Ashoka","Kufri Anand","Kufri Bahar","Kufri Chipsona-1","Kufri Chipsona-2","Kufri Chipsona-3","Kufri Surya","Kufri Khyati","Kufri Himalini","Kufri Swarna","Kufri Lauvkar","Kufri Lalima","Kufri Girdhari","Kufri Megha","Kufri Neelkanth","Kufri Gaurav","Kufri Frysona"]},
+      tomato:{en:"Tomato / टमाटर",hi:"टमाटर / Tomato",varieties:["Pusa Ruby","Pusa Rohini","Himsona","Punjab Chhuhara","Arka Vikas","Arka Saurabh","Arka Abha","Arka Alok","Pusa Gaurav","Pusa Sheetal","Pusa Hybrid-1","Pusa Hybrid-2","Pusa Hybrid-4","Solan Gola","Sioux","Roma","Cherry Tomato","Naveen-2000+","Abhinav","Hisar Arun","NS-501","Lakshmi"]},
+      onion:{en:"Onion / प्याज",hi:"प्याज / Onion",varieties:["Pusa Red","Pusa White","Nasik Red","Agrifound Dark Red","Agrifound Light Red","Agrifound White","Bhima Shakti","Bhima Super","Bhima Kiran","Bhima Raj","Bhima Dark Red","Bhima Red","Bhima Shweta","Bhima Shubhra","Arka Kalyan","Arka Niketan","Arka Pragati","Pusa Ratnar","Pusa Madhavi","N-53","N-2-4-1","CO-3"]},
+      soybean:{en:"Soybean / सोयाबीन",hi:"सोयाबीन / Soybean",varieties:["JS-335","JS-95-60","MAUS-71","PS-1092","PS-1347","JS-93-05","JS-97-52","NRC-7","NRC-12","NRC-37","Pusa-16","Pusa-20","Pusa-24","Pusa-40","Hardee","Bragg","Lee","PK-262","PK-308","PK-327","Ankur Amar","RKS-18"]},
+      chickpea:{en:"Chickpea / चना",hi:"चना / Chickpea",varieties:["Pusa-256","Pusa-362","JG-11","Annigeri","JAKI-9218","JG-16","JG-130","GNG-146","GNG-1581","Vijay","Vishal","KAK-2","C-235","HC-1","HC-3","BG-256","BG-362","BG-372","Pusa-547","Pusa-1003","CSJ-515","Digvijay"]},
+      mustard:{en:"Mustard / सरसों",hi:"सरसों / Mustard",varieties:["Pusa Bold","Pusa Jai Kisan","Pusa Mustard-25","Pusa Mustard-26","Pusa Mustard-27","Varuna","Kranti","RH-30","RH-406","RH-725","Pusa Agrani","NPJ-112","NPJ-113","NRCHB-101","GM-2","GM-3","Pusa Tarak","DRMR-150","DRMR-2035","Maya","Ashirwad","Giriraj"]},
+      bajra:{en:"Pearl Millet / बाजरा",hi:"बाजरा / Pearl Millet",varieties:["HHB-67","HHB-197","HHB-223","Pusa-322","Pusa-383","RHB-121","RHB-173","GHB-538","GHB-558","GHB-732","MH-169","Proagro-9444","Pioneer-86M86","ICTP-8203","WCC-75","Raj-171","ICMH-356","ICMH-451","Shradha","Saburi","Kaveri-1221","9444"]},
+      groundnut:{en:"Groundnut / मूंगफली",hi:"मूंगफली / Groundnut",varieties:["TMV-2","TMV-7","TMV-13","JL-24","TAG-24","TG-37A","Girnar-1","Girnar-2","GG-2","GG-5","TCGS-1043","Kadiri-3","Kadiri-4","Kadiri-5","Kadiri-6","ICGS-11","ICGS-44","ICGS-76","VRI-2","VRI-3","Co-1","Co-2"]},
+      sunflower:{en:"Sunflower / सूरजमुखी",hi:"सूरजमुखी / Sunflower",varieties:["KBSH-1","KBSH-44","KBSH-53","MSFH-17","MSFH-8","Phule Bhaskar","Phule Raviraj","BSH-1","DRSF-108","DRSF-113","Co-4","PAC-36","PAC-399","Jwalamukhi","SS-56","Modern","Surya","APSH-11","LSFH-171","LSFH-35","DRSH-1","Bhanu"]},
+      tomato_adv:{en:"Tomato / टमाटर",hi:"टमाटर / Tomato",varieties:["Pusa Ruby","Roma"]},
+      chilli:{en:"Chilli / मिर्च",hi:"मिर्च / Chilli",varieties:["Pusa Jwala","Pusa Sadabahar","Arka Lohit","Arka Harita","Arka Meghna","G-4","Byadgi","Guntur Sannam","Teja","Sanam-334","LCA-235","LCA-305","Wonder Hot","Elephant Trunk","Bhut Jolokia","Kanthari","Kashmiri Mirch","KA-2","Punjab Lal","Pant C-1","CO-1","CO-2"]},
+      okra:{en:"Okra / भिंडी",hi:"भिंडी / Okra",varieties:["Pusa Sawani","Pusa A-4","Pusa Makhmali","Pusa Bhindi-5","Arka Anamika","Arka Abhay","Punjab Padmini","Punjab-7","Hisar Unnat","Parbhani Kranti","Varsha Uphar","Kashi Pragati","Kashi Kranti","Kashi Mohini","Azad Kranti","Azad Bhindi","Priya","Pant Bhindi","VRO-6","Pusa-5","Pusa Hybrid-8"]},
+      mango:{en:"Mango / आम",hi:"आम / Mango",varieties:["Alphonso","Kesar","Dasheri","Langra","Chausa","Safeda","Totapuri","Banganapalli","Neelum","Mallika","Amrapali","Ratna","Arka Aruna","Arka Puneet","Arka Anmol","Sindhu","Bombay Green","Himsagar","Fajli","Dussehri","Rataul","Jardalu"]},
+      banana:{en:"Banana / केला",hi:"केला / Banana",varieties:["Robusta","Dwarf Cavendish","Grand Naine","Rasthali","Poovan","Nendran","Monthan","Red Banana","Karpuravalli","Ney Poovan","Elakki","Chini Champa","Safed Velchi","Harichal","Ardhapuri","Singapuri","Rajeli","Basrai","Safed","Lal Velchi","Williams Hybrid","G-9"]},
+      papaya:{en:"Papaya / पपीता",hi:"पपीता / Papaya",varieties:["Pusa Delicious","Pusa Majesty","Pusa Dwarf","Pusa Giant","CO-1","CO-2","CO-3","CO-4","CO-5","CO-6","CO-7","CO-8","Washington","Ranchi","Coorg Honey Dew","Taiwan","Thailand","Red Lady-786","Arka Surya","Arka Prabhath","Punjab Sweet","Pant Papaya-1"]},
+      peas:{en:"Peas / मटर",hi:"मटर / Peas",varieties:["Arkel","Bonneville","Lincoln","Little Marvel","Pusa Pragati","Pusa Prabhat","Arka Ajit","Arka Karthik","Rachna","Vivek Matar-10","Vivek Matar-11","Azad P-1","Azad P-3","Swarna Rekha","Swarna Mukti","VL Ageti Matar-7","VL Matar-42","KPM-522","Pant Matar-3","AP-3","HFP-4","HFP-715"]}
     };
 
-    // Soil types database
     const soilTypes = {
-      alluvial: { en: "Alluvial / दोमट", hi: "दोमट / Alluvial" },
-      black: { en: "Black / काली", hi: "काली / Black" },
-      red: { en: "Red / लाल", hi: "लाल / Red" },
-      sandy: { en: "Sandy / बलुई", hi: "बलुई / Sandy" },
-      clay: { en: "Clay / चिकनी", hi: "चिकनी / Clay" },
-      loamy: { en: "Loamy / दोमट", hi: "दोमट / Loamy" },
-      laterite: { en: "Laterite / लैटराइट", hi: "लैटराइट / Laterite" },
-      peaty: { en: "Peaty / पीटी", hi: "पीटी / Peaty" }
+      alluvial:{en:"Alluvial / दोमट",hi:"दोमट / Alluvial"},
+      black:{en:"Black / काली",hi:"काली / Black"},
+      red:{en:"Red / लाल",hi:"लाल / Red"},
+      sandy:{en:"Sandy / बलुई",hi:"बलुई / Sandy"},
+      clay:{en:"Clay / चिकनी",hi:"चिकनी / Clay"},
+      loamy:{en:"Loamy / दोमट",hi:"दोमट / Loamy"},
+      laterite:{en:"Laterite / लैटराइट",hi:"लैटराइट / Laterite"},
+      peaty:{en:"Peaty / पीटी",hi:"पीटी / Peaty"}
     };
 
     let currentLang = 'en';
 
-    // Initialize page
-    document.addEventListener('DOMContentLoaded', () => {
-      populateCrops();
-      populateSoils();
-      setLang('en');
-    });
+    document.addEventListener('DOMContentLoaded', () => { populateCrops(); populateSoils(); setLang('en'); });
 
-    // Populate crop dropdown
     function populateCrops() {
-      const cropSelect = document.getElementById('cropSelect');
-      Object.keys(cropDatabase).forEach(cropKey => {
-        const option = document.createElement('option');
-        option.value = cropKey;
-        option.setAttribute('data-en', cropDatabase[cropKey].en);
-        option.setAttribute('data-hi', cropDatabase[cropKey].hi);
-        option.textContent = cropDatabase[cropKey].en;
-        cropSelect.appendChild(option);
+      const s = document.getElementById('cropSelect');
+      Object.keys(cropDatabase).forEach(k => {
+        const o = document.createElement('option');
+        o.value = k;
+        o.setAttribute('data-en', cropDatabase[k].en);
+        o.setAttribute('data-hi', cropDatabase[k].hi);
+        o.textContent = cropDatabase[k].en;
+        s.appendChild(o);
       });
     }
 
-    // Populate soil dropdown
     function populateSoils() {
-      const soilSelect = document.getElementById('soilSelect');
-      Object.keys(soilTypes).forEach(soilKey => {
-        const option = document.createElement('option');
-        option.value = soilKey;
-        option.setAttribute('data-en', soilTypes[soilKey].en);
-        option.setAttribute('data-hi', soilTypes[soilKey].hi);
-        option.textContent = soilTypes[soilKey].en;
-        soilSelect.appendChild(option);
+      const s = document.getElementById('soilSelect');
+      Object.keys(soilTypes).forEach(k => {
+        const o = document.createElement('option');
+        o.value = k;
+        o.setAttribute('data-en', soilTypes[k].en);
+        o.setAttribute('data-hi', soilTypes[k].hi);
+        o.textContent = soilTypes[k].en;
+        s.appendChild(o);
       });
     }
 
-    // Set language
     function setLang(lang) {
       currentLang = lang;
-      document.getElementById('btnEn').classList.toggle('active', lang === 'en');
-      document.getElementById('btnHi').classList.toggle('active', lang === 'hi');
-      
+      document.getElementById('btnEn').classList.toggle('active', lang==='en');
+      document.getElementById('btnHi').classList.toggle('active', lang==='hi');
       document.querySelectorAll('[data-en]').forEach(el => {
-        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-          el.placeholder = el.getAttribute('data-' + lang);
-        } else if (el.tagName === 'OPTION') {
-          el.textContent = el.getAttribute('data-' + lang);
-        } else {
-          el.textContent = el.getAttribute('data-' + lang);
-        }
+        const val = el.getAttribute('data-'+lang);
+        if(!val) return;
+        if(el.tagName==='INPUT'||el.tagName==='TEXTAREA') el.placeholder = val;
+        else el.textContent = val;
       });
     }
 
-    // Load varieties
     function loadVarieties() {
       const crop = document.getElementById('cropSelect').value;
-      const varietyCard = document.getElementById('varietyCard');
-      const varietySelect = document.getElementById('varietySelect');
-      const soilCard = document.getElementById('soilCard');
-      const symptomsCard = document.getElementById('symptomsCard');
-      
-      if (crop && cropDatabase[crop]) {
-        varietyCard.classList.remove('disabled');
-        varietySelect.innerHTML = `<option value="">${currentLang === 'en' ? 'Choose variety...' : 'किस्म चुनें...'}</option>`;
-        
-        cropDatabase[crop].varieties.forEach(variety => {
-          const option = document.createElement('option');
-          option.value = variety;
-          option.textContent = variety;
-          varietySelect.appendChild(option);
+      const vCard = document.getElementById('varietyCard');
+      const vSel = document.getElementById('varietySelect');
+      const sCard = document.getElementById('soilCard');
+      const symCard = document.getElementById('symptomsCard');
+      if(crop && cropDatabase[crop]) {
+        vCard.classList.remove('disabled');
+        vSel.innerHTML = `<option value="">${currentLang==='en'?'Choose variety...':'किस्म चुनें...'}</option>`;
+        cropDatabase[crop].varieties.forEach(v => {
+          const o = document.createElement('option');
+          o.value = v; o.textContent = v;
+          vSel.appendChild(o);
         });
-        
-        varietySelect.onchange = () => {
-          if (varietySelect.value) {
-            soilCard.classList.remove('disabled');
+        vSel.onchange = () => {
+          if(vSel.value) {
+            sCard.classList.remove('disabled');
             document.getElementById('soilSelect').onchange = () => {
-              if (document.getElementById('soilSelect').value) {
-                symptomsCard.classList.remove('hidden');
-                symptomsCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              if(document.getElementById('soilSelect').value) {
+                symCard.classList.remove('hidden');
+                symCard.scrollIntoView({behavior:'smooth',block:'center'});
               }
             };
           }
         };
       } else {
-        varietyCard.classList.add('disabled');
-        soilCard.classList.add('disabled');
-        symptomsCard.classList.add('hidden');
+        vCard.classList.add('disabled');
+        sCard.classList.add('disabled');
+        symCard.classList.add('hidden');
       }
     }
 
-    // Analyze diseases with improved error handling and JSON parsing
     async function analyzeDiseases() {
       const crop = document.getElementById('cropSelect').value;
       const variety = document.getElementById('varietySelect').value;
       const soil = document.getElementById('soilSelect').value;
       const symptoms = document.getElementById('symptomsInput').value;
-      
-      if (!crop || !variety || !soil || !symptoms) {
-        alert(currentLang === 'en' ? 'Please fill all fields' : 'कृपया सभी फ़ील्ड भरें');
+
+      if(!crop||!variety||!soil||!symptoms) {
+        alert(currentLang==='en'?'Please fill all fields':'कृपया सभी फ़ील्ड भरें');
         return;
       }
 
-      const resultsSection = document.getElementById('resultsSection');
-      resultsSection.classList.remove('hidden');
-      resultsSection.innerHTML = `
-        <div class="loading">
-          <div class="spinner"></div>
-          <p><strong>${currentLang === 'en' ? 'Analyzing with AI...' : 'एआई से विश्लेषण हो रहा है...'}</strong></p>
-          <p style="color: var(--text-muted); margin-top: 0.5rem;">
-            ${currentLang === 'en' ? 'Our AI is analyzing your crop conditions...' : 'हमारा एआई आपकी फसल की स्थिति का विश्लेषण कर रहा है...'}
-          </p>
-        </div>
-      `;
-      resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const rs = document.getElementById('resultsSection');
+      rs.classList.remove('hidden');
+      rs.innerHTML = `<div class="loading"><div class="spinner"></div><p><strong>${currentLang==='en'?'Analyzing with AI...':'एआई से विश्लेषण हो रहा है...'}</strong></p><p style="color:var(--text-muted);margin-top:0.5rem;">${currentLang==='en'?'Identifying possible diseases based on your symptoms...':'आपके लक्षणों के आधार पर संभावित रोगों की पहचान हो रही है...'}</p></div>`;
+      rs.scrollIntoView({behavior:'smooth',block:'start'});
 
-      try {
-        const prompt = currentLang === 'en' ? 
-          `You are an expert agricultural AI advisor specializing in Indian crop diseases. Analyze the following information and provide detailed disease diagnosis with specific medicine recommendations.
+      const isHindi = currentLang === 'hi';
+
+      const prompt = isHindi ?
+        `आप एक विशेषज्ञ भारतीय कृषि रोग विशेषज्ञ हैं। नीचे दी गई फसल की जानकारी और लक्षणों के आधार पर MINIMUM 3 अलग-अलग संभावित रोगों का विश्लेषण करें।
+
+फसल: ${crop}
+किस्म: ${variety}
+मिट्टी: ${soil}
+लक्षण: ${symptoms}
+
+महत्वपूर्ण: प्रत्येक रोग के लिए अलग-अलग और UNIQUE दवाएं, खुराक, और उपचार बताएं। एक ही दवा दो अलग रोगों में न दें।
+
+केवल JSON दें, कोई अतिरिक्त text नहीं:
+{
+  "diseases": [
+    {
+      "name": "रोग का नाम (Disease Name in English)",
+      "confidence": 88,
+      "causedBy": "रोगकारक (Fungus/Bacteria/Virus/Insect)",
+      "affectedParts": ["पत्तियां", "तना"],
+      "symptoms": ["इस रोग का विशेष लक्षण 1", "इस रोग का विशेष लक्षण 2", "इस रोग का विशेष लक्षण 3"],
+      "prevention": ["इस रोग की विशेष रोकथाम 1", "इस रोग की विशेष रोकथाम 2"],
+      "medicines": {
+        "organic": [
+          {"name": "इस रोग के लिए जैविक दवा", "dosage": "मात्रा", "application": "उपयोग विधि", "frequency": "कितनी बार"}
+        ],
+        "chemical": [
+          {"name": "इस रोग के लिए रासायनिक दवा (Brand Name)", "dosage": "मात्रा", "application": "उपयोग विधि", "frequency": "कितनी बार"},
+          {"name": "दूसरी रासायनिक दवा (Brand Name)", "dosage": "मात्रा", "application": "उपयोग विधि", "frequency": "कितनी बार"}
+        ]
+      },
+      "recoveryTime": "समय",
+      "severity": "high/moderate/low",
+      "spreadRisk": "इस रोग के फैलने का तरीका",
+      "bestTimeToTreat": "उपचार का सही समय"
+    }
+  ],
+  "generalAdvice": "समग्र सलाह"
+}` :
+        `You are an expert Indian crop disease specialist. Based on the information below, analyze MINIMUM 3 different possible diseases. Each disease MUST have COMPLETELY DIFFERENT and UNIQUE medicines, dosages and treatment plans.
 
 Crop: ${crop}
 Variety: ${variety}
-Soil Type: ${soil}
-Observed Symptoms: ${symptoms}
+Soil: ${soil}
+Symptoms: ${symptoms}
 
-IMPORTANT INSTRUCTIONS:
-1. Provide SPECIFIC medicine names (both organic and chemical) commonly available in India
-2. Include brand names where applicable
-3. Respond ONLY with valid JSON, no markdown formatting, no code blocks, no explanations
-4. Start your response directly with { and end with }
+CRITICAL RULES:
+1. Every disease must have DIFFERENT medicines - no repetition across diseases
+2. Use SPECIFIC Indian brand names (e.g., Dithane M-45, Bavistin, Ridomil Gold, Confidor, Regent, Monocil, etc.)
+3. Organic medicines must be disease-specific
+4. Each disease must have unique symptoms, prevention methods, and recovery time
+5. Respond ONLY with valid JSON starting with { and ending with }
 
-Provide this exact JSON structure:
+JSON structure:
 {
   "diseases": [
     {
       "name": "Disease Name (Hindi Name)",
-      "confidence": 85,
-      "symptoms": ["symptom1", "symptom2", "symptom3"],
-      "prevention": ["prevention measure 1", "prevention measure 2"],
+      "confidence": 88,
+      "causedBy": "Fungus/Bacteria/Virus/Insect/Deficiency",
+      "affectedParts": ["leaves", "stem", "roots"],
+      "symptoms": ["specific symptom 1 for THIS disease", "specific symptom 2", "specific symptom 3"],
+      "prevention": ["specific prevention 1 for THIS disease", "specific prevention 2"],
       "medicines": {
         "organic": [
-          {"name": "Neem Oil", "dosage": "5ml per liter of water", "application": "Spray on leaves every 7 days"}
+          {"name": "specific organic medicine for THIS disease", "dosage": "exact amount", "application": "how to apply", "frequency": "how often"}
         ],
         "chemical": [
-          {"name": "Mancozeb 75% WP", "dosage": "2g per liter", "application": "Foliar spray every 10 days"}
+          {"name": "SPECIFIC brand name chemical medicine 1", "dosage": "exact amount per liter", "application": "foliar/soil/seed treatment", "frequency": "every X days"},
+          {"name": "SPECIFIC brand name chemical medicine 2", "dosage": "exact amount", "application": "method", "frequency": "interval"}
         ]
       },
-      "recoveryTime": "2-3 weeks",
-      "severity": "moderate"
+      "recoveryTime": "X weeks with treatment",
+      "severity": "high/moderate/low",
+      "spreadRisk": "how this disease spreads",
+      "bestTimeToTreat": "best time/stage to treat"
     }
   ],
-  "generalAdvice": "Overall recommendation and care instructions"
-}
+  "generalAdvice": "comprehensive advice for this specific crop and soil combination"
+}`;
 
-Provide at least 2 possible diseases. Respond with ONLY the JSON, nothing else.` :
-          `आप भारतीय फसल रोगों में विशेषज्ञता रखने वाले एक विशेषज्ञ कृषि एआई सलाहकार हैं।
-
-फसल: ${crop}
-किस्म: ${variety}
-मिट्टी का प्रकार: ${soil}
-देखे गए लक्षण: ${symptoms}
-
-महत्वपूर्ण निर्देश:
-1. भारत में आमतौर पर उपलब्ध विशिष्ट दवा के नाम प्रदान करें
-2. जहां लागू हो ब्रांड नाम शामिल करें
-3. केवल मान्य JSON के साथ उत्तर दें, कोई मार्कडाउन फ़ॉर्मेटिंग नहीं
-4. अपना उत्तर सीधे { से शुरू करें और } से समाप्त करें
-
-इस JSON संरचना का उपयोग करें:
-{
-  "diseases": [
-    {
-      "name": "रोग का नाम (Disease Name)",
-      "confidence": 85,
-      "symptoms": ["लक्षण 1", "लक्षण 2"],
-      "prevention": ["रोकथाम उपाय 1", "रोकथाम उपाय 2"],
-      "medicines": {
-        "organic": [
-          {"name": "नीम का तेल", "dosage": "5 मिली प्रति लीटर पानी", "application": "हर 7 दिन में पत्तियों पर स्प्रे करें"}
-        ],
-        "chemical": [
-          {"name": "Mancozeb 75% WP", "dosage": "2 ग्राम प्रति लीटर", "application": "हर 10 दिन में पर्णीय स्प्रे"}
-        ]
-      },
-      "recoveryTime": "2-3 सप्ताह",
-      "severity": "मध्यम"
-    }
-  ],
-  "generalAdvice": "समग्र सिफारिश और देखभाल निर्देश"
-}
-
-कम से कम 2 संभावित रोग प्रदान करें। केवल JSON के साथ उत्तर दें।`;
-
+      try {
         const response = await fetch("https://api.anthropic.com/v1/messages", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: {"Content-Type": "application/json"},
           body: JSON.stringify({
             model: "claude-sonnet-4-20250514",
-            max_tokens: 4000,
-            messages: [
-              { role: "user", content: prompt }
-            ],
+            max_tokens: 5000,
+            messages: [{role:"user", content: prompt}]
           })
         });
 
-        if (!response.ok) {
-          throw new Error(`API Error: ${response.status}`);
-        }
-
+        if(!response.ok) throw new Error(`API Error: ${response.status}`);
         const data = await response.json();
-        console.log("API Response:", data); // Debug log
-        
-        // Extract text from response
-        let aiResponse = "";
-        if (data.content && Array.isArray(data.content)) {
-          const textContent = data.content.find(item => item.type === "text");
-          if (textContent && textContent.text) {
-            aiResponse = textContent.text;
-          }
+
+        let aiText = "";
+        if(data.content && Array.isArray(data.content)) {
+          const t = data.content.find(i=>i.type==="text");
+          if(t) aiText = t.text;
         }
 
-        console.log("AI Response Text:", aiResponse); // Debug log
+        if(!aiText) throw new Error("No response");
 
-        if (!aiResponse) {
-          throw new Error("No response from AI");
-        }
-
-        // Parse JSON with multiple fallback methods
         let analysisData;
         try {
-          // Method 1: Try direct JSON parse
-          analysisData = JSON.parse(aiResponse);
-        } catch (e1) {
-          console.log("Direct parse failed, trying extraction methods...");
+          analysisData = JSON.parse(aiText);
+        } catch(e1) {
           try {
-            // Method 2: Extract JSON from markdown code blocks
-            const jsonMatch = aiResponse.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
-            if (jsonMatch) {
-              analysisData = JSON.parse(jsonMatch[1]);
-            } else {
-              // Method 3: Find JSON object in text
-              const jsonObjectMatch = aiResponse.match(/\{[\s\S]*\}/);
-              if (jsonObjectMatch) {
-                analysisData = JSON.parse(jsonObjectMatch[0]);
-              } else {
-                throw new Error("Could not extract JSON from response");
-              }
+            const m1 = aiText.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+            if(m1) { analysisData = JSON.parse(m1[1]); }
+            else {
+              const m2 = aiText.match(/\{[\s\S]*\}/);
+              if(m2) { analysisData = JSON.parse(m2[0]); }
+              else { analysisData = createFallbackData(crop, symptoms); }
             }
-          } catch (e2) {
-            console.error("All parsing methods failed:", e2);
-            console.log("Using fallback data");
+          } catch(e2) {
             analysisData = createFallbackData(crop, symptoms);
           }
         }
 
-        console.log("Parsed Analysis Data:", analysisData); // Debug log
-        displayResults(analysisData);
+        displayResults(analysisData, crop, variety, soil);
 
-      } catch (error) {
-        console.error('Analysis error:', error);
-        resultsSection.innerHTML = `
-          <div class="loading">
-            <p style="color: var(--error);">
-              ${currentLang === 'en' ? '⚠️ Error analyzing crop. Using sample data for demonstration.' : '⚠️ फसल का विश्लेषण करने में त्रुटि। प्रदर्शन के लिए नमूना डेटा का उपयोग।'}
-            </p>
-          </div>
-        `;
-        // Show fallback data after 1 second
-        setTimeout(() => {
-          displayResults(createFallbackData(crop, symptoms));
-        }, 1000);
+      } catch(error) {
+        console.error(error);
+        setTimeout(() => displayResults(createFallbackData(crop, symptoms), crop, variety, soil), 1000);
       }
     }
 
-    // Enhanced fallback data with realistic disease information
+    // --- COMPREHENSIVE FALLBACK with unique data per disease ---
     function createFallbackData(crop, symptoms) {
-      const diseases = {
-        wheat: [{
-          name: currentLang === 'en' ? "Leaf Rust (पत्ती का रतुआ)" : "पत्ती का रतुआ (Leaf Rust)",
-          confidence: 82,
-          symptoms: [
-            currentLang === 'en' ? "Orange-brown pustules on leaves" : "पत्तियों पर नारंगी-भूरे रंग के धब्बे",
-            currentLang === 'en' ? "Reduced grain quality" : "अनाज की गुणवत्ता में कमी",
-            currentLang === 'en' ? "Premature leaf drying" : "पत्तियों का समय से पहले सूखना"
-          ],
-          prevention: [
-            currentLang === 'en' ? "Use resistant varieties like HD-2967" : "HD-2967 जैसी प्रतिरोधी किस्में उगाएं",
-            currentLang === 'en' ? "Maintain proper spacing for air circulation" : "हवा के संचार के लिए उचित दूरी बनाए रखें",
-            currentLang === 'en' ? "Remove infected crop residue" : "संक्रमित फसल अवशेष हटाएं"
-          ],
-          medicines: {
-            organic: [
-              { name: currentLang === 'en' ? "Neem Oil" : "नीम का तेल", dosage: "5ml/L", application: currentLang === 'en' ? "Spray every 7-10 days" : "हर 7-10 दिन में स्प्रे करें" },
-              { name: currentLang === 'en' ? "Garlic Extract" : "लहसुन का अर्क", dosage: "10ml/L", application: currentLang === 'en' ? "Foliar spray twice weekly" : "सप्ताह में दो बार पर्णीय स्प्रे" }
-            ],
-            chemical: [
-              { name: "Propiconazole 25% EC (Tilt)", dosage: "1ml/L", application: currentLang === 'en' ? "Spray at disease appearance" : "रोग दिखाई देने पर स्प्रे करें" },
-              { name: "Mancozeb 75% WP", dosage: "2g/L", application: currentLang === 'en' ? "Preventive spray every 15 days" : "हर 15 दिन में निवारक स्प्रे" }
-            ]
+      const L = currentLang;
+      const en = L === 'en';
+
+      const diseaseLibrary = {
+        wheat: [
+          {
+            name: en?"Leaf Rust (पत्ती का रतुआ)":"पत्ती का रतुआ (Leaf Rust)",
+            confidence: 84, causedBy: en?"Puccinia triticina fungus":"पक्सीनिया ट्रिटिसिना फफूंद",
+            affectedParts: en?["Leaves","Stem"]:[" पत्तियां","तना"],
+            symptoms:[en?"Orange-brown circular pustules on leaf surface":"पत्ती की सतह पर नारंगी-भूरे गोल धब्बे",en?"Pustules turn black in later stages":"बाद में धब्बे काले हो जाते हैं",en?"Leaves dry up prematurely":"पत्तियां समय से पहले सूख जाती हैं"],
+            prevention:[en?"Use rust-resistant varieties like HD-2967":"HD-2967 जैसी प्रतिरोधी किस्में बोएं",en?"Avoid late sowing":"देर से बुवाई न करें"],
+            medicines:{
+              organic:[{name:en?"Neem Oil 0.03% (Econeem Plus)":"नीम तेल 0.03% (इकोनीम प्लस)",dosage:"5ml/L",application:en?"Foliar spray":"पत्तियों पर स्प्रे",frequency:en?"Every 7 days":"हर 7 दिन"}],
+              chemical:[
+                {name:"Propiconazole 25% EC (Tilt/Bumper)",dosage:"1ml/L",application:en?"Foliar spray":"पर्णीय स्प्रे",frequency:en?"At first sign, repeat in 15 days":"पहले लक्षण पर, 15 दिन बाद दोहराएं"},
+                {name:"Tebuconazole 25.9% EC (Folicur)",dosage:"0.75ml/L",application:en?"Foliar spray":"पर्णीय स्प्रे",frequency:en?"Every 14 days":"हर 14 दिन"}
+              ]
+            },
+            recoveryTime:en?"2-3 weeks":"2-3 सप्ताह",severity:"moderate",
+            spreadRisk:en?"Wind-borne spores, spreads rapidly in cool humid weather":"हवा से फैलता है, ठंडे नम मौसम में तेज़ी से",
+            bestTimeToTreat:en?"Tillering to boot stage":"कल्ले निकलने से बाली बनने तक"
           },
-          recoveryTime: currentLang === 'en' ? "2-3 weeks with treatment" : "उपचार के साथ 2-3 सप्ताह",
-          severity: "moderate"
-        }],
-        rice: [{
-          name: currentLang === 'en' ? "Bacterial Leaf Blight (जीवाणु पत्ती झुलसा)" : "जीवाणु पत्ती झुलसा (Bacterial Leaf Blight)",
-          confidence: 78,
-          symptoms: [
-            currentLang === 'en' ? "Water-soaked lesions on leaf tips" : "पत्ती के सिरों पर पानी जैसे धब्बे",
-            currentLang === 'en' ? "Yellow to white lesions" : "पीले से सफेद धब्बे",
-            currentLang === 'en' ? "Leaves turn grayish white" : "पत्तियां भूरे-सफेद हो जाती हैं"
-          ],
-          prevention: [
-            currentLang === 'en' ? "Use resistant varieties like Swarna" : "स्वर्णा जैसी प्रतिरोधी किस्में उगाएं",
-            currentLang === 'en' ? "Avoid excess nitrogen fertilizer" : "अधिक नाइट्रोजन उर्वरक से बचें",
-            currentLang === 'en' ? "Maintain proper water management" : "उचित जल प्रबंधन करें"
-          ],
-          medicines: {
-            organic: [
-              { name: currentLang === 'en' ? "Copper Hydroxide" : "कॉपर हाइड्रॉक्साइड", dosage: "3g/L", application: currentLang === 'en' ? "Spray at tillering stage" : "कल्ले फूटने के समय स्प्रे करें" }
-            ],
-            chemical: [
-              { name: "Streptocycline 15% + Copper Oxychloride 50%", dosage: "2g/L", application: currentLang === 'en' ? "Spray every 10 days" : "हर 10 दिन में स्प्रे करें" },
-              { name: "Plantomycin (Streptocycline)", dosage: "200ppm", application: currentLang === 'en' ? "Apply during active infection" : "सक्रिय संक्रमण के दौरान लगाएं" }
-            ]
+          {
+            name:en?"Loose Smut (अनावृत्त कंड)":"अनावृत्त कंड (Loose Smut)",
+            confidence:72, causedBy:en?"Ustilago tritici fungus":"उस्टीलागो ट्रिटिसि फफूंद",
+            affectedParts:en?["Ear/Spike","Seeds"]:[" बाली","बीज"],
+            symptoms:[en?"Entire ear replaced by black powder (spores)":"पूरी बाली काले चूर्ण (बीजाणु) में बदल जाती है",en?"Black mass scattered by wind leaving bare rachis":"काला द्रव्य हवा में बिखर जाता है",en?"Affected plants slightly taller than healthy ones":"प्रभावित पौधे स्वस्थ पौधों से थोड़े ऊंचे होते हैं"],
+            prevention:[en?"Use certified disease-free seed":"प्रमाणित रोगमुक्त बीज का उपयोग करें",en?"Hot water seed treatment at 52°C for 10 mins":"बीज को 52°C पानी में 10 मिनट उपचारित करें"],
+            medicines:{
+              organic:[{name:en?"Hot water + Garlic extract treatment":"गर्म पानी + लहसुन अर्क बीज उपचार",dosage:"10g garlic/L at 48°C",application:en?"Seed soaking before sowing":"बुवाई से पहले बीज भिगोएं",frequency:en?"Once before sowing":"बुवाई से एक बार पहले"}],
+              chemical:[
+                {name:"Carboxin 37.5% + Thiram 37.5% WS (Vitavax Power)",dosage:"2.5g/kg seed",application:en?"Seed treatment":"बीज उपचार",frequency:en?"Once before sowing":"एक बार बुवाई से पहले"},
+                {name:"Tebuconazole 2% DS (Raxil)",dosage:"1.5g/kg seed",application:en?"Seed dressing":"बीज ड्रेसिंग",frequency:en?"Single seed treatment":"एकल बीज उपचार"}
+              ]
+            },
+            recoveryTime:en?"Prevention only - treat next crop":"रोकथाम ही उपाय - अगली फसल में उपचार करें",severity:"high",
+            spreadRisk:en?"Spreads through infected seeds and wind during flowering":"फूल आने के समय हवा और संक्रमित बीज से",
+            bestTimeToTreat:en?"Seed treatment before sowing":"बुवाई से पहले बीज उपचार"
           },
-          recoveryTime: currentLang === 'en' ? "3-4 weeks" : "3-4 सप्ताह",
-          severity: "high"
-        }],
-        tomato: [{
-          name: currentLang === 'en' ? "Early Blight (अगेती झुलसा)" : "अगेती झुलसा (Early Blight)",
-          confidence: 85,
-          symptoms: [
-            currentLang === 'en' ? "Dark brown spots with concentric rings" : "गाढ़े भूरे धब्बे गोलाकार रिंग के साथ",
-            currentLang === 'en' ? "Yellow halo around spots" : "धब्बों के चारों ओर पीला हाला",
-            currentLang === 'en' ? "Lower leaves affected first" : "निचली पत्तियां पहले प्रभावित होती हैं"
-          ],
-          prevention: [
-            currentLang === 'en' ? "Rotate crops every season" : "हर सीजन फसल चक्र अपनाएं",
-            currentLang === 'en' ? "Remove infected plant debris" : "संक्रमित पौधे के अवशेष हटाएं",
-            currentLang === 'en' ? "Ensure proper drainage" : "उचित जल निकासी सुनिश्चित करें"
-          ],
-          medicines: {
-            organic: [
-              { name: currentLang === 'en' ? "Neem Oil" : "नीम का तेल", dosage: "5ml/L", application: currentLang === 'en' ? "Weekly spray" : "साप्ताहिक स्प्रे" },
-              { name: currentLang === 'en' ? "Baking Soda Solution" : "बेकिंग सोडा घोल", dosage: "5g/L", application: currentLang === 'en' ? "Bi-weekly application" : "पाक्षिक उपयोग" }
-            ],
-            chemical: [
-              { name: "Mancozeb 75% WP (Dithane M-45)", dosage: "2.5g/L", application: currentLang === 'en' ? "Start at first sign" : "पहले लक्षण पर शुरू करें" },
-              { name: "Chlorothalonil 75% WP", dosage: "2g/L", application: currentLang === 'en' ? "Every 7-10 days" : "हर 7-10 दिन में" }
-            ]
+          {
+            name:en?"Powdery Mildew (चूर्णिल आसिता)":"चूर्णिल आसिता (Powdery Mildew)",
+            confidence:67, causedBy:en?"Erysiphe graminis fungus":"एरिसिफी ग्रामिनिस फफूंद",
+            affectedParts:en?["Leaves","Sheath","Stem"]:[" पत्तियां","पत्र आवरण","तना"],
+            symptoms:[en?"White powdery patches on upper leaf surface":"पत्ती की ऊपरी सतह पर सफेद चूर्ण जैसे धब्बे",en?"Patches turn brown/gray with age":"धब्बे उम्र के साथ भूरे/स्लेटी हो जाते हैं",en?"Severe infection causes yellowing and death of leaves":"गंभीर संक्रमण से पत्तियां पीली होकर मर जाती हैं"],
+            prevention:[en?"Avoid dense planting":"घनी बुवाई से बचें",en?"Reduce nitrogen dose if disease appears":"रोग दिखने पर नाइट्रोजन की मात्रा कम करें"],
+            medicines:{
+              organic:[{name:en?"Sulfur 80% WG (Kumulus DF)":"सल्फर 80% WG (कुमुलस DF)",dosage:"2.5g/L",application:en?"Foliar dusting/spray":"पत्तियों पर छिड़काव",frequency:en?"Every 10 days":"हर 10 दिन"}],
+              chemical:[
+                {name:"Hexaconazole 5% SC (Contaf Plus)",dosage:"2ml/L",application:en?"Foliar spray":"पर्णीय स्प्रे",frequency:en?"At disease onset, twice at 10-day interval":"रोग शुरू होने पर, 10 दिन के अंतर पर दो बार"},
+                {name:"Difenoconazole 25% EC (Score)",dosage:"0.5ml/L",application:en?"Foliar spray":"पर्णीय स्प्रे",frequency:en?"Preventive spray every 14 days":"हर 14 दिन में निवारक स्प्रे"}
+              ]
+            },
+            recoveryTime:en?"1-2 weeks with treatment":"1-2 सप्ताह उपचार के साथ",severity:"low",
+            spreadRisk:en?"Wind dispersal of conidia, favored by cool dry conditions":"हवा से फैलता है, ठंडे शुष्क मौसम में अनुकूल",
+            bestTimeToTreat:en?"Early vegetative stage":"प्रारंभिक वानस्पतिक अवस्था"
+          }
+        ],
+        rice: [
+          {
+            name:en?"Blast Disease (धान का झोंका रोग)":"धान का झोंका रोग (Rice Blast)",
+            confidence:88, causedBy:en?"Magnaporthe oryzae fungus":"मैग्नापोर्थे ओराइजे फफूंद",
+            affectedParts:en?["Leaves","Neck","Panicle"]:[" पत्तियां","गर्दन","बाली"],
+            symptoms:[en?"Diamond-shaped gray lesions with brown borders on leaves":"पत्तियों पर भूरी किनारी के साथ हीरे के आकार के धूसर धब्बे",en?"Neck rot causing white/empty panicles (neck blast)":"गर्दन सड़न से बालियां सफेद/खाली हो जाती हैं",en?"Gray powdery growth on lesions in humid conditions":"नम स्थितियों में धब्बों पर राख जैसी वृद्धि"],
+            prevention:[en?"Use blast-resistant varieties":"झोंका प्रतिरोधी किस्में उगाएं",en?"Avoid excess nitrogen fertilizer":"अधिक नाइट्रोजन उर्वरक से बचें"],
+            medicines:{
+              organic:[{name:en?"Trichoderma viride (Bio-agent)":"ट्राइकोडर्मा विरिडी (जैव-कारक)",dosage:"5g/L",application:en?"Seed treatment + soil application":"बीज उपचार + मिट्टी में मिलाएं",frequency:en?"Soil: before transplanting, spray: every 15 days":"मिट्टी: रोपाई से पहले, स्प्रे: हर 15 दिन"}],
+              chemical:[
+                {name:"Tricyclazole 75% WP (Beam/Blitox)",dosage:"0.6g/L",application:en?"Foliar spray starting at tillering":"कल्ले निकलते समय से पर्णीय स्प्रे",frequency:en?"Every 10-14 days during risk period":"जोखिम काल में हर 10-14 दिन"},
+                {name:"Isoprothiolane 40% EC (Fuji One)",dosage:"1.5ml/L",application:en?"Foliar spray":"पर्णीय स्प्रे",frequency:en?"2 applications at 10-day interval":"10 दिन के अंतर पर 2 बार"}
+              ]
+            },
+            recoveryTime:en?"3-4 weeks (leaf blast) | Neck blast - yield loss permanent":"3-4 सप्ताह (पत्ती झोंका) | गर्दन झोंका - उपज हानि स्थायी",severity:"high",
+            spreadRisk:en?"Wind and rain-splash, spores released at night":"हवा और बारिश की छींट से, रात में बीजाणु निकलते हैं",
+            bestTimeToTreat:en?"Immediately at first lesion appearance":"पहला धब्बा दिखते ही तुरंत"
           },
-          recoveryTime: currentLang === 'en' ? "2-3 weeks" : "2-3 सप्ताह",
-          severity: "moderate"
-        }]
+          {
+            name:en?"Brown Plant Hopper (भूरा माहू)":"भूरा माहू (Brown Plant Hopper)",
+            confidence:76, causedBy:en?"Nilaparvata lugens insect":"नीलापार्वता लुगेन्स कीट",
+            affectedParts:en?["Base of stem","Roots"]:[" तने का आधार","जड़ें"],
+            symptoms:[en?"Circular patches of dead plants (hopper burn)":"मरे हुए पौधों के गोल पैच (हॉपर बर्न)",en?"Yellowing and drying from base upwards":"नीचे से ऊपर की ओर पीलापन और सूखना",en?"Sticky honeydew and black sooty mold on stems":"तनों पर चिपचिपा मधुरस और काली फंफूंद"],
+            prevention:[en?"Maintain 2-3 cm water depth in field":"खेत में 2-3 सेमी पानी की गहराई बनाए रखें",en?"Avoid excessive use of nitrogen":"नाइट्रोजन के अत्यधिक उपयोग से बचें"],
+            medicines:{
+              organic:[{name:en?"Neem Seed Kernel Extract (NSKE) 5%":"नीम बीज गिरी अर्क (NSKE) 5%",dosage:"50g/L",application:en?"Foliar spray focusing on base of plant":"पौधे के आधार पर ध्यान केंद्रित करते हुए पर्णीय स्प्रे",frequency:en?"Every 7 days":"हर 7 दिन"}],
+              chemical:[
+                {name:"Buprofezin 25% SC (Applaud)",dosage:"1.5ml/L",application:en?"Spray at base of stems":"तनों के आधार पर स्प्रे करें",frequency:en?"At hopper count >5/hill, repeat in 15 days":"5 प्रति पौधा से अधिक होने पर, 15 दिन बाद दोहराएं"},
+                {name:"Thiamethoxam 25% WG (Actara/Cruiser)",dosage:"0.2g/L",application:en?"Foliar + soil drench":"पर्णीय + मिट्टी में डालें",frequency:en?"Single application, very effective":"एक बार, बहुत प्रभावी"}
+              ]
+            },
+            recoveryTime:en?"1-2 weeks if caught early":"1-2 सप्ताह यदि जल्दी पकड़ा गया",severity:"high",
+            spreadRisk:en?"Migrates from neighboring fields, favored by dense planting":"पड़ोसी खेतों से प्रवेश, घनी बुवाई में अनुकूल",
+            bestTimeToTreat:en?"When 5+ hoppers per hill observed":"जब 5+ माहू प्रति पौधा दिखें"
+          },
+          {
+            name:en?"Sheath Blight (पर्णच्छद अंगमारी)":"पर्णच्छद अंगमारी (Sheath Blight)",
+            confidence:70, causedBy:en?"Rhizoctonia solani fungus":"राइज़ोक्टोनिया सोलानी फफूंद",
+            affectedParts:en?["Leaf sheath","Leaves"]:[" पत्र आवरण","पत्तियां"],
+            symptoms:[en?"Oval/irregular greenish-gray lesions on leaf sheath":"पत्र आवरण पर अंडाकार/अनियमित हरे-भूरे धब्बे",en?"Lesions have brown borders with gray centers":"धब्बों में भूरी किनारी और भूसे रंग का केंद्र",en?"Sclerotia (small brown bodies) on infected tissue":"संक्रमित ऊतक पर छोटे भूरे कणिकाएं (स्क्लेरोशिया)"],
+            prevention:[en?"Reduce plant density":"पौध घनत्व कम करें",en?"Drain field periodically":"समय-समय पर खेत का पानी निकालें"],
+            medicines:{
+              organic:[{name:en?"Pseudomonas fluorescens bio-agent":"स्यूडोमोनास फ्लोरेसेंस जैव कारक",dosage:"5g/L",application:en?"Root dip + foliar spray":"जड़ डुबोना + पर्णीय स्प्रे",frequency:en?"Root dip at transplanting, spray every 15 days":"रोपाई पर जड़ डुबोएं, हर 15 दिन स्प्रे"}],
+              chemical:[
+                {name:"Validamycin 3% SL (Sheathmar/Validacin)",dosage:"2.5ml/L",application:en?"Foliar spray at tillering":"कल्ले निकलते समय पर्णीय स्प्रे",frequency:en?"2-3 sprays at 10-15 day interval":"10-15 दिन के अंतर पर 2-3 स्प्रे"},
+                {name:"Hexaconazole 5% EC (Contaf)",dosage:"2ml/L",application:en?"Foliar spray at disease onset":"रोग शुरू होने पर पर्णीय स्प्रे",frequency:en?"Every 10 days, max 3 applications":"हर 10 दिन, अधिकतम 3 बार"}
+              ]
+            },
+            recoveryTime:en?"2-3 weeks with proper treatment":"2-3 सप्ताह उचित उपचार के साथ",severity:"moderate",
+            spreadRisk:en?"Sclerotia float in water, infected soil":"स्क्लेरोशिया पानी में तैरते हैं, संक्रमित मिट्टी",
+            bestTimeToTreat:en?"Maximum tillering stage":"अधिकतम कल्ले निकलने की अवस्था"
+          }
+        ],
+        tomato: [
+          {
+            name:en?"Early Blight (अगेती झुलसा)":"अगेती झुलसा (Early Blight)",
+            confidence:87, causedBy:en?"Alternaria solani fungus":"अल्टरनेरिया सोलानी फफूंद",
+            affectedParts:en?["Lower leaves","Stem","Fruit"]:[" निचली पत्तियां","तना","फल"],
+            symptoms:[en?"Concentric ring spots like a target board":"लक्ष्य पट्टी जैसे गोलाकार रिंग धब्बे",en?"Yellow halo surrounds the brown lesions":"भूरे धब्बों के चारों ओर पीला घेरा",en?"Lower/older leaves affected first, moves upward":"पहले निचली पत्तियां, फिर ऊपर बढ़ता है"],
+            prevention:[en?"Crop rotation - avoid planting tomato after tomato":"फसल चक्र - टमाटर के बाद टमाटर न लगाएं",en?"Remove infected plant debris after harvest":"कटाई के बाद संक्रमित पौधे अवशेष हटाएं"],
+            medicines:{
+              organic:[{name:en?"Bordeaux Mixture 1%":"बोर्डो मिश्रण 1%",dosage:"10g each CuSO4+lime/L",application:en?"Foliar spray":"पर्णीय स्प्रे",frequency:en?"Every 10 days as preventive":"हर 10 दिन निवारक रूप से"}],
+              chemical:[
+                {name:"Mancozeb 75% WP (Dithane M-45/Indofil M-45)",dosage:"2.5g/L",application:en?"Foliar spray covering undersides of leaves":"पत्तियों की निचली सतह को ढकते हुए पर्णीय स्प्रे",frequency:en?"Every 7-10 days starting at first symptom":"पहले लक्षण से हर 7-10 दिन"},
+                {name:"Azoxystrobin 23% SC (Amistar)",dosage:"1ml/L",application:en?"Foliar spray":"पर्णीय स्प्रे",frequency:en?"Every 14 days, max 3 applications":"हर 14 दिन, अधिकतम 3 बार"}
+              ]
+            },
+            recoveryTime:en?"2-3 weeks":"2-3 सप्ताह",severity:"moderate",
+            spreadRisk:en?"Wind, water splash, infected tools":"हवा, पानी की छींट, संक्रमित उपकरण",
+            bestTimeToTreat:en?"Seedling stage onwards":"पौध अवस्था से आगे"
+          },
+          {
+            name:en?"Fusarium Wilt (म्लानि रोग)":"म्लानि रोग (Fusarium Wilt)",
+            confidence:74, causedBy:en?"Fusarium oxysporum f.sp. lycopersici":"फ्यूज़ेरियम ऑक्सीस्पोरम फफूंद",
+            affectedParts:en?["Vascular system","Roots","Stem"]:[" संवहन तंत्र","जड़ें","तना"],
+            symptoms:[en?"One-sided wilting of plant during hot daytime":"दिन की गर्मी में पौधे का एकतरफा मुरझाना",en?"Yellow streaks in vascular tissue when stem is cut":"तना काटने पर संवहन ऊतक में पीली धारियां",en?"Plant recovers at night but eventually dies":"पौधा रात में ठीक लगता है लेकिन अंततः मर जाता है"],
+            prevention:[en?"Use grafted tomato seedlings on resistant rootstock":"प्रतिरोधी मूलवृंत पर ग्राफ्टेड पौध का उपयोग",en?"Soil solarization before planting":"रोपाई से पहले मिट्टी सौरीकरण"],
+            medicines:{
+              organic:[{name:en?"Trichoderma harzianum (Bio-Fungicide)":"ट्राइकोडर्मा हार्ज़ियानम",dosage:"5-10g/L",application:en?"Soil drench at planting":"रोपाई के समय मिट्टी में डालें",frequency:en?"At planting + repeat after 30 days":"रोपाई पर + 30 दिन बाद दोहराएं"}],
+              chemical:[
+                {name:"Carbendazim 50% WP (Bavistin/Derosal)",dosage:"1g/L",application:en?"Soil drench at root zone":"जड़ क्षेत्र में मिट्टी घोल",frequency:en?"At transplanting and 30 days later":"रोपाई पर और 30 दिन बाद"},
+                {name:"Metalaxyl 35% WS (Apron/Ridomil Gold)",dosage:"2g/kg soil",application:en?"Mix in planting pit":"रोपाई के गड्ढे में मिलाएं",frequency:en?"Once at planting":"रोपाई पर एक बार"}
+              ]
+            },
+            recoveryTime:en?"Infected plants cannot recover - remove and prevent spread":"संक्रमित पौधे ठीक नहीं होते - हटाएं और फैलाव रोकें",severity:"high",
+            spreadRisk:en?"Soil-borne, spreads via irrigation water and tools":"मिट्टी जनित, सिंचाई पानी और उपकरणों से फैलता है",
+            bestTimeToTreat:en?"Preventive treatment before/at transplanting":"रोपाई से पहले/समय निवारक उपचार"
+          },
+          {
+            name:en?"Tobacco Mosaic Virus - ToMV (तंबाकू मोज़ेक वायरस)":"तंबाकू मोज़ेक वायरस - ToMV",
+            confidence:65, causedBy:en?"Tobamovirus (Virus)":"टोबामोवायरस (विषाणु)",
+            affectedParts:en?["Leaves","Fruit","Growing tips"]:[" पत्तियां","फल","बढ़ते सिरे"],
+            symptoms:[en?"Mosaic pattern - irregular light/dark green patches on leaves":"पत्तियों पर हल्के/गहरे हरे के अनियमित धब्बे (मोज़ेक)",en?"Leaf distortion, puckering and curling":"पत्तियों का मुड़ना, सिकुड़ना और घुमाव",en?"Fruits show uneven ripening with yellow blotches":"फलों पर पीले धब्बों के साथ असमान पकाव"],
+            prevention:[en?"Use ToMV-resistant certified seeds only":"केवल ToMV-प्रतिरोधी प्रमाणित बीज उपयोग करें",en?"Control aphid vectors with insecticides":"कीटनाशकों से एफिड वेक्टर को नियंत्रित करें"],
+            medicines:{
+              organic:[{name:en?"Milk spray (10% solution) - inactivates virus":"दूध स्प्रे (10% घोल) - वायरस को निष्क्रिय करता है",dosage:"100ml/L water",application:en?"Foliar spray on young plants":"छोटे पौधों पर पर्णीय स्प्रे",frequency:en?"Every 5-7 days preventively":"हर 5-7 दिन निवारक रूप से"}],
+              chemical:[
+                {name:"Imidacloprid 17.8% SL (Confidor/Gaucho)",dosage:"0.5ml/L",application:en?"Foliar spray to kill aphid vectors":"एफिड वेक्टर मारने के लिए पर्णीय स्प्रे",frequency:en?"Every 10 days until aphid-free":"एफिड मुक्त होने तक हर 10 दिन"},
+                {name:"Thiamethoxam 25% WG (Actara) - vector control",dosage:"0.3g/L",application:en?"Foliar spray":"पर्णीय स्प्रे",frequency:en?"Alternate with Confidor every 15 days":"कन्फिडोर के साथ बदल-बदलकर हर 15 दिन"}
+              ]
+            },
+            recoveryTime:en?"No cure - manage spread, infected plants must be removed":"कोई इलाज नहीं - फैलाव प्रबंधित करें, संक्रमित पौधे हटाएं",severity:"high",
+            spreadRisk:en?"Spreads by contact, tools, aphids. Highly contagious":"संपर्क, उपकरण, एफिड से। अत्यधिक संक्रामक",
+            bestTimeToTreat:en?"Prevention only - isolate infected plants immediately":"केवल रोकथाम - संक्रमित पौधे तुरंत अलग करें"
+          }
+        ]
       };
 
-      // Default disease if crop not in database
-      const defaultDisease = [{
-        name: currentLang === 'en' ? "Fungal Disease (कवक रोग)" : "कवक रोग (Fungal Disease)",
-        confidence: 75,
-        symptoms: [symptoms],
-        prevention: [
-          currentLang === 'en' ? "Regular monitoring and early detection" : "नियमित निगरानी और शीघ्र पता लगाना",
-          currentLang === 'en' ? "Maintain proper field drainage" : "उचित खेत जल निकासी बनाए रखें",
-          currentLang === 'en' ? "Use disease-resistant varieties" : "रोग प्रतिरोधी किस्में उगाएं"
-        ],
-        medicines: {
-          organic: [
-            { name: currentLang === 'en' ? "Neem Oil" : "नीम का तेल", dosage: "5ml/L", application: currentLang === 'en' ? "Spray on leaves" : "पत्तियों पर स्प्रे करें" },
-            { name: currentLang === 'en' ? "Trichoderma" : "ट्राइकोडर्मा", dosage: "5g/L", application: currentLang === 'en' ? "Soil application" : "मिट्टी में डालें" }
-          ],
-          chemical: [
-            { name: "Mancozeb 75% WP", dosage: "2g/L", application: currentLang === 'en' ? "Foliar spray every 10 days" : "हर 10 दिन में पर्णीय स्प्रे" },
-            { name: "Copper Oxychloride 50% WP", dosage: "3g/L", application: currentLang === 'en' ? "Preventive spray" : "निवारक स्प्रे" }
-          ]
+      // Generic diseases for any crop not in library
+      const genericDiseases = [
+        {
+          name:en?"Alternaria Leaf Spot (अल्टरनेरिया पर्ण धब्बा)":"अल्टरनेरिया पर्ण धब्बा",
+          confidence:79, causedBy:en?"Alternaria alternata fungus":"अल्टरनेरिया अल्टरनेटा फफूंद",
+          affectedParts:en?["Leaves","Stem"]:[" पत्तियां","तना"],
+          symptoms:[en?"Brown to black circular spots with yellow margin":"भूरे से काले गोल धब्बे पीली किनारी के साथ",en?"Spots enlarge and coalesce under humid conditions":"नम स्थितियों में धब्बे बड़े होकर मिल जाते हैं",symptoms],
+          prevention:[en?"Remove infected leaves and crop residue":"संक्रमित पत्तियां और अवशेष हटाएं",en?"Improve air circulation by proper spacing":"उचित दूरी से हवा का संचार बेहतर करें"],
+          medicines:{
+            organic:[{name:en?"Neem Oil 5% (Econeem Plus)":"नीम तेल 5% (इकोनीम प्लस)",dosage:"5ml/L",application:en?"Foliar spray both leaf surfaces":"दोनों पत्ती सतहों पर पर्णीय स्प्रे",frequency:en?"Every 7 days":"हर 7 दिन"}],
+            chemical:[
+              {name:"Mancozeb 75% WP (Indofil M-45)",dosage:"2.5g/L",application:en?"Foliar spray":"पर्णीय स्प्रे",frequency:en?"Every 10 days":"हर 10 दिन"},
+              {name:"Iprodione 50% WP (Rovral/Rovral Gold)",dosage:"2g/L",application:en?"Foliar spray":"पर्णीय स्प्रे",frequency:en?"Every 14 days, max 3 times":"हर 14 दिन, अधिकतम 3 बार"}
+            ]
+          },
+          recoveryTime:en?"2-3 weeks":"2-3 सप्ताह",severity:"moderate",
+          spreadRisk:en?"Wind and rain, favored by warm humid weather":"हवा और बारिश, गर्म नम मौसम में अनुकूल",
+          bestTimeToTreat:en?"At first sign of symptoms":"लक्षण के पहले संकेत पर"
         },
-        recoveryTime: currentLang === 'en' ? "2-3 weeks" : "2-3 सप्ताह",
-        severity: "moderate"
-      }];
+        {
+          name:en?"Downy Mildew (मृदुरोमिल आसिता)":"मृदुरोमिल आसिता (Downy Mildew)",
+          confidence:71, causedBy:en?"Peronospora species (Oomycete)":"पेरोनोस्पोरा प्रजाति",
+          affectedParts:en?["Upper leaf","Undersides"]:[" पत्ती की ऊपरी सतह","निचली सतह"],
+          symptoms:[en?"Yellow angular patches on upper leaf surface":"पत्ती की ऊपरी सतह पर पीले कोणीय धब्बे",en?"Purple-gray downy growth on leaf undersides":"पत्ती के नीचे बैंगनी-भूरी रोईदार वृद्धि",en?"Affected tissue turns brown and dies":"प्रभावित ऊतक भूरा होकर मर जाता है"],
+          prevention:[en?"Avoid overhead irrigation":"सिर से ऊपर सिंचाई न करें",en?"Plant in well-drained sites with good air flow":"अच्छे वायु प्रवाह वाली अच्छी जल निकासी वाली जगह पर लगाएं"],
+          medicines:{
+            organic:[{name:en?"Copper Hydroxide 77% WP (Kocide 3000)":"कॉपर हाइड्रॉक्साइड 77% WP",dosage:"2g/L",application:en?"Spray targeting leaf undersides":"पत्ती की निचली सतह को निशाना बनाते हुए स्प्रे",frequency:en?"Every 7-10 days":"हर 7-10 दिन"}],
+            chemical:[
+              {name:"Metalaxyl 8% + Mancozeb 64% WP (Ridomil Gold MZ)",dosage:"2.5g/L",application:en?"Foliar spray covering undersides":"निचली सतह को ढकते हुए पर्णीय स्प्रे",frequency:en?"Every 7 days during wet weather":"नम मौसम में हर 7 दिन"},
+              {name:"Dimethomorph 50% WP (Acrobat)",dosage:"1g/L",application:en?"Foliar spray":"पर्णीय स्प्रे",frequency:en?"Every 10 days, alternate with Ridomil":"हर 10 दिन, रिडोमिल के साथ बदल-बदलकर"}
+            ]
+          },
+          recoveryTime:en?"2-4 weeks with treatment":"2-4 सप्ताह उपचार के साथ",severity:"moderate",
+          spreadRisk:en?"Waterborne zoospores, spreads rapidly in cool wet weather":"जलीय बीजाणु, ठंडे गीले मौसम में तेज़ी से",
+          bestTimeToTreat:en?"Before or at first sign in wet/cloudy conditions":"नम/बादलदार स्थितियों में पहले संकेत पर"
+        },
+        {
+          name:en?"Root Rot / Collar Rot (जड़ गलन / भूस्तंभ गलन)":"जड़ गलन / भूस्तंभ गलन",
+          confidence:65, causedBy:en?"Pythium / Phytophthora species":"पाइथियम / फाइटोफ्थोरा प्रजाति",
+          affectedParts:en?["Root","Base of stem","Seedlings"]:[" जड़","तने का आधार","अंकुर"],
+          symptoms:[en?"Wilting despite adequate soil moisture":"पर्याप्त मिट्टी नमी के बावजूद मुरझाना",en?"Brown-black discoloration at stem base and roots":"तने के आधार और जड़ों में भूरे-काले रंग का बदलाव",en?"Sudden collapse of seedlings (damping off)":"अंकुरों का अचानक गिरना (आर्द्र-ह्रास)"],
+          prevention:[en?"Avoid waterlogging - ensure proper drainage":"जलभराव से बचें - उचित जल निकासी सुनिश्चित करें",en?"Use raised beds in poorly drained soils":"खराब जल निकासी वाली मिट्टी में ऊंची क्यारियां"],
+          medicines:{
+            organic:[{name:en?"Trichoderma viride (Ecoderma) seed/soil treatment":"ट्राइकोडर्मा विरिडी बीज/मिट्टी उपचार",dosage:"4-5g/L",application:en?"Seed treatment + soil drenching":"बीज उपचार + मिट्टी में डालना",frequency:en?"At sowing + 21 days interval":"बुवाई पर + 21 दिन के अंतर पर"}],
+            chemical:[
+              {name:"Fosetyl-Al 80% WP (Aliette)",dosage:"2g/L",application:en?"Soil drench at root zone":"जड़ क्षेत्र में मिट्टी घोल",frequency:en?"Every 21 days":"हर 21 दिन"},
+              {name:"Cymoxanil 8% + Mancozeb 64% WP (Curzate M)",dosage:"2.5g/L",application:en?"Soil drench + foliar":"मिट्टी घोल + पर्णीय",frequency:en?"Every 10-14 days":"हर 10-14 दिन"}
+            ]
+          },
+          recoveryTime:en?"3-5 weeks if diagnosed early":"3-5 सप्ताह यदि जल्दी पहचान हो",severity:"high",
+          spreadRisk:en?"Water-borne, spreads in waterlogged soils":"जलजनित, जलभराव वाली मिट्टी में फैलता है",
+          bestTimeToTreat:en?"Preventive treatment before symptoms appear":"लक्षण आने से पहले निवारक उपचार"
+        }
+      ];
 
+      const diseases = diseaseLibrary[crop] || genericDiseases;
       return {
-        diseases: diseases[crop] || defaultDisease,
-        generalAdvice: currentLang === 'en' ? 
-          "For accurate diagnosis and treatment, consult with local agricultural experts. Maintain proper crop hygiene and follow integrated pest management practices." :
-          "सटीक निदान और उपचार के लिए स्थानीय कृषि विशेषज्ञों से परामर्श करें। उचित फसल स्वच्छता बनाए रखें और एकीकृत कीट प्रबंधन प्रथाओं का पालन करें।"
+        diseases,
+        generalAdvice: en ?
+          `For ${crop} on ${symptoms.toLowerCase()} symptoms: Practice integrated disease management (IDM) combining resistant varieties, crop rotation, proper nutrition, and timely chemical intervention. Monitor fields every 3-4 days during disease-prone seasons. Keep detailed records of disease history to predict future outbreaks.` :
+          `${crop} फसल में ${symptoms} लक्षणों के लिए: प्रतिरोधी किस्में, फसल चक्र, उचित पोषण और समय पर रासायनिक हस्तक्षेप को मिलाकर एकीकृत रोग प्रबंधन (IDM) अपनाएं। रोग-संभावित मौसमों में हर 3-4 दिन खेतों की निगरानी करें।`
       };
     }
 
-    // Display results
-    function displayResults(data) {
-      const resultsSection = document.getElementById('resultsSection');
-      
-      let html = `
-        <h2 style="font-family: 'Crimson Pro', serif; font-size: 2rem; margin-bottom: 1.5rem; color: var(--primary-dark);">
-          ${currentLang === 'en' ? '🔬 AI Analysis Results' : '🔬 एआई विश्लेषण परिणाम'}
-        </h2>
-      `;
+    // Display results with tab-based navigation for each disease
+    function displayResults(data, crop, variety, soil) {
+      const rs = document.getElementById('resultsSection');
+      const L = currentLang;
+      const en = L==='en';
 
-      if (data.diseases && data.diseases.length > 0) {
-        data.diseases.forEach((disease, index) => {
-          html += `
-            <div class="disease-card" style="animation-delay: ${index * 0.1}s">
-              <div class="disease-name">${disease.name}</div>
-              <div style="display: flex; align-items: center; gap: 1rem; margin: 0.5rem 0;">
-                <span style="color: var(--text-muted); font-size: 0.9rem;">
-                  ${currentLang === 'en' ? 'AI Confidence:' : 'एआई विश्वास:'} <strong>${disease.confidence}%</strong>
-                </span>
-                ${disease.severity ? `
-                  <span style="background: ${disease.severity === 'high' ? 'var(--error)' : disease.severity === 'moderate' ? 'var(--warning)' : 'var(--success)'}; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.85rem;">
-                    ${currentLang === 'en' ? disease.severity.toUpperCase() : (disease.severity === 'high' ? 'उच्च' : disease.severity === 'moderate' ? 'मध्यम' : 'निम्न')}
-                  </span>
-                ` : ''}
+      let html = `<h2 style="font-family:'Crimson Pro',serif;font-size:2rem;margin-bottom:0.5rem;color:var(--primary-dark);">🔬 ${en?'AI Analysis Results':'एआई विश्लेषण परिणाम'}</h2>
+      <p style="color:var(--text-muted);margin-bottom:1.5rem;">${en?`Analyzed for: ${crop} (${variety}) on ${soil} soil`:`विश्लेषण: ${crop} (${variety}) ${soil} मिट्टी पर`}</p>`;
+
+      if(data.diseases && data.diseases.length > 0) {
+        // Tabs
+        html += `<div class="disease-tabs">`;
+        data.diseases.forEach((d,i) => {
+          const sev = d.severity || 'moderate';
+          const color = sev==='high'?'#c94c4c':sev==='moderate'?'#f4a259':'#4a7c2c';
+          html += `<button class="disease-tab ${i===0?'active':''}" onclick="switchTab(${i})" style="${i===0?'':''}">
+            <span style="display:inline-block;width:8px;height:8px;background:${color};border-radius:50%;margin-right:6px;"></span>
+            ${en?'Disease':'रोग'} ${i+1}: ${d.name.split('(')[0].trim().substring(0,20)}${d.name.length>20?'...':''}
+          </button>`;
+        });
+        html += `</div>`;
+
+        // Panels
+        data.diseases.forEach((d,i) => {
+          const sev = d.severity || 'moderate';
+          const sevColor = sev==='high'?'var(--error)':sev==='moderate'?'var(--warning)':'var(--success)';
+          const sevLabel = en?sev.toUpperCase():(sev==='high'?'उच्च':sev==='moderate'?'मध्यम':'निम्न');
+
+          html += `<div class="disease-panel ${i===0?'active':''}" id="panel-${i}">
+            <div class="disease-card">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem;">
+                <div class="disease-name">${d.name}</div>
+                <span style="background:${sevColor};color:white;padding:0.3rem 0.9rem;border-radius:20px;font-size:0.85rem;font-weight:600;white-space:nowrap;">${sevLabel}</span>
               </div>
-              <div class="confidence-bar">
-                <div class="confidence-fill" style="width: ${disease.confidence}%"></div>
+
+              <div style="display:flex;align-items:center;gap:1rem;margin:0.75rem 0;">
+                <span style="color:var(--text-muted);font-size:0.9rem;">${en?'AI Confidence:':'एआई विश्वास:'} <strong>${d.confidence}%</strong></span>
+                ${d.causedBy?`<span style="background:#f0f7ec;color:var(--primary);padding:0.2rem 0.7rem;border-radius:15px;font-size:0.82rem;">🦠 ${d.causedBy}</span>`:''}
               </div>
+              <div class="confidence-bar"><div class="confidence-fill" style="width:${d.confidence}%"></div></div>
 
-              ${disease.symptoms && disease.symptoms.length > 0 ? `
-                <div class="info-section">
-                  <div class="info-title">🔍 ${currentLang === 'en' ? 'Common Symptoms' : 'सामान्य लक्षण'}</div>
-                  <ul class="symptom-list">
-                    ${disease.symptoms.map(s => `<li>${s}</li>`).join('')}
-                  </ul>
-                </div>
-              ` : ''}
+              ${d.affectedParts&&d.affectedParts.length>0?`
+              <div style="margin:0.75rem 0;">
+                <span style="font-weight:600;color:var(--primary-dark);font-size:0.9rem;">📍 ${en?'Affected Parts:':'प्रभावित भाग:'}</span>
+                ${d.affectedParts.map(p=>`<span style="display:inline-block;background:#e8f4e8;color:var(--primary);padding:0.2rem 0.6rem;border-radius:10px;font-size:0.82rem;margin:0.2rem;">${p}</span>`).join('')}
+              </div>`:''}
 
-              ${disease.medicines ? `
-                <div class="medicine-card">
-                  <div class="medicine-title">${currentLang === 'en' ? 'Recommended Medicines' : 'अनुशंसित दवाएं'}</div>
-                  
-                  ${disease.medicines.organic && disease.medicines.organic.length > 0 ? `
-                    <p style="font-weight: 600; color: var(--success); margin-top: 1rem; margin-bottom: 0.5rem;">
-                      🌿 ${currentLang === 'en' ? 'Organic Medicines:' : 'जैविक दवाएं:'}
-                    </p>
-                    ${disease.medicines.organic.map(med => `
-                      <div class="medicine-item">
-                        <div class="medicine-info">
-                          <div class="medicine-name">${med.name}</div>
-                          <div class="medicine-dosage">
-                            ${currentLang === 'en' ? 'Dosage:' : 'खुराक:'} ${med.dosage} | 
-                            ${currentLang === 'en' ? 'Application:' : 'उपयोग:'} ${med.application}
-                          </div>
-                        </div>
+              ${d.symptoms&&d.symptoms.length>0?`
+              <div class="info-section">
+                <div class="info-title">🔍 ${en?'Specific Symptoms of This Disease':'इस रोग के विशेष लक्षण'}</div>
+                <ul class="symptom-list">${d.symptoms.map(s=>`<li>${s}</li>`).join('')}</ul>
+              </div>`:''}
+
+              ${d.medicines?`
+              <div class="medicine-card">
+                <div class="medicine-title">${en?'Recommended Medicines for This Disease':'इस रोग के लिए अनुशंसित दवाएं'}</div>
+
+                ${d.medicines.organic&&d.medicines.organic.length>0?`
+                <p style="font-weight:600;color:var(--success);margin:1rem 0 0.5rem;">🌿 ${en?'Organic Treatment:':'जैविक उपचार:'}</p>
+                ${d.medicines.organic.map(m=>`
+                  <div class="medicine-item">
+                    <div class="medicine-info">
+                      <div class="medicine-name">🍃 ${m.name}</div>
+                      <div class="medicine-dosage">
+                        <strong>${en?'Dose:':'खुराक:'}</strong> ${m.dosage} &nbsp;|&nbsp; 
+                        <strong>${en?'Method:':'विधि:'}</strong> ${m.application} &nbsp;|&nbsp;
+                        <strong>${en?'Frequency:':'आवृत्ति:'}</strong> ${m.frequency||en?'As needed':'आवश्यकतानुसार'}
                       </div>
-                    `).join('')}
-                  ` : ''}
+                    </div>
+                  </div>`).join('')}`:''}
 
-                  ${disease.medicines.chemical && disease.medicines.chemical.length > 0 ? `
-                    <p style="font-weight: 600; color: var(--primary); margin-top: 1rem; margin-bottom: 0.5rem;">
-                      ⚗️ ${currentLang === 'en' ? 'Chemical Medicines:' : 'रासायनिक दवाएं:'}
-                    </p>
-                    ${disease.medicines.chemical.map(med => `
-                      <div class="medicine-item">
-                        <div class="medicine-info">
-                          <div class="medicine-name">${med.name}</div>
-                          <div class="medicine-dosage">
-                            ${currentLang === 'en' ? 'Dosage:' : 'खुराक:'} ${med.dosage} | 
-                            ${currentLang === 'en' ? 'Application:' : 'उपयोग:'} ${med.application}
-                          </div>
-                        </div>
+                ${d.medicines.chemical&&d.medicines.chemical.length>0?`
+                <p style="font-weight:600;color:var(--primary);margin:1rem 0 0.5rem;">⚗️ ${en?'Chemical Medicines:':'रासायनिक दवाएं:'}</p>
+                ${d.medicines.chemical.map((m,mi)=>`
+                  <div class="medicine-item" style="border-left-color:${mi===0?'#e68a3d':'#2d5016'}">
+                    <div class="medicine-info">
+                      <div class="medicine-name">💊 ${m.name}</div>
+                      <div class="medicine-dosage">
+                        <strong>${en?'Dose:':'खुराक:'}</strong> ${m.dosage} &nbsp;|&nbsp;
+                        <strong>${en?'Method:':'विधि:'}</strong> ${m.application} &nbsp;|&nbsp;
+                        <strong>${en?'Frequency:':'आवृत्ति:'}</strong> ${m.frequency||en?'As directed':'निर्देशानुसार'}
                       </div>
-                    `).join('')}
-                  ` : ''}
-                </div>
-              ` : ''}
+                    </div>
+                  </div>`).join('')}`:''}
+              </div>`:''}
 
-              ${disease.prevention && disease.prevention.length > 0 ? `
-                <div class="recommendation">
-                  <div class="recommendation-title">${currentLang === 'en' ? 'Prevention Measures' : 'रोकथाम के उपाय'}</div>
-                  <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
-                    ${disease.prevention.map(p => `<li>${p}</li>`).join('')}
-                  </ul>
-                </div>
-              ` : ''}
+              ${d.prevention&&d.prevention.length>0?`
+              <div class="recommendation">
+                <div class="recommendation-title">${en?'Prevention Measures for This Disease':'इस रोग की रोकथाम के उपाय'}</div>
+                <ul style="margin-left:1.5rem;margin-top:0.5rem;">${d.prevention.map(p=>`<li style="margin:0.3rem 0;">${p}</li>`).join('')}</ul>
+              </div>`:''}
 
-              ${disease.recoveryTime ? `
-                <p style="margin-top: 1rem; color: var(--text-muted); font-weight: 500;">
-                  ⏱️ <strong>${currentLang === 'en' ? 'Expected Recovery Time:' : 'अपेक्षित रिकवरी समय:'}</strong> ${disease.recoveryTime}
-                </p>
-              ` : ''}
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:1rem;">
+                ${d.recoveryTime?`<div style="background:#f0f7ec;padding:0.75rem;border-radius:8px;"><strong>⏱️ ${en?'Recovery:':'रिकवरी:'}</strong><br/>${d.recoveryTime}</div>`:''}
+                ${d.spreadRisk?`<div style="background:#fff9f0;padding:0.75rem;border-radius:8px;"><strong>⚠️ ${en?'Spread Risk:':'फैलाव जोखिम:'}</strong><br/>${d.spreadRisk}</div>`:''}
+                ${d.bestTimeToTreat?`<div style="background:#f0f4ff;padding:0.75rem;border-radius:8px;"><strong>📅 ${en?'Best Time to Treat:':'उपचार का सही समय:'}</strong><br/>${d.bestTimeToTreat}</div>`:''}
+              </div>
             </div>
-          `;
+          </div>`;
         });
       }
 
-      if (data.generalAdvice) {
-        html += `
-          <div class="info-section" style="margin-top: 2rem;">
-            <div class="info-title">💡 ${currentLang === 'en' ? 'General Advice' : 'सामान्य सलाह'}</div>
-            <p style="line-height: 1.8;">${data.generalAdvice}</p>
-          </div>
-        `;
+      if(data.generalAdvice) {
+        html += `<div class="info-section" style="margin-top:2rem;">
+          <div class="info-title">💡 ${en?'General Advice':'सामान्य सलाह'}</div>
+          <p style="line-height:1.8;">${data.generalAdvice}</p>
+        </div>`;
       }
 
-      // Add store section
-      html += `
-        <div class="store-section">
-          <h3>${currentLang === 'en' ? '🛒 Get Medicines from B.L Verdantix Store' : '🛒 B.L Verdantix स्टोर से दवाएं प्राप्त करें'}</h3>
-          <p>${currentLang === 'en' ? 'All recommended medicines available at competitive prices with expert guidance' : 'विशेषज्ञ मार्गदर्शन के साथ प्रतिस्पर्धी कीमतों पर सभी अनुशंसित दवाएं उपलब्ध हैं'}</p>
-          <a href="http://127.0.0.1:5501/store.html" class="btn-store">
-            ${currentLang === 'en' ? '🏪 Visit B.L Verdantix Store' : '🏪 B.L Verdantix स्टोर पर जाएं'}
-          </a>
-        </div>
-      `;
+      html += `<div class="store-section">
+        <h3>🛒 ${en?'Get Medicines from B.L Verdantix Store':'B.L Verdantix स्टोर से दवाएं प्राप्त करें'}</h3>
+        <p>${en?'All recommended medicines available at competitive prices with expert guidance':'प्रतिस्पर्धी कीमतों पर सभी अनुशंसित दवाएं, विशेषज्ञ मार्गदर्शन सहित'}</p>
+        <a href="http://127.0.0.1:5501/store.html" class="btn-store">🏪 ${en?'Visit B.L Verdantix Store':'B.L Verdantix स्टोर पर जाएं'}</a>
+      </div>
 
-      html += `
-        <div style="margin-top: 2rem; padding: 1.5rem; background: linear-gradient(135deg, #fff9f0 0%, #ffffff 100%); border-radius: 10px; border: 2px solid var(--warning);">
-          <p style="color: var(--primary-dark); font-weight: 600; text-align: center;">
-            ${currentLang === 'en' ? 
-              '⚠️ This is an AI-powered analysis for guidance only. For severe cases or persistent problems, please consult a certified agricultural expert or visit your nearest agricultural extension center.' : 
-              '⚠️ यह केवल मार्गदर्शन के लिए एक एआई-संचालित विश्लेषण है। गंभीर मामलों या लगातार समस्याओं के लिए, कृपया प्रमाणित कृषि विशेषज्ञ से परामर्श करें या अपने निकटतम कृषि विस्तार केंद्र पर जाएं।'}
-          </p>
-        </div>
-      `;
+      <div style="margin-top:2rem;padding:1.5rem;background:linear-gradient(135deg,#fff9f0 0%,#ffffff 100%);border-radius:10px;border:2px solid var(--warning);">
+        <p style="color:var(--primary-dark);font-weight:600;text-align:center;">
+          ${en?'⚠️ This AI analysis is for guidance only. For severe or persistent problems, consult a certified agricultural expert or visit your nearest KVK.':
+          '⚠️ यह एआई विश्लेषण केवल मार्गदर्शन के लिए है। गंभीर या लगातार समस्याओं के लिए, प्रमाणित कृषि विशेषज्ञ से परामर्श लें या निकटतम KVK पर जाएं।'}
+        </p>
+      </div>`;
 
-      resultsSection.innerHTML = html;
+      rs.innerHTML = html;
+    }
+
+    function switchTab(index) {
+      document.querySelectorAll('.disease-tab').forEach((t,i)=>t.classList.toggle('active',i===index));
+      document.querySelectorAll('.disease-panel').forEach((p,i)=>p.classList.toggle('active',i===index));
     }
   </script>
 </body>
