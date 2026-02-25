@@ -6,7 +6,6 @@
     <title>About Us - B.L Verdantix</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
 
     <style>
         * {
@@ -366,42 +365,91 @@
             margin: auto;
         }
 
-        .leader-card {
+        /* ===== PERSON CARD (shared for leaders & team) ===== */
+        .leader-card,
+        .team-member {
             width: 240px;
             text-align: center;
             transition: 0.4s;
             cursor: pointer;
+            background: white;
+            border-radius: 20px;
+            padding: 25px 20px 20px;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.10);
         }
 
-        .leader-card:hover {
+        .leader-card:hover,
+        .team-member:hover {
             transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(46, 125, 50, 0.2);
         }
 
-        .leader-img {
-            width: 220px;
-            height: 260px;
-            border-radius: 15px;
-            background-size: cover;
-            background-position: center;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            margin-bottom: 15px;
+        .profile-pic {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #2e7d32;
+            box-shadow: 0 4px 15px rgba(46,125,50,0.25);
+            margin: 0 auto 15px;
+            display: block;
+            background: #e8f5e9;
             transition: 0.4s;
         }
 
-        .leader-card:hover .leader-img {
-            box-shadow: 0 12px 30px rgba(46, 125, 50, 0.3);
+        .leader-card:hover .profile-pic,
+        .team-member:hover .profile-pic {
+            border-color: #66bb6a;
+            box-shadow: 0 8px 25px rgba(46,125,50,0.4);
+            transform: scale(1.05);
         }
 
-        .leader-name {
-            font-size: 20px;
-            font-weight: 600;
-            color: #2e7d32;
-            margin-bottom: 5px;
+        .leader-name,
+        .team-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1b5e20;
+            margin-bottom: 4px;
         }
 
-        .leader-title {
-            font-size: 14px;
-            color: #666;
+        .leader-title,
+        .team-role {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 4px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            font-size: 16px;
+            text-decoration: none;
+            transition: 0.3s;
+            color: white;
+        }
+
+        .social-links a.github {
+            background: #333;
+        }
+
+        .social-links a.linkedin {
+            background: #0077b5;
+        }
+
+        .social-links a:hover {
+            transform: scale(1.2);
+            opacity: 0.85;
         }
 
         /* ===== TEAM ===== */
@@ -428,48 +476,12 @@
         }
 
         .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            display: flex;
+            justify-content: center;
             gap: 40px;
+            flex-wrap: wrap;
             max-width: 1100px;
             margin: auto;
-        }
-
-        .team-member {
-            text-align: center;
-            transition: 0.4s;
-        }
-
-        .team-member:hover {
-            transform: translateY(-10px);
-        }
-
-        .team-cube {
-            width: 200px;
-            height: 200px;
-            border-radius: 20px;
-            background-size: cover;
-            background-position: center;
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.18);
-            transition: 0.4s;
-            margin: 0 auto 15px;
-        }
-
-        .team-member:hover .team-cube {
-            transform: rotateY(15deg) rotateX(10deg) scale(1.05);
-            box-shadow: 0 15px 35px rgba(46, 125, 50, 0.3);
-        }
-
-        .team-name {
-            font-size: 18px;
-            font-weight: 600;
-            color: #2e7d32;
-            margin-bottom: 5px;
-        }
-
-        .team-role {
-            font-size: 14px;
-            color: #666;
         }
 
         /* ===== FOOTER ===== */
@@ -577,20 +589,12 @@
         }
 
         @keyframes pulseGlow {
-
-            0%,
-            100% {
-                box-shadow: 0 6px 20px rgba(66, 133, 244, 0.4);
-            }
-
-            50% {
-                box-shadow: 0 6px 30px rgba(66, 133, 244, 0.7);
-            }
+            0%, 100% { box-shadow: 0 6px 20px rgba(66, 133, 244, 0.4); }
+            50% { box-shadow: 0 6px 30px rgba(66, 133, 244, 0.7); }
         }
 
         .ai-chat-button:hover {
             transform: scale(1.1);
-            box-shadow: 0 8px 25px rgba(66, 133, 244, 0.5);
         }
 
         .ai-chat-window {
@@ -610,20 +614,11 @@
         }
 
         @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .ai-chat-window.active {
-            display: flex;
-        }
+        .ai-chat-window.active { display: flex; }
 
         .ai-chat-header {
             background: linear-gradient(135deg, #4285f4, #34a853);
@@ -656,18 +651,14 @@
         }
 
         .ai-close-btn {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255,255,255,0.2);
             border: none;
             color: white;
             font-size: 24px;
             cursor: pointer;
             padding: 5px 10px;
             border-radius: 8px;
-            transition: background 0.3s ease;
-        }
-
-        .ai-close-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
+            transition: background 0.3s;
         }
 
         .ai-chat-messages {
@@ -677,30 +668,10 @@
             background: #f8f9fa;
         }
 
-        .ai-message {
-            margin-bottom: 18px;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .ai-message.user {
-            text-align: right;
-        }
-
-        .ai-message.bot {
-            text-align: left;
-        }
+        .ai-message { margin-bottom: 18px; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+        .ai-message.user { text-align: right; }
+        .ai-message.bot { text-align: left; }
 
         .ai-message-bubble {
             display: inline-block;
@@ -708,7 +679,7 @@
             border-radius: 18px;
             max-width: 85%;
             word-wrap: break-word;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
         .ai-message.user .ai-message-bubble {
@@ -725,8 +696,7 @@
         }
 
         .ai-bot-avatar {
-            width: 32px;
-            height: 32px;
+            width: 32px; height: 32px;
             background: linear-gradient(135deg, #4285f4, #34a853);
             border-radius: 50%;
             display: inline-flex;
@@ -738,17 +708,8 @@
             vertical-align: middle;
         }
 
-        .ai-contact-info {
-            font-size: 14px;
-            line-height: 1.8;
-        }
-
-        .ai-contact-info strong {
-            color: #4285f4;
-            display: block;
-            margin-top: 8px;
-            margin-bottom: 4px;
-        }
+        .ai-contact-info { font-size: 14px; line-height: 1.8; }
+        .ai-contact-info strong { color: #4285f4; display: block; margin-top: 8px; margin-bottom: 4px; }
 
         .ai-chat-input-area {
             padding: 18px;
@@ -765,124 +726,58 @@
             border-radius: 25px;
             outline: none;
             font-size: 15px;
-            transition: border 0.3s ease;
+            transition: border 0.3s;
         }
 
-        .ai-chat-input:focus {
-            border-color: #4285f4;
-        }
+        .ai-chat-input:focus { border-color: #4285f4; }
 
         .ai-send-btn {
             background: linear-gradient(135deg, #4285f4, #34a853);
             color: white;
             border: none;
-            width: 50px;
-            height: 50px;
+            width: 50px; height: 50px;
             border-radius: 50%;
             cursor: pointer;
             font-size: 20px;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(66, 133, 244, 0.3);
+            transition: all 0.3s;
         }
 
-        .ai-send-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(66, 133, 244, 0.5);
-        }
-
-        .ai-typing-indicator {
-            display: none;
-            padding: 10px 0;
-        }
-
+        .ai-typing-indicator { display: none; padding: 10px 0; }
         .ai-typing-indicator span {
-            height: 8px;
-            width: 8px;
+            height: 8px; width: 8px;
             background: #4285f4;
             border-radius: 50%;
             display: inline-block;
             margin: 0 2px;
             animation: typing 1.4s infinite;
         }
-
-        .ai-typing-indicator span:nth-child(2) {
-            animation-delay: 0.2s;
-            background: #34a853;
-        }
-
-        .ai-typing-indicator span:nth-child(3) {
-            animation-delay: 0.4s;
-            background: #fbbc04;
-        }
-
+        .ai-typing-indicator span:nth-child(2) { animation-delay: 0.2s; background: #34a853; }
+        .ai-typing-indicator span:nth-child(3) { animation-delay: 0.4s; background: #fbbc04; }
         @keyframes typing {
-
-            0%,
-            60%,
-            100% {
-                transform: translateY(0);
-            }
-
-            30% {
-                transform: translateY(-10px);
-            }
+            0%,60%,100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
         }
 
         /* ===== RESPONSIVE ===== */
         @media(max-width: 768px) {
-            .hero-section h1 {
-                font-size: 36px;
-            }
-
-            .mission-grid {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-
-            .values-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .timeline::before {
-                left: 30px;
-            }
-
-            .timeline-item {
-                grid-template-columns: 1fr;
-            }
-
+            .hero-section h1 { font-size: 36px; }
+            .mission-grid { grid-template-columns: 1fr; gap: 40px; }
+            .values-grid { grid-template-columns: 1fr; }
+            .timeline::before { left: 30px; }
+            .timeline-item { grid-template-columns: 1fr; }
             .timeline-item:nth-child(even) .timeline-content,
-            .timeline-item:nth-child(even) .timeline-year {
-                grid-column: 1;
-                text-align: left;
-            }
-
-            .timeline-dot {
-                left: 30px;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .ai-chat-window {
-                width: calc(100% - 30px);
-                height: 75vh;
-                bottom: 100px;
-                right: 15px;
-            }
-
-            .ai-chat-button {
-                width: 60px;
-                height: 60px;
-                bottom: 20px;
-                right: 20px;
-            }
+            .timeline-item:nth-child(even) .timeline-year { grid-column: 1; text-align: left; }
+            .timeline-dot { left: 30px; }
+            .nav-links { display: none; }
+            .ai-chat-window { width: calc(100% - 30px); height: 75vh; bottom: 100px; right: 15px; }
+            .ai-chat-button { width: 60px; height: 60px; bottom: 20px; right: 20px; }
+            .leader-card, .team-member { width: 200px; }
         }
     </style>
 </head>
 
 <body>
+
     <!-- NAVIGATION -->
     <nav>
         <div class="nav-container">
@@ -923,41 +818,32 @@
         <div class="values-container">
             <h2>Our Core Values</h2>
             <p class="values-subtitle">The principles that guide everything we do</p>
-
             <div class="values-grid">
                 <div class="value-card">
                     <div class="value-icon">🌱</div>
                     <h3>Sustainability</h3>
-                    <p>We prioritize environmental protection and sustainable farming practices in all our solutions.
-                    </p>
+                    <p>We prioritize environmental protection and sustainable farming practices in all our solutions.</p>
                 </div>
-
                 <div class="value-card">
                     <div class="value-icon">💡</div>
                     <h3>Innovation</h3>
                     <p>We continuously develop cutting-edge technologies to solve modern agricultural challenges.</p>
                 </div>
-
                 <div class="value-card">
                     <div class="value-icon">🤝</div>
                     <h3>Partnership</h3>
-                    <p>We believe in building strong relationships with farmers and stakeholders across the agricultural
-                        value chain.</p>
+                    <p>We believe in building strong relationships with farmers and stakeholders across the agricultural value chain.</p>
                 </div>
-
                 <div class="value-card">
                     <div class="value-icon">📊</div>
                     <h3>Data-Driven</h3>
-                    <p>We leverage data analytics and AI to provide actionable insights for better farming decisions.
-                    </p>
+                    <p>We leverage data analytics and AI to provide actionable insights for better farming decisions.</p>
                 </div>
-
                 <div class="value-card">
                     <div class="value-icon">🌍</div>
                     <h3>Global Impact</h3>
                     <p>We aim to create positive change in agricultural communities worldwide.</p>
                 </div>
-
                 <div class="value-card">
                     <div class="value-icon">✅</div>
                     <h3>Quality</h3>
@@ -971,44 +857,36 @@
     <section class="journey-section">
         <div class="journey-container">
             <h2>Our Journey</h2>
-
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-year">2000</div>
                     <div class="timeline-content">
                         <h3>The Idea</h3>
-                        <p>Idea by Mr. Bajan Lal with a vision to transform agricultural practices and empower farmers.
-                        </p>
+                        <p>Idea by Mr. Bajan Lal with a vision to transform agricultural practices and empower farmers.</p>
                     </div>
                     <div class="timeline-dot"></div>
                 </div>
-
                 <div class="timeline-item">
                     <div class="timeline-year">2024</div>
                     <div class="timeline-content">
                         <h3>Legacy Continues</h3>
-                        <p>The company evolved under new leadership, maintaining the founder's vision while embracing
-                            modern technology.</p>
+                        <p>The company evolved under new leadership, maintaining the founder's vision while embracing modern technology.</p>
                     </div>
                     <div class="timeline-dot"></div>
                 </div>
-
                 <div class="timeline-item">
                     <div class="timeline-year">2025</div>
                     <div class="timeline-content">
                         <h3>Digital Transformation</h3>
-                        <p>Launched AI-powered crop advisory services and mobile applications to reach farmers directly.
-                        </p>
+                        <p>Launched AI-powered crop advisory services and mobile applications to reach farmers directly.</p>
                     </div>
                     <div class="timeline-dot"></div>
                 </div>
-
                 <div class="timeline-item">
                     <div class="timeline-year">2026</div>
                     <div class="timeline-content">
                         <h3>Expanding Horizons</h3>
-                        <p>Scaling operations nationwide with innovative sustainable agriculture solutions and smart
-                            farming technologies.</p>
+                        <p>Scaling operations nationwide with innovative sustainable agriculture solutions and smart farming technologies.</p>
                     </div>
                     <div class="timeline-dot"></div>
                 </div>
@@ -1022,50 +900,79 @@
         <p class="leadership-intro">Meet the visionary leaders driving innovation and sustainability in agriculture</p>
 
         <div class="leaders">
+
+            <!-- Mr Bajan Lal -->
             <div class="leader-card">
-                <div class="leader-img"
-                    style="background-image:url('https://img.sanishtech.com/u/cee79e87490ef0065bf4ee05c359e86b.jpeg')">
-                </div>
-                <div class="leader-name">Mr Bajan lal</div>
+                <img class="profile-pic"
+                    src="https://github.com/blverdantix.png"
+                    alt="Mr Bajan Lal"
+                    onerror="this.src='https://ui-avatars.com/api/?name=Bajan+Lal&background=2e7d32&color=fff&size=140'">
+                <div class="leader-name">Mr Bajan Lal</div>
                 <div class="leader-title">FOUNDER</div>
-                <div class="leader-title">1945-2000</div>
-                <a
-                    href="https://www.linkedin.com/in/b-l-verdantix-ba21343a9?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i
-                        class="fab fa-linkedin"></i></a>
+                <div class="leader-title">1945 – 2000</div>
+                <div class="social-links">
+                    <a class="github" href="https://github.com/blverdantix" target="_blank" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a class="linkedin" href="https://www.linkedin.com/in/b-l-verdantix-ba21343a9" target="_blank" title="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
             </div>
 
+            <!-- Mr Karan Kumar -->
             <div class="leader-card">
-                <div class="leader-img"
-                    style="background-image:url('https://img.sanishtech.com/u/c56bc0587b77814a8a93259c1eab2a10.jpg')">
-                </div>
+                <img class="profile-pic"
+                    src="https://github.com/karanchaudhary1718.png"
+                    alt="Mr Karan Kumar"
+                    onerror="this.src='https://ui-avatars.com/api/?name=Karan+Kumar&background=2e7d32&color=fff&size=140'">
                 <div class="leader-name">Mr Karan Kumar</div>
-                <div class="leader-title">B.tech</div>
-                <a
-                    href="https://www.linkedin.com/in/karan-chaudhary-23494a31a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i
-                        class="fab fa-linkedin"></i></a>
-            </div>
-            <div class="leader-card">
-                <div class="leader-img"
-                    style="background-image:url('https://img.sanishtech.com/u/dc7eca1adb8a94afff6e07ad333070ca.jpeg')">
+                <div class="leader-title">B.Tech</div>
+                <div class="social-links">
+                    <a class="github" href="https://github.com/karanchaudhary1718" target="_blank" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a class="linkedin" href="https://www.linkedin.com/in/karan-chaudhary-23494a31a" target="_blank" title="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
                 </div>
-                <div class="leader-name">Mr Aman Gupt</div>
-                <div class="leader-title">B.tech</div>
-                <a
-                    href="https://www.linkedin.com/in/aman-gupt-b1480a313?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i
-                        class="fab fa-linkedin"></i></a>
             </div>
 
+            <!-- Mr Aman Gupt -->
             <div class="leader-card">
-                <div class="leader-img"
-                    style="background-image:url('https://img.sanishtech.com/u/ed89f8292bd5f3aee0858850c0787862.jpeg')">
+                <img class="profile-pic"
+                    src="https://github.com/Its-aman18.png"
+                    alt="Mr Aman Gupt"
+                    onerror="this.src='https://ui-avatars.com/api/?name=Aman+Gupt&background=2e7d32&color=fff&size=140'">
+                <div class="leader-name">Mr Aman Gupt</div>
+                <div class="leader-title">B.Tech</div>
+                <div class="social-links">
+                    <a class="github" href="https://github.com/Its-aman18" target="_blank" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a class="linkedin" href="https://www.linkedin.com/in/aman-gupt-b1480a313" target="_blank" title="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
                 </div>
+            </div>
+
+            <!-- Mr Prashant Kumar -->
+            <div class="leader-card">
+                <img class="profile-pic"
+                    src="https://github.com/prashantsaini8656-ops.png"
+                    alt="Mr Prashant Kumar"
+                    onerror="this.src='https://ui-avatars.com/api/?name=Prashant+Kumar&background=2e7d32&color=fff&size=140'">
                 <div class="leader-name">Mr Prashant Kumar</div>
                 <div class="leader-title">B.Tech</div>
-                <a
-                    href="https://www.linkedin.com/in/prashant-saini-712759370?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i
-                        class="fab fa-linkedin"></i></a>
+                <div class="social-links">
+                    <a class="github" href="https://github.com/prashantsaini8656-ops" target="_blank" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a class="linkedin" href="https://www.linkedin.com/in/prashant-saini-712759370" target="_blank" title="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
             </div>
-
 
         </div>
     </section>
@@ -1077,82 +984,79 @@
 
         <div class="team-grid">
 
-
+            <!-- Mr Harshit Chaudhary — no GitHub provided yet -->
             <div class="team-member">
-                <div class="team-cube"
-                    style="background-image:url('https://img.sanishtech.com/u/2932f9a9640579142b983757c689f911.jpeg')">
+                <img class="profile-pic"
+                    src="https://img.sanishtech.com/u/2932f9a9640579142b983757c689f911.jpeg"
+                    alt="Mr Harshit Chaudhary"
+                    onerror="this.src='https://ui-avatars.com/api/?name=Harshit+Chaudhary&background=2e7d32&color=fff&size=140'">
+                <div class="team-name">Mr Harshit Chaudhary</div>
+                <div class="team-role">B.Tech</div>
+                <div class="social-links">
+                    <!-- Add GitHub link when available -->
                 </div>
-                <div class="team-name">Mr Harshit chaudhary</div>
-                <div class="team-role">B.tech</div>
             </div>
 
+            <!-- Mr Nishant Chauhan -->
             <div class="team-member">
-                <div class="team-cube"
-                    style="background-image:url('https://img.sanishtech.com/u/6cf5a705646e855910f79a8bd975fbf8.jpeg')">
+                <img class="profile-pic"
+                    src="https://github.com/nishantchauhan3637-cell.png"
+                    alt="Mr Nishant Chauhan"
+                    onerror="this.src='https://ui-avatars.com/api/?name=Nishant+Chauhan&background=2e7d32&color=fff&size=140'">
+                <div class="team-name">Mr Nishant Chauhan</div>
+                <div class="team-role">B.Tech</div>
+                <div class="social-links">
+                    <a class="github" href="https://github.com/nishantchauhan3637-cell" target="_blank" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a class="linkedin" href="https://www.linkedin.com/in/nishant-chauhan-2a7951386" target="_blank" title="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
                 </div>
-                <div class="team-name">Mr Nishant chauhan</div>
-                <div class="team-role">B.tech</div>
-                <a
-                    href="https://www.linkedin.com/in/nishant-chauhan-2a7951386?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i
-                        class="fab fa-linkedin"></i></a>
             </div>
-
 
         </div>
-
     </section>
 
     <!-- FOOTER -->
     <footer>
         <div class="footer-container">
-            <!-- Logo -->
             <div class="footer-logo">
                 <img src="https://img.sanishtech.com/u/93f1fb0a350e8f01025cce71e51db399.png" alt="B.L Verdantix Logo">
                 <p>Smart • Sustainable • Innovative Agriculture Solutions</p>
             </div>
-
-            <!-- Navigation -->
             <div>
                 <h3>Navigation</h3>
                 <a href="home.html">Home</a>
                 <a href="about-us.html">About Us</a>
                 <a href="calculator.html">Calculators</a>
-                <a href="our-services.html">our services</a>
+                <a href="our-services.html">Our Services</a>
             </div>
-
-            <!-- Our Services -->
             <div>
                 <h3>Our Services</h3>
                 <a href="#">Plant Scan Photo</a>
-                <a href="#">Agriculture alculator</a>
+                <a href="#">Agriculture Calculator</a>
                 <a href="#">Irrigation Solutions</a>
                 <a href="#">Agri Solutions</a>
             </div>
-
-            <!-- Contact Us -->
             <div>
                 <h3>Contact Us</h3>
                 <a href="tel:+919058545076">📞 +91 90585 45076</a>
-                <a href="mailto:b.l.verdantix2026@gmail.com">✉️ b.l.verdantix2026@gmail.com</a>
+                <a href="/cdn-cgi/l/email-protection#7f1d511351091a0d1b1e110b16074d4f4d493f18121e1613511c1012">✉️ <span class="__cf_email__" data-cfemail="5a387436742c3f283e3b342e3322686a686c1a3d373b333674393537">[email&#160;protected]</span></a>
                 <a href="https://maps.app.goo.gl/zS5ygzcMFFMb6kZCA">📍 CCS University, Meerut</a>
             </div>
-
-            <!-- Follow Us -->
             <div>
                 <h3>Follow Us</h3>
                 <div class="social-icons">
-                    <a href="https://www.instagram.com/b.l.verdantixagri2026?igsh=MWFmM3E4NGRwdmZl"><i
-                            class="fab fa-instagram"></i></a>
-                    <a
-                        href="https://www.linkedin.com/in/b-l-verdantix-ba21343a9?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i
-                            class="fab fa-linkedin"></i></a>
+                    <a href="https://www.instagram.com/b.l.verdantixagri2026?igsh=MWFmM3E4NGRwdmZl"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/b-l-verdantix-ba21343a9"><i class="fab fa-linkedin"></i></a>
                     <a href="https://x.com/verdantixa97632"><i class="fab fa-twitter"></i></a>
                     <a href="https://www.facebook.com/share/1KC5CAfjHD/"><i class="fab fa-facebook"></i></a>
                     <a href="https://www.youtube.com/@B.LVerdantix"><i class="fab fa-youtube"></i></a>
+                    <a href="https://github.com/blverdantix"><i class="fab fa-github"></i></a>
                 </div>
             </div>
         </div>
-
         <div class="copy">
             © 2026 B.L Verdantix Agri Technologies. All Rights Reserved.
         </div>
@@ -1171,7 +1075,6 @@
             </h3>
             <button class="ai-close-btn" id="aiCloseChat">&times;</button>
         </div>
-
         <div class="ai-chat-messages" id="aiChatMessages">
             <div class="ai-message bot">
                 <div class="ai-message-bubble">
@@ -1182,26 +1085,20 @@
                 </div>
             </div>
         </div>
-
         <div class="ai-typing-indicator" id="aiTypingIndicator">
             <div class="ai-message bot">
                 <div class="ai-message-bubble">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                    <span></span><span></span><span></span>
                 </div>
             </div>
         </div>
-
         <div class="ai-chat-input-area">
-            <input type="text" class="ai-chat-input" id="aiChatInput" placeholder="अपनी समस्या यहाँ लिखें..."
-                autocomplete="off">
+            <input type="text" class="ai-chat-input" id="aiChatInput" placeholder="अपनी समस्या यहाँ लिखें..." autocomplete="off">
             <button class="ai-send-btn" id="aiSendBtn">➤</button>
         </div>
     </div>
 
-    <script>
-        // AI CHATBOT SCRIPT
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         const aiChatButton = document.getElementById('aiChatButton');
         const aiChatWindow = document.getElementById('aiChatWindow');
         const aiCloseChat = document.getElementById('aiCloseChat');
@@ -1214,8 +1111,7 @@
             <div class="ai-contact-info">
                 <strong>📞 संपर्क करें:</strong>
                 <strong>फोन:</strong> 9058545076<br>
-                <strong>📧 ईमेल:</strong>
-                b.l.verdantix2026@gmail.com<br><br>
+                <strong>📧 ईमेल:</strong> b.l.verdantix2026@gmail.com<br><br>
                 कृपया उपरोक्त नंबर या ईमेल पर संपर्क करें।<br>
                 हमारी टीम जल्द ही आपकी सहायता करेगी! 🌱
             </div>
@@ -1223,25 +1119,18 @@
 
         aiChatButton.addEventListener('click', () => {
             aiChatWindow.classList.toggle('active');
-            if (aiChatWindow.classList.contains('active')) {
-                aiChatInput.focus();
-            }
+            if (aiChatWindow.classList.contains('active')) aiChatInput.focus();
         });
 
-        aiCloseChat.addEventListener('click', () => {
-            aiChatWindow.classList.remove('active');
-        });
+        aiCloseChat.addEventListener('click', () => aiChatWindow.classList.remove('active'));
 
         function sendAIMessage() {
             const message = aiChatInput.value.trim();
-            if (message === '') return;
-
+            if (!message) return;
             addAIMessage(message, 'user');
             aiChatInput.value = '';
-
             aiTypingIndicator.style.display = 'block';
             scrollAIToBottom();
-
             setTimeout(() => {
                 aiTypingIndicator.style.display = 'none';
                 addAIMessage(AI_RESPONSE, 'bot');
@@ -1250,32 +1139,15 @@
         }
 
         function addAIMessage(text, sender) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `ai-message ${sender}`;
-
-            const bubbleDiv = document.createElement('div');
-            bubbleDiv.className = 'ai-message-bubble';
-            bubbleDiv.innerHTML = text;
-
-            messageDiv.appendChild(bubbleDiv);
-            aiChatMessages.appendChild(messageDiv);
+            const div = document.createElement('div');
+            div.className = `ai-message ${sender}`;
+            const bubble = document.createElement('div');
+            bubble.className = 'ai-message-bubble';
+            bubble.innerHTML = text;
+            div.appendChild(bubble);
+            aiChatMessages.appendChild(div);
         }
 
         function scrollAIToBottom() {
-            aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
-        }
-
-        aiSendBtn.addEventListener('click', sendAIMessage);
-        aiChatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                sendAIMessage();
-            }
-        });
-
-        scrollAIToBottom();
-    </script>
-
-</body>
-
-
-</html>
+            aiChatMessages.scrollTop =
+                }
