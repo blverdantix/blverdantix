@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B.L Verdantix - AI-Powered Plant Care & Agriculture</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Sora:wght@300;400;600;700;800&family=Manrope:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css" />
+    <link rel="stylesheet" href="css\style.css">
+</head>
+
+<body>
+
+    <div class="toast-global" id="globalToast"></div>
+
+    <!-- ═══════════════════════════════════════
+     STICKY HEADER
+═══════════════════════════════════════ -->
+    <header id="mainHeader">
+        <div class="logo" onclick="navigateTo('home')">
+            <img src="https://img.sanishtech.com/u/4b566ef4348b320888dffcf6b3f503a5.png" alt="B.L Verdantix">
+            <div class="logo-text">
+                <h2>B.L Verdantix</h2>
+                <p>Agri Solutions</p>
+            </div>
+        </div>
+
+        <nav id="navMenu">
+
+            <a href="home.html">Home</a>
+            <a href="pages/about.html">About</a>
+            <a href="pages/services.html">Services</a>
+            <a href="pages/doctor.html">Doctor</a>
+            <a href="pages/press.html">Press</a>
+            <a href="pages/contact.html">Contact</a>
+            <a href="pages/profile.html">Profile</a>
+        </nav>
+
+        <div class="profile-btn" onclick="navigateTo('profile')" title="Profile">
+            <i class="fas fa-user"></i>
+        </div>
+        <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    </header>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- ═══════════════════════════════════════
+     FOOTER TEMPLATE (injected by JS)
+═══════════════════════════════════════ -->
+    <template id="footerTemplate">
+        <footer class="site-footer">
+            <div class="footer-inner">
+                <div class="footer-topband">
+                    <div class="footer-brand">
+                        <div class="footer-logo-wrap">
+                            <img src="https://img.sanishtech.com/u/4b566ef4348b320888dffcf6b3f503a5.png"
+                                alt="B.L Verdantix Logo">
+                            <div class="footer-logo-text">
+                                <h3>B.L Verdantix</h3>
+                                <span>Agri Technologies</span>
+                            </div>
+                        </div>
+                        <p>Empowering farmers with AI-driven plant care, disease detection, and smart agricultural
+                            tools. Building a sustainable future, one harvest at a time.</p>
+                        <div class="footer-socials">
+                            <a href="https://www.instagram.com/b.l.verdantixagri2026" target="_blank"><i
+                                    class="fab fa-instagram"></i></a>
+                            <a href="https://www.linkedin.com/in/b-l-verdantix-ba21343a9" target="_blank"><i
+                                    class="fab fa-linkedin"></i></a>
+                            <a href="https://x.com/verdantixa97632" target="_blank"><i class="fab fa-twitter"></i></a>
+                            <a href="https://www.facebook.com/share/1KC5CAfjHD/" target="_blank"><i
+                                    class="fab fa-facebook"></i></a>
+                            <a href="https://www.youtube.com/@B.LVerdantix" target="_blank"><i
+                                    class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-newsletter">
+                        <h4>🌿 Stay Updated</h4>
+                        <p>Get the latest agri tips, pest alerts & product updates delivered to your inbox.</p>
+                        <div class="newsletter-form">
+                            <input type="email" id="newsletterEmail" placeholder="your@email.com">
+                            <button onclick="subscribeNewsletter()">Subscribe</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-grid">
+                    <div class="footer-col">
+                        <h4>Navigate</h4>
+                        <ul>
+                            <li><a onclick="navigateTo('home')"><span class="link-arrow">›</span>Home</a></li>
+                            <li><a onclick="navigateTo('about')"><span class="link-arrow">›</span>About</a></li>
+                            <li><a onclick="navigateTo('services')"><span class="link-arrow">›</span>Services</a>
+                            </li>
+                            <li><a onclick="navigateTo('press')"><span class="link-arrow">›</span>Press</a></li>
+                            <li><a onclick="navigateTo('contact')"><span class="link-arrow">›</span>Contact</a></li>
+                            <li><a onclick="navigateTo('profile')"><span class="link-arrow">›</span>Profile</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Our Services</h4>
+                        <ul>
+                            <li><a href="Pest-Finder.html"><span class="link-arrow">›</span>🔬 Pest Finder</a></li>
+                            <li><a onclick="navigateTo('services')"><span class="link-arrow">›</span>🗺️ GPS Land
+                                    Measurement</a></li>
+                            <li><a onclick="navigateTo('services')"><span class="link-arrow">›</span>🌾 Fertilizer
+                                    Calculator</a></li>
+                            <li><a onclick="navigateTo('services')"><span class="link-arrow">›</span>💧 Irrigation
+                                    Calculator</a></li>
+                            <li><a onclick="navigateTo('services')"><span class="link-arrow">›</span>🌳 Tree Dose
+                                    Calculator</a></li>
+                            <li><a onclick="navigateTo('services')"><span class="link-arrow">›</span>📏 Area
+                                    Converter</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Active Regions</h4>
+                        <div class="footer-active-badge">Actively Serving</div>
+                        <div class="footer-regions">
+                            <span class="footer-region-chip">📍 Uttar Pradesh</span>
+                            <span class="footer-region-chip">📍 Punjab</span>
+                            <span class="footer-region-chip">📍 Haryana</span>
+                            <span class="footer-region-chip">📍 Uttarakhand</span>
+                            <span class="footer-region-chip">📍 Bihar</span>
+                        </div>
+                        <ul style="margin-top:20px">
+                            <li><a href="#"><span class="link-arrow">›</span>🏪 Visit Our Store – Mawana, Meerut</a>
+                            </li>
+                            <li><a onclick="navigateTo('about')"><span class="link-arrow">›</span>🌱 Our Journey &
+                                    Legacy</a></li>
+                            <li><a onclick="navigateTo('about')"><span class="link-arrow">›</span>👥 Meet Our Team</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Get In Touch</h4>
+                        <div class="footer-contact-item">
+                            <div class="footer-contact-icon"><i class="fas fa-phone"></i></div>
+                            <div class="footer-contact-text">
+                                <p>Call Us</p><a href="tel:+919058545076">+91 90585 45076</a>
+                            </div>
+                        </div>
+                        <div class="footer-contact-item">
+                            <div class="footer-contact-icon"><i class="fas fa-envelope"></i></div>
+                            <div class="footer-contact-text">
+                                <p>Email Us</p><a
+                                    href="mailto:b.l.verdantix2026@gmail.com">b.l.verdantix2026@gmail.com</a>
+                            </div>
+                        </div>
+                        <div class="footer-contact-item">
+                            <div class="footer-contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div class="footer-contact-text">
+                                <p>Visit Us</p><a href="https://maps.app.goo.gl/zS5ygzcMFFMb6kZCA" target="_blank">CCS
+                                    University, Meerut, U.P.</a>
+                            </div>
+                        </div>
+                        <div class="footer-contact-item">
+                            <div class="footer-contact-icon"><i class="fas fa-clock"></i></div>
+                            <div class="footer-contact-text">
+                                <p>Business Hours</p><span>Mon–Sat: 9:00 AM – 6:00 PM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-bottom">
+                    <div class="footer-bottom-left">
+                        <div class="footer-leaf-icon">🌿</div>
+                        <p>© 2026 <strong>B.L Verdantix Agri Technologies</strong>. All Rights Reserved.</p>
+                    </div>
+                    <div class="footer-bottom-links">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Use</a>
+                        <a href="#">Disclaimer</a>
+                        <a href="#">Sitemap</a>
+                    </div>
+                    <div class="footer-bottom-badge">
+                        <i class="fas fa-shield-alt"></i> Secured &amp; Verified
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </template>
+
+    <!-- ═══════════════════════════════════════
+     PAGE: HOME
+═══════════════════════════════════════ -->
+    <div class="page active" id="page-home">
+        <section class="hero">
+            <div class="hero-bg"></div>
+            <div class="hero-content">
+                <div class="hero-badge"><i class="fas fa-leaf"></i><span>AI-Powered Plant Care</span></div>
+                <h1>Identify Plants & Diseases Instantly</h1>
+                <p>Snap a photo and get instant plant identification, disease diagnosis, and expert care advice powered
+                    by advanced AI technology.</p>
+                <div class="hero-buttons">
+                    <a href="Pest-Finder.html" class="btn btn-primary"><i class="fas fa-camera"></i> Pest Finder</a>
+                    <a href="profile.html" class="btn btn-secondary">Create Profile <i class="fas fa-user-plus"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <section class="features-section">
+            <div class="section-header"><span class="section-badge">Key Features</span>
+                <h2>Everything You Need for Plant Care</h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-seedling"></i></div>
+                    <h3>Plant Identification</h3>
+                    <p>Identify 17,000+ plant species with 98% accuracy using advanced AI recognition technology.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-stethoscope"></i></div>
+                    <h3>Disease Detection</h3>
+                    <p>Diagnose plant diseases and pests early to save your crops with instant treatment
+                        recommendations.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-pills"></i></div>
+                    <h3>Treatment Guide</h3>
+                    <p>Get organic and chemical treatment options with detailed instructions for plant recovery.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3>Mobile Friendly</h3>
+                    <p>Scan plants anywhere, anytime with our mobile-optimized interface and camera integration.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-language"></i></div>
+                    <h3>Bilingual Support</h3>
+                    <p>Available in Hindi and English to serve farmers across India with local language support.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-history"></i></div>
+                    <h3>Scan History</h3>
+                    <p>Track your plant health over time and access previous diagnoses and recommendations.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="ai-section">
+            <div class="ai-container">
+                <div class="ai-content">
+                    <h2>Advanced AI Plant Recognition</h2>
+                    <p>Our cutting-edge artificial intelligence has been trained on millions of plant images to provide
+                        you with the most accurate identification and disease detection available.</p>
+                    <p>Powered by revolutionary technology, we help farmers, gardeners, and plant enthusiasts care for
+                        their plants with professional-grade diagnostics.</p>
+                    <div class="ai-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">17K+</div>
+                            <div class="stat-label">Plant Species</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">98%</div>
+                            <div class="stat-label">Accuracy Rate</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">10K+</div>
+                            <div class="stat-label">Diseases Detected</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Available</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ai-image"><img src="https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=800"
+                        alt="AI Plant Recognition"></div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header"><span class="section-badge">What We Identify</span>
+                <h2>Comprehensive Plant Database</h2>
+            </div>
+            <div class="solutions-grid">
+                <div class="solution-card"><img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=800"
+                        alt="Crops">
+                    <div class="solution-content">
+                        <h3>Crops & Vegetables</h3>
+                        <p>Identify and diagnose diseases in major crops including wheat, rice, tomatoes, potatoes, and
+                            more.</p>
+                    </div>
+                </div>
+                <div class="solution-card"><img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=800"
+                        alt="Fruits">
+                    <div class="solution-content">
+                        <h3>Fruits & Trees</h3>
+                        <p>Recognize fruit plants, detect diseases in apple, mango, citrus trees and get expert care
+                            recommendations.</p>
+                    </div>
+                </div>
+                <div class="solution-card"><img src="https://images.unsplash.com/photo-1466781783364-36c955e42a7f?w=800"
+                        alt="Flowers">
+                    <div class="solution-content">
+                        <h3>Flowers & Ornamentals</h3>
+                        <p>Identify decorative plants, flowers, and garden species with detailed care guides and pest
+                            management.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="how-it-works">
+            <div class="section-header"><span class="section-badge">Simple Process</span>
+                <h2>How It Works</h2>
+                <p>Get plant identification and disease diagnosis in three simple steps</p>
+            </div>
+            <div class="steps-container">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Take a Photo</h3>
+                    <p>Capture a clear image of your plant's leaves, flowers, or affected areas using your phone camera.
+                    </p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>AI Analysis</h3>
+                    <p>Our advanced AI instantly analyzes the image to identify the plant species and detect any
+                        diseases.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Get Results</h3>
+                    <p>Receive detailed identification, diagnosis, and treatment recommendations in seconds.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="app-section">
+            <div class="app-container">
+                <div class="app-content">
+                    <h2>Care for Your Plants on the Go</h2>
+                    <p>Download our mobile app for instant plant identification wherever you are.</p>
+                    <ul class="app-features">
+                        <li>Instant plant identification</li>
+                        <li>Disease diagnosis with photos</li>
+                        <li>Treatment recommendations</li>
+                        <li>Care reminders and tips</li>
+                        <li>Offline database access</li>
+                        <li>Expert support available</li>
+                    </ul>
+                    <div class="app-buttons">
+                        <a href="#" class="app-btn"><i class="fab fa-google-play"></i> Google Play</a>
+                        <a href="#" class="app-btn"><i class="fab fa-apple"></i> App Store</a>
+                    </div>
+                </div>
+                <div class="app-mockup"><img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600"
+                        alt="App" style="max-height:500px"></div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <span class="section-badge">Our Mission</span>
+                <h2>Empowering Farmers with AI Technology</h2>
+                <p>B.L Verdantix Agri Technologies combines cutting-edge AI with agricultural expertise to help farmers
+                    identify plant diseases early and take preventive action.</p>
+            </div>
+        </section>
+
+        <section class="recognition-section">
+            <div class="section-header" style="position:relative;z-index:2"><span class="section-badge">Our
+                    Journey</span>
+                <h2>Recognition & Expert Talks</h2>
+            </div>
+            <div class="slider-container">
+                <div class="slider-track">
+                    <div class="slider-card"><img
+                            src="https://img.sanishtech.com/u/c1aa970a51b0934b737859637462cbcb.jpeg" alt="Bhajan Lal">
+                        <div class="slider-content">
+                            <p><strong>Bhajan Lal (Founder)</strong></p>
+                            <p>1945 – 2002</p>
+                        </div>
+                    </div>
+                    <div class="slider-card"><img
+                            src="https://img.sanishtech.com/u/b5e3279bfd6d6a88a057863d25101792.jpeg" alt="Advisor">
+                        <div class="slider-content">
+                            <p><strong>Amarjit Singh</strong></p>
+                            <p>Senior Advisor</p>
+                        </div>
+                    </div>
+                    <div class="slider-card"><img
+                            src="https://img.sanishtech.com/u/232930959f6654010462654b9026b688.jpg" alt="Karan">
+                        <div class="slider-content">
+                            <p><strong>Karan Chaudhary</strong></p>
+                            <p>Head</p>
+                        </div>
+                    </div>
+                    <div class="slider-card"><img
+                            src="https://img.sanishtech.com/u/0f90e2cb50cf4d092bed1d49ce01240d.jpeg" alt="Aman">
+                        <div class="slider-content">
+                            <p><strong>Aman Gupt</strong></p>
+                            <p>Tech Lead</p>
+                        </div>
+                    </div>
+                    <div class="slider-card"><img
+                            src="https://img.sanishtech.com/u/c1aa970a51b0934b737859637462cbcb.jpeg" alt="B2">
+                        <div class="slider-content">
+                            <p><strong>Bhajan Lal</strong></p>
+                            <p>1945 – 2002</p>
+                        </div>
+                    </div>
+                    <div class="slider-card"><img
+                            src="https://img.sanishtech.com/u/9fa761a3f614c221ccccfaf96d07d849.jpeg" alt="Store">
+                        <div class="slider-content">
+                            <p><strong>B.L Verdantix Store</strong></p>
+                            <p>Mawana, Meerut</p>
+                        </div>
+                    </div>
+                    <div class="slider-card"><img
+                            src="https://img.sanishtech.com/u/232930959f6654010462654b9026b688.jpg" alt="K2">
+                        <div class="slider-content">
+                            <p><strong>Karan Chaudhary</strong></p>
+                            <p></p>
+                        </div>
+                    </div>
+                    <div class="slider-card"><img
+                            src="https://img.sanishtech.com/u/0f90e2cb50cf4d092bed1d49ce01240d.jpeg" alt="A2">
+                        <div class="slider-content">
+                            <p><strong>Aman Gupt</strong></p>
+                            <p></p>
+                        </div>
+                    </div>
+                    <div class="slider-card"><img
+                            src="https://img.sanishtech.com/u/c1aa970a51b0934b737859637462cbcb.jpeg" alt="BL">
+                        <div class="slider-content">
+                            <p><strong>Bhajan Lal</strong></p>
+                            <p>1945 – 2002</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="map-section">
+            <div class="map-container">
+                <div class="map-image"><img src="https://img.sanishtech.com/u/7d49bcf0aa4305150425f391d54d680f.png"
+                        alt="India Map"></div>
+                <div class="map-content">
+                    <h2>We Are Actively Working In</h2>
+                    <ul>
+                        <li>Uttar Pradesh</li>
+                        <li>Punjab</li>
+                        <li>Haryana</li>
+                        <li>Uttarakhand</li>
+                        <li>Bihar</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <div id="footer-home"></div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+     PAGE: ABOUT
+═══════════════════════════════════════ -->
+    <div class="page" href="http://127.0.0.1:5501/about%20us.html" id="page-about ">
+        <div class="about-hero">
+            <h1>Transforming Agriculture<br>for a Sustainable Future</h1>
+            <p>We empower farmers with innovative technology, smart advisory services, and sustainable solutions.</p>
+        </div>
+
+        <section class="mission-section">
+            <div class="mission-grid">
+                <div class="mission-text">
+                    <h2>Our Mission</h2>
+                    <p>At B.L Verdantix Agri Technologies, we are dedicated to revolutionizing agriculture through
+                        innovation, technology, and sustainability.</p>
+                    <p>We work closely with farmers to provide smart advisory services, crop protection solutions, and
+                        data-driven insights that improve productivity while protecting our planet's natural resources.
+                    </p>
+                    <p>Our commitment is to create a sustainable agricultural ecosystem that benefits farmers,
+                        consumers, and the environment for generations to come.</p>
+                </div>
+                <div class="mission-image"><img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800"
+                        alt="Mission"></div>
+            </div>
+        </section>
+
+        <section class="values-section">
+            <div class="values-container">
+                <h2>Our Core Values</h2>
+                <p class="values-subtitle">The principles that guide everything we do</p>
+                <div class="values-grid">
+                    <div class="value-card">
+                        <div class="value-icon">🌱</div>
+                        <h3>Sustainability</h3>
+                        <p>We prioritize environmental protection and sustainable farming practices in all our
+                            solutions.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">💡</div>
+                        <h3>Innovation</h3>
+                        <p>We continuously develop cutting-edge technologies to solve modern agricultural challenges.
+                        </p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">🤝</div>
+                        <h3>Partnership</h3>
+                        <p>We believe in building strong relationships with farmers and stakeholders across the
+                            agricultural value chain.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">📊</div>
+                        <h3>Data-Driven</h3>
+                        <p>We leverage data analytics and AI to provide actionable insights for better farming
+                            decisions.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">🌍</div>
+                        <h3>Global Impact</h3>
+                        <p>We aim to create positive change in agricultural communities worldwide.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">✅</div>
+                        <h3>Quality</h3>
+                        <p>We maintain the highest standards in all our products, services, and customer interactions.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="journey-section">
+            <div class="journey-container">
+                <h2>Our Journey</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">2000</div>
+                        <div class="timeline-content">
+                            <h3>The Idea</h3>
+                            <p>Idea by Mr. Bhajan Lal with a vision to transform agricultural practices and empower
+                                farmers.</p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2024</div>
+                        <div class="timeline-content">
+                            <h3>Legacy Continues</h3>
+                            <p>The company evolved under new leadership, maintaining the founder's vision while
+                                embracing modern technology.</p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2025</div>
+                        <div class="timeline-content">
+                            <h3>Digital Transformation</h3>
+                            <p>Launched AI-powered crop advisory services and mobile applications to reach farmers
+                                directly.</p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2026</div>
+                        <div class="timeline-content">
+                            <h3>Expanding Horizons</h3>
+                            <p>Scaling operations nationwide with innovative sustainable agriculture solutions and smart
+                                farming technologies.</p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="leadership">
+            <h2>Our Leadership</h2>
+            <p class="leadership-intro">Meet the visionary leaders driving innovation and sustainability in agriculture
+            </p>
+            <div class="leaders">
+                <div class="leader-card">
+                    <div class="leader-img"
+                        style="background-image:url('https://img.sanishtech.com/u/cee79e87490ef0065bf4ee05c359e86b.jpeg')">
+                    </div>
+                    <div class="leader-name">Mr Bhajan Lal</div>
+                    <div class="leader-title">FOUNDER · 1945–2000</div>
+                </div>
+                <div class="leader-card">
+                    <div class="leader-img"
+                        style="background-image:url('https://img.sanishtech.com/u/c56bc0587b77814a8a93259c1eab2a10.jpg')">
+                    </div>
+                    <div class="leader-name">Mr Karan Kumar</div>
+                    <div class="leader-title">CEO · B.Tech, Agra</div>
+                </div>
+                <div class="leader-card">
+                    <div class="leader-img"
+                        style="background-image:url('https://img.sanishtech.com/u/dc7eca1adb8a94afff6e07ad333070ca.jpeg')">
+                    </div>
+                    <div class="leader-name">Mr Aman Gupt</div>
+                    <div class="leader-title">B.Tech(C.S), Maharajganj</div>
+                </div>
+                <div class="leader-card">
+                    <div class="leader-img"
+                        style="background-image:url('https://img.sanishtech.com/u/ed89f8292bd5f3aee0858850c0787862.jpeg')">
+                    </div>
+                    <div class="leader-name">Mr Prashant Kumar</div>
+                    <div class="leader-title">B.Tech(A.G), Bijnor</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="team">
+            <h2>Our Team</h2>
+            <p class="team-intro">Dedicated professionals committed to transforming agriculture</p>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="team-cube"
+                        style="background-image:url('https://img.sanishtech.com/u/2932f9a9640579142b983757c689f911.jpeg')">
+                    </div>
+                    <div class="team-name">Mr Harshit Chaudhary</div>
+                    <div class="team-role">B.Tech(A.G), Bijnor (U.P)</div>
+                </div>
+                <div class="team-member">
+                    <div class="team-cube"
+                        style="background-image:url('https://img.sanishtech.com/u/6cf5a705646e855910f79a8bd975fbf8.jpeg')">
+                    </div>
+                    <div class="team-name">Mr Nishant Chauhan</div>
+                    <div class="team-role">B.Tech(A.G), Itabha (U.P)</div>
+                </div>
+            </div>
+        </section>
+        <div id="footer-about"></div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+     PAGE: CONTACT
+═══════════════════════════════════════ -->
+    <div class="page" id="page-contact">
+        <div class="contact-bg">
+            <div class="contact-header">
+                <h1>🌾 Get In Touch</h1>
+                <p class="tagline">Connect with us for Agriculture, Calculators & Scan Photo Solutions</p>
+            </div>
+            <div class="contact-main">
+                <div class="info-section">
+                    <h2 class="section-title">Contact Information</h2>
+                    <div class="contact-item">
+                        <div class="contact-icon">📧</div>
+                        <div class="contact-details">
+                            <h3>Email Address</h3>
+                            <p><a href="mailto:b.l.verdantix2026@gmail.com">b.l.verdantix2026@gmail.com</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📱</div>
+                        <div class="contact-details">
+                            <h3>Phone Number</h3>
+                            <p><a href="tel:+919058545076">+91 90585 45076</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-details">
+                            <h3>Location</h3>
+                            <p>Meerut, Uttar Pradesh, India</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">⏰</div>
+                        <div class="contact-details">
+                            <h3>Business Hours</h3>
+                            <p>Mon–Sat: 9:00 AM – 6:00 PM<br>Sunday: Closed</p>
+                        </div>
+                    </div>
+                    <div class="info-box">
+                        <h3>Why Choose Us?</h3>
+                        <p>✓ Expert consulting in agriculture</p>
+                        <p>✓ Scan-Photo solutions for sustainable farming</p>
+                        <p>✓ Data-driven analytics and insights</p>
+                        <p>✓ Dedicated support team</p>
+                    </div>
+                </div>
+                <div class="form-section">
+                    <h2 class="section-title">Send Us a Message</h2>
+                    <div class="success-message" id="contactSuccess">✅ Thank you! We'll respond within 24 hours.</div>
+                    <div class="error-message" id="contactError">❌ Something went wrong. Please try again.</div>
+                    <div class="form-group"><label for="cName">Your Name <span class="required">*</span></label><input
+                            type="text" id="cName" placeholder="Enter your full name" required></div>
+                    <div class="form-group"><label for="cEmail">Your Email <span class="required">*</span></label><input
+                            type="email" id="cEmail" placeholder="your.email@example.com" required></div>
+                    <div class="form-group">
+                        <label for="cMsg">Your Message <span class="required">*</span></label>
+                        <textarea id="cMsg" placeholder="Tell us how we can help..." required></textarea>
+                    </div>
+                    <button class="contact-submit" id="contactSubmitBtn" onclick="submitContact()">Send Message
+                        📤</button>
+                </div>
+            </div>
+        </div>
+        <div id="footer-contact"></div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+     PAGE: SERVICES
+═══════════════════════════════════════ -->
+    <div class="page" id="page-services">
+        <div class="services-bg">
+            <header class="services-header">
+                <div class="header-inner">
+                    <div class="logo-brand">
+                        <div class="brand-text">
+                            <div class="company-tag">B.L. <span>VERDANTIX</span></div>
+                            <div class="company-sub">Agri Technologies</div>
+                        </div>
+                    </div>
+                    <div class="header-center">
+                        <div class="services-badge">⭐ हमारी सेवाएँ</div>
+                        <h1>🌾 <span>Our Services</span></h1>
+                        <p>GPS Technology और Smart Calculators के साथ खेती को आसान बनाएँ</p>
+                    </div>
+                </div>
+            </header>
+
+            <nav class="service-nav">
+                <button class="service-tab active" onclick="switchService('gps')" id="tab-gps"><span>🗺️</span> भूमि
+                    क्षेत्रफल कैलकुलेटर</button>
+                <button class="service-tab" onclick="switchService('agri')" id="tab-agri"><span>🌱</span> कृषि
+                    कैलकुलेटर</button>
+            </nav>
+
+            <!-- GPS PANEL -->
+            <div class="service-panel active" id="panel-gps">
+                <div class="gps-layout">
+                    <aside class="gps-sidebar">
+                        <div class="sidebar-instructions">
+                            <h4>📋 कैसे उपयोग करें:</h4>
+                            <ol>
+                                <li>स्थान खोजें या GPS से खोजें</li>
+                                <li>"जमीन मापना शुरू करें" दबाएँ</li>
+                                <li>Map पर सीमा पर क्लिक करें</li>
+                                <li>सभी कोनों को मार्क करें</li>
+                                <li>पहले बिंदु पर क्लिक करके बंद करें</li>
+                            </ol>
+                        </div>
+                        <div class="gps-input-row">
+                            <label>📍 स्थान खोजें</label>
+                            <input type="text" id="searchLocation" placeholder="मेरठ, उत्तर प्रदेश"
+                                onkeypress="if(event.key==='Enter')searchLocation()">
+                        </div>
+                        <div class="gps-btn-row">
+                            <button class="gps-btn primary" onclick="searchLocation()">🔍 स्थान खोजें</button>
+                            <button class="gps-btn success" onclick="getCurrentLocation()">📍 अपनी लोकेशन खोजें</button>
+                            <div class="loading-text" id="gpsLoading">⏳ लोड हो रहा है...</div>
+                            <button class="gps-btn warning" onclick="startDrawing()">✏️ जमीन मापना शुरू करें</button>
+                            <button class="gps-btn danger" onclick="clearAll()">🗑️ सब मिटाएँ</button>
+                        </div>
+                        <div class="gps-result-card" id="resultCard">
+                            <div class="r-row"><span class="r-label">क्षेत्रफल (वर्ग मीटर)</span><span class="r-val"
+                                    id="areaSqM">0</span></div>
+                            <div class="r-row"><span class="r-label">क्षेत्रफल (एकड़)</span><span class="r-val"
+                                    id="areaAcre">0</span></div>
+                            <div class="r-row"><span class="r-label">क्षेत्रफल (हेक्टेयर)</span><span class="r-val"
+                                    id="areaHectare">0</span></div>
+                            <div class="r-row"><span class="r-label">क्षेत्रफल (बीघा)</span><span class="r-val"
+                                    id="areaBigha">0</span></div>
+                            <div class="r-row"><span class="r-label">परिधि (मीटर)</span><span class="r-val"
+                                    id="perimeter">0</span></div>
+                        </div>
+                        <div class="polygon-hint" id="polygonInfo">📌 जमीन की सीमाओं पर क्लिक करते रहें। पहले बिंदु पर
+                            क्लिक करके बंद करें।</div>
+                    </aside>
+                    <div class="gps-map-wrap">
+                        <div id="map"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AGRI PANEL -->
+            <div class="service-panel" id="panel-agri">
+                <div class="agri-inner-tabs">
+                    <button class="agri-tab-btn active" onclick="openAgriTab('fertilizer',this)">🌱 Fertilizer</button>
+                    <button class="agri-tab-btn" onclick="openAgriTab('irrigation',this)">💧 Irrigation</button>
+                    <button class="agri-tab-btn" onclick="openAgriTab('bulk-density',this)">📊 Bulk Density</button>
+                    <button class="agri-tab-btn" onclick="openAgriTab('tree-dose',this)">🌳 Tree Dose</button>
+                    <button class="agri-tab-btn" onclick="openAgriTab('area',this)">📏 Area Converter</button>
+                </div>
+
+                <div id="fertilizer" class="agri-tab-content active">
+                    <h2 class="calc-title">🌾 Fertilizer Calculator</h2>
+                    <div class="form-row">
+                        <div class="agri-form-group"><label>Select State *</label><select id="state"
+                                onchange="loadDistricts()">
+                                <option value="">-- Choose State --</option>
+                            </select></div>
+                        <div class="agri-form-group"><label>Select District *</label><select id="district">
+                                <option value="">-- Choose District --</option>
+                            </select></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="agri-form-group"><label>Select Crop *</label><select id="crop">
+                                <option value="">-- Choose Crop --</option>
+                            </select></div>
+                        <div class="agri-form-group"><label>Soil Type *</label><select id="soil">
+                                <option value="">-- Choose Soil --</option>
+                            </select></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="agri-form-group"><label>Area – Acres</label><input type="number" id="acres"
+                                placeholder="0" step="0.01" oninput="convertArea('acres')"></div>
+                        <div class="agri-form-group"><label>Area – Hectares</label><input type="number" id="hectares"
+                                placeholder="0" step="0.01" oninput="convertArea('hectares')"></div>
+                        <div class="agri-form-group"><label>Area – Bigha</label><input type="number" id="bigha"
+                                placeholder="0" step="0.01" oninput="convertArea('bigha')"></div>
+                    </div>
+                    <button class="btn-calc" onclick="calculateFertilizer()">Calculate Fertilizer</button>
+                    <div id="fertilizerResult" class="result-box"></div>
+                </div>
+
+                <div id="irrigation" class="agri-tab-content">
+                    <h2 class="calc-title">💧 Irrigation Calculator</h2>
+                    <div class="form-row">
+                        <div class="agri-form-group"><label>Select Crop *</label><select id="irrigCrop">
+                                <option value="">-- Choose --</option>
+                                <option value="wheat">Wheat</option>
+                                <option value="rice">Rice</option>
+                                <option value="cotton">Cotton</option>
+                                <option value="sugarcane">Sugarcane</option>
+                                <option value="maize">Maize</option>
+                                <option value="vegetables">Vegetables</option>
+                            </select></div>
+                        <div class="agri-form-group"><label>Irrigation Method *</label><select id="irrigMethod">
+                                <option value="">-- Choose --</option>
+                                <option value="drip">Drip</option>
+                                <option value="sprinkler">Sprinkler</option>
+                                <option value="flood">Flood</option>
+                                <option value="furrow">Furrow</option>
+                            </select></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="agri-form-group"><label>Field Area (Acres) *</label><input type="number"
+                                id="irrigArea" placeholder="Enter area" step="0.1"></div>
+                        <div class="agri-form-group"><label>Soil Type *</label><select id="soilType">
+                                <option value="sandy">Sandy</option>
+                                <option value="loamy">Loamy</option>
+                                <option value="clay">Clay</option>
+                            </select></div>
+                    </div>
+                    <button class="btn-calc" onclick="calculateIrrigation()">Calculate Irrigation</button>
+                    <div id="irrigationResult" class="result-box"></div>
+                </div>
+
+                <div id="bulk-density" class="agri-tab-content">
+                    <h2 class="calc-title">📊 Bulk Density Calculator</h2>
+                    <div class="form-row">
+                        <div class="agri-form-group"><label>Soil Weight (g) *</label><input type="number"
+                                id="soilWeight" placeholder="Enter weight" step="0.01"></div>
+                        <div class="agri-form-group"><label>Soil Volume (cm³) *</label><input type="number"
+                                id="soilVolume" placeholder="Enter volume" step="0.01"></div>
+                    </div>
+                    <div class="info-note"><strong>Note:</strong> Bulk Density = Weight ÷ Volume (g/cm³)</div>
+                    <button class="btn-calc" style="margin-top:18px" onclick="calculateBulkDensity()">Calculate</button>
+                    <div id="bulkDensityResult" class="result-box"></div>
+                </div>
+
+                <div id="tree-dose" class="agri-tab-content">
+                    <h2 class="calc-title">🌳 Tree Fertilizer Dose</h2>
+                    <div class="agri-form-group"><label>Select Tree Type *</label>
+                        <div class="tree-grid" id="treeGrid"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="agri-form-group"><label>Tree Age (Days) *</label><input type="number" id="treeAge"
+                                placeholder="Enter age"></div>
+                        <div class="agri-form-group"><label>Number of Trees</label><input type="number" id="treeCount"
+                                placeholder="1" value="1"></div>
+                    </div>
+                    <button class="btn-calc" onclick="calculateTreeDose()">Calculate Tree Dose</button>
+                    <div id="treeDoseResult" class="result-box"></div>
+                </div>
+
+                <div id="area" class="agri-tab-content">
+                    <h2 class="calc-title">📏 Area Converter</h2>
+                    <div class="form-row">
+                        <div class="agri-form-group"><label>Enter Value *</label><input type="number" id="areaValue"
+                                placeholder="Enter value" step="0.0001" oninput="convertAllAreas()"></div>
+                        <div class="agri-form-group"><label>From Unit *</label>
+                            <select id="fromUnit" onchange="convertAllAreas()">
+                                <option value="acre">Acre</option>
+                                <option value="hectare">Hectare</option>
+                                <option value="bigha">Bigha</option>
+                                <option value="sqmeter">Sq. Meter</option>
+                                <option value="sqfoot">Sq. Feet</option>
+                                <option value="katha">Katha</option>
+                                <option value="guntha">Guntha</option>
+                                <option value="biswa">Biswa</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="areaResult" class="result-box"></div>
+                </div>
+            </div>
+        </div>
+        <div id="footer-services"></div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+     PAGE: PRESS
+═══════════════════════════════════════ -->
+    <div class="page" id="page-press">
+        <div class="press-bg">
+            <section class="press-hero">
+                <h1>B.L. Verdantix Press Center</h1>
+                <p>Stay up to date with the latest press releases and media coverage about B.L. Verdantix</p>
+            </section>
+            <div class="press-container">
+                <div class="press-grid" id="pressGrid"></div>
+            </div>
+        </div>
+        <div id="footer-press"></div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+     PAGE: PROFILE
+═══════════════════════════════════════ -->
+    <div class="page" id="page-profile">
+        <div class="profile-bg">
+            <div class="glow-orb orb1"></div>
+            <div class="glow-orb orb2"></div>
+            <div class="glow-orb orb3"></div>
+            <div class="profile-wrapper">
+                <div class="top-label">
+                    <div class="line"></div>
+                    <span id="topLabel">Profile Setup</span>
+                    <div class="line"
+                        style="background:linear-gradient(90deg,transparent,var(--cyan));transform:scaleX(-1)"></div>
+                </div>
+                <div class="profile-card">
+                    <div class="success-screen" id="successScreen">
+                        <div class="success-ring">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <defs>
+                                    <linearGradient id="cg" x1="0" y1="0" x2="1" y2="1">
+                                        <stop offset="0%" stop-color="#00d4ff" />
+                                        <stop offset="100%" stop-color="#00f5c3" />
+                                    </linearGradient>
+                                </defs>
+                                <polyline points="20 6 9 17 4 12" stroke="url(#cg)" />
+                            </svg>
+                        </div>
+                        <h2 id="s_title">Profile <em>Submitted!</em></h2>
+                        <p id="s_desc">Your data has been sent to the admin. You'll receive a confirmation shortly.</p>
+                        <div class="profile-preview" id="previewBox">
+                            <img src="" id="previewPic" class="preview-pic" alt="" />
+                            <div class="preview-info"><strong id="previewName"></strong><span id="previewEmail"></span>
+                            </div>
+                        </div>
+                        <button class="btn-new" onclick="resetProfileForm()" id="s_btn">+ New Profile | नई
+                            प्रोफाइल</button>
+                    </div>
+                    <div id="profileFormArea">
+                        <div class="card-head">
+                            <div class="head-text">
+                                <h1 id="h_title">Create Your <em>Profile</em></h1>
+                                <p id="h_sub">Fill in your details • नीचे जानकारी भरें</p>
+                            </div>
+                            <div class="lang-pill">
+                                <button class="active" id="btnEn" onclick="setLang('en')">EN</button>
+                                <button id="btnHi" onclick="setLang('hi')">हिं</button>
+                            </div>
+                        </div>
+                        <div class="avatar-row">
+                            <div class="avatar-ring" onclick="document.getElementById('photoInput').click()">
+                                <div class="avatar-inner">
+                                    <div class="avatar-placeholder" id="avatarPlaceholder">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                                            <circle cx="12" cy="7" r="4" />
+                                        </svg>
+                                        <span>PHOTO</span>
+                                    </div>
+                                    <img id="avatarImg" src="" style="display:none" alt="preview" />
+                                </div>
+                            </div>
+                            <div class="avatar-info">
+                                <h3 id="a_title">Your Photo</h3>
+                                <p id="a_sub">JPG, PNG • Max 5MB</p>
+                                <div class="upload-chip" onclick="document.getElementById('photoInput').click()">
+                                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2.5">
+                                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                                        <polyline points="17 8 12 3 7 8" />
+                                        <line x1="12" y1="3" x2="12" y2="15" />
+                                    </svg>
+                                    <span id="a_btn">Upload Photo</span>
+                                </div>
+                            </div>
+                            <input type="file" id="photoInput" accept="image/*" onchange="previewPhoto(event)" />
+                        </div>
+                        <div class="profile-form-body">
+                            <div class="sec-title"><span id="sec1">Basic Info</span></div>
+                            <div class="profile-field"><label><span class="dot"></span><span id="lbl_name">Full
+                                        Name</span></label><input type="text" id="inp_name"
+                                    placeholder="Enter your full name | पूरा नाम" required /></div>
+                            <div class="prow2">
+                                <div class="profile-field"><label><span class="dot"></span><span
+                                            id="lbl_age">Age</span></label><input type="number" id="inp_age"
+                                        placeholder="25" min="1" max="120" /></div>
+                                <div class="profile-field"><label><span class="dot"></span><span
+                                            id="lbl_phone">Phone</span></label><input type="tel" id="inp_phone"
+                                        placeholder="+91 98765 43210" /></div>
+                            </div>
+                            <div class="sec-title" style="margin-top:8px"><span id="sec2">Contact Info</span></div>
+                            <div class="profile-field"><label><span class="dot"></span><span
+                                        id="lbl_gmail">Gmail</span></label><input type="email" id="inp_email"
+                                    placeholder="yourname@gmail.com" required /></div>
+                            <div class="profile-field"><label><span class="dot"></span><span
+                                        id="lbl_address">Address</span></label><textarea id="inp_address"
+                                    placeholder="Full address | पूरा पता" required></textarea></div>
+                            <div class="btn-wrap">
+                                <button class="btn-submit" id="submitBtn" onclick="submitProfileForm()">
+                                    <span class="btn-inner">
+                                        <div class="spin-anim" id="pSpinner"></div>
+                                        <span id="btnText">Submit Profile | प्रोफाइल जमा करें</span>
+                                        <span id="btnArrow">→</span>
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="progress-dots">
+                                <div class="pdot active" id="pd1"></div>
+                                <div class="pdot" id="pd2"></div>
+                                <div class="pdot" id="pd3"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+     AI CHATBOT
+═══════════════════════════════════════ -->
+    <button class="ai-chat-button" id="aiChatButton"><span style="font-size:40px">✨</span></button>
+    <div class="ai-chat-window" id="aiChatWindow">
+        <div class="ai-chat-header">
+            <h3><span class="ai-header-icon">🤖</span>किसान सहायता AI</h3>
+            <button class="ai-close-btn" id="aiCloseChat">&times;</button>
+        </div>
+        <div class="ai-chat-messages" id="aiChatMessages">
+            <div class="ai-message bot">
+                <div class="ai-message-bubble"><span class="ai-bot-avatar">🌾</span>नमस्ते! 🙏<br>मैं आपकी सहायता के लिए
+                    यहाँ हूँ।<br>कृपया अपनी समस्या पूछें।</div>
+            </div>
+        </div>
+        <div class="ai-typing-indicator" id="aiTypingIndicator">
+            <div class="ai-message bot">
+                <div class="ai-message-bubble"><span></span><span></span><span></span></div>
+            </div>
+        </div>
+        <div class="ai-chat-input-area">
+            <input type="text" class="ai-chat-input" id="aiChatInput" placeholder="अपनी समस्या यहाँ लिखें..."
+                autocomplete="off">
+            <button class="ai-send-btn" id="aiSendBtn">➤</button>
+        </div>
+    </div>
+
+    <!-- External Libraries -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
+    <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
+    <!-- Main Script -->
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services - B.L. Verdantix</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@400;500;600;700&display=swap');
+
+        :root {
+            --green-dark: #0f4c3a;
+            --green-mid: #1a7f5a;
+            --green-light: #2d8f5f;
+            --green-accent: #52b788;
+            --green-pale: #d8f3dc;
+            --green-bg: #f1faee;
+            --gold: #f0c040;
+            --gold-light: #ffdd88;
+            --text-dark: #1a2e1a;
+            --text-mid: #3d5a3d;
+            --text-light: #6b8f6b;
+            --shadow: 0 8px 32px rgba(15, 76, 58, 0.18);
+            --shadow-hover: 0 14px 44px rgba(15, 76, 58, 0.28);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #e8f5e9;
+            min-height: 100vh;
+            color: var(--text-dark);
+        }
+
+        /* ─── HEADER ─── */
+        .top-header {
+            background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-mid) 60%, var(--green-light) 100%);
+            padding: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .top-header::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .top-header::after {
+            content: '';
+            position: absolute;
+            bottom: -40px;
+            left: -40px;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .header-inner {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 28px 24px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-svg {
+            width: 58px;
+            height: 58px;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            padding: 6px;
+            backdrop-filter: blur(4px);
+        }
+
+        .brand-text .company-tag {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 2px;
+            line-height: 1.1;
+        }
+
+        .brand-text .company-tag span {
+            color: var(--gold);
+        }
+
+        .brand-text .company-sub {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.65);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        .header-center {
+            text-align: center;
+            flex: 1;
+            padding: 0 20px;
+        }
+
+        .header-center .services-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: 30px;
+            padding: 5px 22px;
+            font-size: 11px;
+            color: var(--gold);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 10px;
+            backdrop-filter: blur(6px);
+        }
+
+        .header-center h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 34px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .header-center h1 span {
+            color: var(--gold);
+        }
+
+        .header-center p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .logo-right-wrap {
+            width: 58px;
+        }
+
+        /* ─── MAIN SERVICE TABS ─── */
+        .service-nav {
+            max-width: 1300px;
+            margin: -22px auto 0;
+            padding: 0 24px;
+            position: relative;
+            z-index: 10;
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+        }
+
+        .service-tab {
+            background: #fff;
+            border: none;
+            border-radius: 14px 14px 0 0;
+            padding: 14px 32px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-mid);
+            cursor: pointer;
+            box-shadow: 0 -2px 12px rgba(15, 76, 58, 0.10);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            position: relative;
+        }
+
+        .service-tab .tab-icon {
+            font-size: 19px;
+        }
+
+        .service-tab:hover {
+            color: var(--green-dark);
+            background: #fff;
+        }
+
+        .service-tab.active {
+            background: #fff;
+            color: var(--green-dark);
+            box-shadow: 0 -4px 16px rgba(15, 76, 58, 0.15);
+        }
+
+        .service-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--green-accent);
+            border-radius: 3px 3px 0 0;
+        }
+
+        /* ─── SERVICE PANELS ─── */
+        .service-panel {
+            display: none;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 24px 30px;
+            background: #fff;
+            border-radius: 0 18px 18px 18px;
+            box-shadow: var(--shadow);
+            min-height: 200px;
+        }
+
+        .service-panel.active {
+            display: block;
+        }
+
+        /* ═══════════════════════════════════════ */
+        /* PANEL A ── GPS LAND CALCULATOR          */
+        /* ═══════════════════════════════════════ */
+        .gps-layout {
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            gap: 0;
+        }
+
+        .gps-sidebar {
+            padding: 28px 24px;
+            border-right: 1px solid var(--green-pale);
+            background: var(--green-bg);
+            border-radius: 0 0 0 18px;
+        }
+
+        .gps-map-wrap {
+            height: 680px;
+            border-radius: 0 18px 18px 0;
+            overflow: hidden;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        .sidebar-instructions {
+            background: #fff;
+            border: 1px solid var(--green-pale);
+            border-radius: 10px;
+            padding: 14px 16px;
+            margin-bottom: 18px;
+        }
+
+        .sidebar-instructions h4 {
+            color: var(--green-dark);
+            font-size: 13px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .sidebar-instructions ol {
+            margin-left: 18px;
+            font-size: 12px;
+            color: var(--text-mid);
+            line-height: 1.8;
+        }
+
+        .gps-input-row {
+            margin-bottom: 12px;
+        }
+
+        .gps-input-row label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--green-dark);
+            margin-bottom: 5px;
+        }
+
+        .gps-input-row input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid var(--green-pale);
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: 'Poppins', sans-serif;
+            transition: border-color .25s;
+        }
+
+        .gps-input-row input:focus {
+            outline: none;
+            border-color: var(--green-accent);
+        }
+
+        .gps-btn-row {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .gps-btn {
+            width: 100%;
+            padding: 11px 14px;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform .2s, box-shadow .2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+        }
+
+        .gps-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
+        }
+
+        .gps-btn.primary {
+            background: linear-gradient(135deg, var(--green-dark), var(--green-mid));
+            color: #fff;
+        }
+
+        .gps-btn.success {
+            background: var(--green-accent);
+            color: #fff;
+        }
+
+        .gps-btn.warning {
+            background: #f0a030;
+            color: #fff;
+        }
+
+        .gps-btn.danger {
+            background: #e05555;
+            color: #fff;
+        }
+
+        .loading-text {
+            display: none;
+            text-align: center;
+            color: var(--green-mid);
+            font-size: 13px;
+            padding: 6px 0;
+        }
+
+        .loading-text.show {
+            display: block;
+        }
+
+        .gps-result-card {
+            display: none;
+            background: linear-gradient(135deg, var(--green-dark), var(--green-mid));
+            border-radius: 12px;
+            padding: 18px;
+            color: #fff;
+            margin-top: 16px;
+        }
+
+        .gps-result-card.show {
+            display: block;
+        }
+
+        .gps-result-card .r-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 7px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, .18);
+        }
+
+        .gps-result-card .r-row:last-child {
+            border-bottom: none;
+        }
+
+        .gps-result-card .r-label {
+            font-size: 11px;
+            opacity: .8;
+        }
+
+        .gps-result-card .r-val {
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .polygon-hint {
+            display: none;
+            background: #fff3cd;
+            border: 1px solid #ffe08a;
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-size: 12px;
+            color: #7a5a00;
+            margin-top: 10px;
+        }
+
+        .polygon-hint.show {
+            display: block;
+        }
+
+        /* ═══════════════════════════════════════ */
+        /* PANEL B ── AGRICULTURE CALCULATORS      */
+        /* ═══════════════════════════════════════ */
+        .agri-inner-tabs {
+            display: flex;
+            border-bottom: 2px solid var(--green-pale);
+            background: var(--green-bg);
+            border-radius: 18px 18px 0 0;
+            overflow: hidden;
+            flex-wrap: wrap;
+        }
+
+        .agri-tab-btn {
+            flex: 1;
+            min-width: 120px;
+            padding: 15px 10px;
+            border: none;
+            background: transparent;
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-mid);
+            cursor: pointer;
+            transition: all .25s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .agri-tab-btn:hover {
+            background: rgba(82, 183, 136, .08);
+        }
+
+        .agri-tab-btn.active {
+            background: #fff;
+            color: var(--green-dark);
+            border-bottom-color: var(--green-accent);
+        }
+
+        .agri-tab-content {
+            display: none;
+            padding: 32px 36px 28px;
+        }
+
+        .agri-tab-content.active {
+            display: block;
+        }
+
+        .calc-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            color: var(--green-dark);
+            margin-bottom: 22px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--green-pale);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            margin-bottom: 18px;
+        }
+
+        .form-group {
+            margin-bottom: 4px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--green-dark);
+            margin-bottom: 6px;
+        }
+
+        .form-group select,
+        .form-group input {
+            width: 100%;
+            padding: 11px 14px;
+            border: 2px solid var(--green-pale);
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            background: var(--green-bg);
+            transition: all .25s;
+        }
+
+        .form-group select:focus,
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--green-accent);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(82, 183, 136, .12);
+        }
+
+        .btn-calc {
+            padding: 13px 36px;
+            background: linear-gradient(135deg, var(--green-dark), var(--green-accent));
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: .6px;
+            transition: transform .2s, box-shadow .2s;
+            box-shadow: 0 4px 14px rgba(15, 76, 58, .25);
+        }
+
+        .btn-calc:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(15, 76, 58, .35);
+        }
+
+        .result-box {
+            display: none;
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            border-left: 5px solid var(--green-dark);
+            border-radius: 10px;
+            padding: 24px 22px;
+            margin-top: 24px;
+            animation: slideIn .4s ease-out;
+        }
+
+        .result-box.show {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .result-box h3 {
+            color: var(--green-dark);
+            font-size: 18px;
+            margin-bottom: 16px;
+        }
+
+        .result-item {
+            background: #fff;
+            padding: 11px 16px;
+            margin-bottom: 9px;
+            border-radius: 7px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, .07);
+        }
+
+        .result-label {
+            color: #555;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .result-value {
+            color: var(--green-dark);
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .total-cost {
+            background: var(--green-dark);
+            color: #fff;
+            padding: 16px;
+            border-radius: 9px;
+            margin-top: 12px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .info-note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 12px 14px;
+            margin-top: 16px;
+            border-radius: 5px;
+            color: #7a5a00;
+            font-size: 13px;
+        }
+
+        /* Tree grid */
+        .tree-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+            margin-bottom: 18px;
+            max-height: 280px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .tree-grid::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .tree-grid::-webkit-scrollbar-thumb {
+            background: var(--green-pale);
+            border-radius: 3px;
+        }
+
+        .tree-card {
+            background: var(--green-bg);
+            border: 2px solid var(--green-pale);
+            border-radius: 10px;
+            padding: 12px 6px;
+            text-align: center;
+            cursor: pointer;
+            transition: all .22s;
+        }
+
+        .tree-card:hover {
+            border-color: var(--green-accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(82, 183, 136, .25);
+        }
+
+        .tree-card.selected {
+            background: var(--green-accent);
+            color: #fff;
+            border-color: var(--green-dark);
+        }
+
+        .tree-card .t-icon {
+            font-size: 28px;
+        }
+
+        .tree-card .t-name {
+            font-size: 11px;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        /* ─── FOOTER ─── */
+        .footer {
+            background: linear-gradient(135deg, var(--green-dark) 0%, #0a3528 100%);
+            padding: 44px 24px 28px;
+            margin-top: 32px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(82, 183, 136, .12) 0%, transparent 70%);
+        }
+
+        .footer-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .footer h3 {
+            font-family: 'Playfair Display', serif;
+            color: #fff;
+            font-size: 22px;
+            margin-bottom: 4px;
+        }
+
+        .footer .tagline {
+            color: rgba(255, 255, 255, .5);
+            font-size: 13px;
+            font-style: italic;
+            margin-bottom: 18px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-top: 18px;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            color: #fff;
+            text-decoration: none;
+            transition: transform .25s, box-shadow .25s;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, .2);
+        }
+
+        .social-link:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, .3);
+        }
+
+        .social-link.instagram {
+            background: linear-gradient(135deg, #f09433, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888);
+        }
+
+        .social-link.linkedin {
+            background: #0077b5;
+        }
+
+        .social-link.twitter {
+            background: #1da1f2;
+        }
+
+        .social-link.facebook {
+            background: #1877f2;
+        }
+
+        .social-link.youtube {
+            background: #ff0000;
+        }
+
+        .copyright {
+            margin-top: 22px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(255, 255, 255, .12);
+            color: rgba(255, 255, 255, .4);
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 900px) {
+            .gps-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .gps-sidebar {
+                border-right: none;
+                border-bottom: 1px solid var(--green-pale);
+                border-radius: 0;
+            }
+
+            .gps-map-wrap {
+                height: 460px;
+                border-radius: 0 0 18px 18px;
+            }
+
+            .header-inner {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .logo-right-wrap {
+                display: none;
+            }
+
+            .service-nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .agri-tab-content {
+                padding: 22px 18px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .header-center h1 {
+                font-size: 22px;
+            }
+
+            .service-tab {
+                padding: 11px 18px;
+                font-size: 13px;
+            }
+
+            .agri-inner-tabs {
+                justify-content: center;
+            }
+
+            .agri-tab-btn {
+                min-width: 100px;
+                font-size: 11px;
+                padding: 12px 6px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ════════ TOP HEADER ════════ -->
+    <header class="top-header">
+        <div class="header-inner">
+            <div class="logo-brand">
+                <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="46" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.3)"
+                        stroke-width="1.5" />
+                    <ellipse cx="50" cy="62" rx="22" ry="6" fill="#f0c040" opacity=".7" />
+                    <rect x="34" y="40" width="4" height="22" rx="2" fill="#52b788" />
+                    <circle cx="36" cy="38" r="5" fill="#52b788" />
+                    <rect x="44" y="34" width="4" height="28" rx="2" fill="#90ee90" />
+                    <circle cx="46" cy="32" r="6" fill="#2d8f5f" />
+                    <rect x="54" y="37" width="4" height="25" rx="2" fill="#52b788" />
+                    <circle cx="56" cy="35" r="5" fill="#90ee90" />
+                    <circle cx="72" cy="30" r="5" fill="#f0c040" />
+                    <line x1="72" y1="24" x2="72" y2="20" stroke="#f0c040" stroke-width="1.5" />
+                    <line x1="67" y1="30" x2="63" y2="30" stroke="#f0c040" stroke-width="1.5" />
+                    <line x1="77" y1="30" x2="81" y2="30" stroke="#f0c040" stroke-width="1.5" />
+                    <line x1="72" y1="36" x2="72" y2="40" stroke="#f0c040" stroke-width="1.5" />
+                </svg>
+                <div class="brand-text">
+                    <div class="company-tag">B.L. <span>VERDANTIX</span></div>
+                    <div class="company-sub">Agri Technologies</div>
+                </div>
+            </div>
+
+            <div class="header-center">
+                <div class="services-badge">⭐ हमारी सेवाएँ</div>
+                <h1>🌾 <span>Our Services</span></h1>
+                <p>GPS Technology और Smart Calculators के साथ खेती को आसान बनाएँ</p>
+            </div>
+
+            <div class="logo-right-wrap">
+                <svg width="58" height="58" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="46" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.2)"
+                        stroke-width="1.5" />
+                    <text x="50" y="58" text-anchor="middle" font-size="30" fill="#52b788">🌱</text>
+                </svg>
+            </div>
+        </div>
+    </header>
+
+    <!-- ════════ SERVICE NAV TABS ════════ -->
+    <nav class="service-nav">
+        <button class="service-tab active" onclick="switchService('gps')" id="tab-gps">
+            <span class="tab-icon">🗺️</span> भूमि क्षेत्रफल कैलकुलेटर
+        </button>
+        <button class="service-tab" onclick="switchService('agri')" id="tab-agri">
+            <span class="tab-icon">🌱</span> कृषि कैलकुलेटर
+        </button>
+    </nav>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!-- SERVICE PANEL A  ── GPS LAND CALCULATOR     -->
+    <!-- ════════════════════════════════════════════ -->
+    <div class="service-panel active" id="panel-gps">
+        <div class="gps-layout">
+            <!-- Sidebar -->
+            <aside class="gps-sidebar">
+                <div class="sidebar-instructions">
+                    <h4>📋 कैसे उपयोग करें:</h4>
+                    <ol>
+                        <li>अपनी लोकेशन सर्च करें या GPS से खोजें</li>
+                        <li>"जमीन मापना शुरू करें" बटन दबाएँ</li>
+                        <li>Map पर जमीन की सीमा पर क्लिक करें</li>
+                        <li>सभी कोनों को मार्क करें</li>
+                        <li>पहले बिंदु पर वापस क्लिक करके बंद करें</li>
+                    </ol>
+                </div>
+
+                <div class="gps-input-row">
+                    <label>📍 स्थान खोजें (गांव, शहर, जिला)</label>
+                    <input type="text" id="searchLocation" placeholder="उदाहरण: मेरठ, उत्तर प्रदेश"
+                        onkeypress="if(event.key==='Enter') searchLocation()">
+                </div>
+
+                <div class="gps-btn-row">
+                    <button class="gps-btn primary" onclick="searchLocation()">🔍 स्थान खोजें</button>
+                    <button class="gps-btn success" onclick="getCurrentLocation()">📍 अपनी लोकेशन खोजें</button>
+                    <div class="loading-text" id="loading">⏳ लोड हो रहा है...</div>
+                    <button class="gps-btn warning" onclick="startDrawing()">✏️ जमीन मापना शुरू करें</button>
+                    <button class="gps-btn danger" onclick="clearAll()">🗑️ सब मिटाएँ</button>
+                </div>
+
+                <div class="gps-result-card" id="resultCard">
+                    <div class="r-row"><span class="r-label">क्षेत्रफल (वर्ग मीटर)</span><span class="r-val"
+                            id="areaSqM">0</span></div>
+                    <div class="r-row"><span class="r-label">क्षेत्रफल (एकड़)</span><span class="r-val"
+                            id="areaAcre">0</span></div>
+                    <div class="r-row"><span class="r-label">क्षेत्रफल (हेक्टेयर)</span><span class="r-val"
+                            id="areaHectare">0</span></div>
+                    <div class="r-row"><span class="r-label">क्षेत्रफल (बीघा)</span><span class="r-val"
+                            id="areaBigha">0</span></div>
+                    <div class="r-row"><span class="r-label">परिधि (मीटर)</span><span class="r-val"
+                            id="perimeter">0</span></div>
+                </div>
+
+                <div class="polygon-hint" id="polygonInfo">
+                    📌 <strong>निर्देश:</strong> जमीन की सीमाओं पर क्लिक करते रहें। पूरा करने के लिए पहले बिंदु पर वापस
+                    क्लिक करें।
+                </div>
+            </aside>
+
+            <!-- Map -->
+            <div class="gps-map-wrap">
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!-- SERVICE PANEL B  ── AGRICULTURE CALCULATORS -->
+    <!-- ════════════════════════════════════════════ -->
+    <div class="service-panel" id="panel-agri">
+        <!-- Inner Tabs -->
+        <div class="agri-inner-tabs">
+            <button class="agri-tab-btn active" onclick="openAgriTab('fertilizer', this)">🌱 Fertilizer</button>
+            <button class="agri-tab-btn" onclick="openAgriTab('irrigation', this)">💧 Irrigation</button>
+            <button class="agri-tab-btn" onclick="openAgriTab('bulk-density', this)">📊 Bulk Density</button>
+            <button class="agri-tab-btn" onclick="openAgriTab('tree-dose', this)">🌳 Tree Dose</button>
+            <button class="agri-tab-btn" onclick="openAgriTab('area', this)">📏 Area Converter</button>
+        </div>
+
+        <!-- 1. FERTILIZER -->
+        <div id="fertilizer" class="agri-tab-content active">
+            <h2 class="calc-title">🌾 Fertilizer Calculator</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Select State *</label>
+                    <select id="state" onchange="loadDistricts()">
+                        <option value="">-- Choose State --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Select District *</label>
+                    <select id="district">
+                        <option value="">-- Choose District --</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Select Crop *</label>
+                    <select id="crop">
+                        <option value="">-- Choose Crop --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Select Soil Type *</label>
+                    <select id="soil">
+                        <option value="">-- Choose Soil Type --</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Field Area – Acres</label>
+                    <input type="number" id="acres" placeholder="0" step="0.01" oninput="convertArea('acres')">
+                </div>
+                <div class="form-group">
+                    <label>Field Area – Hectares</label>
+                    <input type="number" id="hectares" placeholder="0" step="0.01" oninput="convertArea('hectares')">
+                </div>
+                <div class="form-group">
+                    <label>Field Area – Bigha</label>
+                    <input type="number" id="bigha" placeholder="0" step="0.01" oninput="convertArea('bigha')">
+                </div>
+            </div>
+            <button class="btn-calc" onclick="calculateFertilizer()">Calculate Fertilizer Requirement</button>
+            <div id="fertilizerResult" class="result-box"></div>
+        </div>
+
+        <!-- 2. IRRIGATION -->
+        <div id="irrigation" class="agri-tab-content">
+            <h2 class="calc-title">💧 Irrigation Calculator</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Select Crop *</label>
+                    <select id="irrigCrop">
+                        <option value="">-- Choose Crop --</option>
+                        <option value="wheat">Wheat</option>
+                        <option value="rice">Rice</option>
+                        <option value="cotton">Cotton</option>
+                        <option value="sugarcane">Sugarcane</option>
+                        <option value="maize">Maize</option>
+                        <option value="vegetables">Vegetables</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Irrigation Method *</label>
+                    <select id="irrigMethod">
+                        <option value="">-- Choose Method --</option>
+                        <option value="drip">Drip Irrigation</option>
+                        <option value="sprinkler">Sprinkler</option>
+                        <option value="flood">Flood / Surface</option>
+                        <option value="furrow">Furrow</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Field Area (Acres) *</label>
+                    <input type="number" id="irrigArea" placeholder="Enter area" step="0.1">
+                </div>
+                <div class="form-group">
+                    <label>Soil Type *</label>
+                    <select id="soilType">
+                        <option value="sandy">Sandy</option>
+                        <option value="loamy">Loamy</option>
+                        <option value="clay">Clay</option>
+                    </select>
+                </div>
+            </div>
+            <button class="btn-calc" onclick="calculateIrrigation()">Calculate Irrigation Needs</button>
+            <div id="irrigationResult" class="result-box"></div>
+        </div>
+
+        <!-- 3. BULK DENSITY -->
+        <div id="bulk-density" class="agri-tab-content">
+            <h2 class="calc-title">📊 Bulk Density Calculator</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Soil Weight (grams) *</label>
+                    <input type="number" id="soilWeight" placeholder="Enter weight in grams" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label>Soil Volume (cm³) *</label>
+                    <input type="number" id="soilVolume" placeholder="Enter volume" step="0.01">
+                </div>
+            </div>
+            <div class="info-note"><strong>Note:</strong> Bulk Density = Weight (g) ÷ Volume (cm³) = g/cm³</div>
+            <button class="btn-calc" style="margin-top:18px" onclick="calculateBulkDensity()">Calculate Bulk
+                Density</button>
+            <div id="bulkDensityResult" class="result-box"></div>
+        </div>
+
+        <!-- 4. TREE DOSE -->
+        <div id="tree-dose" class="agri-tab-content">
+            <h2 class="calc-title">🌳 Tree Fertilizer Dose Calculator</h2>
+            <div class="form-group">
+                <label>Select Tree Type *</label>
+                <div class="tree-grid" id="treeGrid"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Tree Age (Days) *</label>
+                    <input type="number" id="treeAge" placeholder="Enter age in days">
+                </div>
+                <div class="form-group">
+                    <label>Number of Trees</label>
+                    <input type="number" id="treeCount" placeholder="1" value="1">
+                </div>
+            </div>
+            <button class="btn-calc" onclick="calculateTreeDose()">Calculate Tree Dose</button>
+            <div id="treeDoseResult" class="result-box"></div>
+        </div>
+
+        <!-- 5. AREA CONVERTER -->
+        <div id="area" class="agri-tab-content">
+            <h2 class="calc-title">📏 Agricultural Area Converter</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Enter Value *</label>
+                    <input type="number" id="areaValue" placeholder="Enter area value" step="0.0001"
+                        oninput="convertAllAreas()">
+                </div>
+                <div class="form-group">
+                    <label>From Unit *</label>
+                    <select id="fromUnit" onchange="convertAllAreas()">
+                        <option value="acre">Acre</option>
+                        <option value="hectare">Hectare</option>
+                        <option value="bigha">Bigha</option>
+                        <option value="sqmeter">Square Meter</option>
+                        <option value="sqfoot">Square Feet</option>
+                        <option value="katha">Katha</option>
+                        <option value="guntha">Guntha</option>
+                        <option value="biswa">Biswa</option>
+                    </select>
+                </div>
+            </div>
+            <div id="areaResult" class="result-box"></div>
+        </div>
+    </div>
+
+    <!-- ════════ FOOTER ════════ -->
+    <footer class="footer">
+        <div class="footer-content">
+            <h3>B.L. VERDANTIX</h3>
+            <p class="tagline">Smart Farming · Sustainable Future</p>
+            <div class="social-links">
+                <a href="https://www.instagram.com/b.l.verdantixagri2026?igsh=MWFmM3E4NGRwdmZl"
+                    class="social-link instagram" title="Instagram">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                    </svg>
+                </a>
+                <a href="https://www.linkedin.com/company/b-l-verdantix-agri-2026" class="social-link linkedin"
+                    title="LinkedIn">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                    </svg>
+                </a>
+                <a href="https://x.com/verdantixa97632" class="social-link twitter" title="Twitter / X">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
+                    </svg>
+                </a>
+                <a href="https://www.facebook.com/share/1KC5CAfjHD/" class="social-link facebook" title="Facebook">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    </svg>
+                </a>
+                <a href="https://www.youtube.com/@verdantixagri2026" class="social-link youtube" title="YouTube">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                    </svg>
+                </a>
+            </div>
+            <div class="copyright">
+                <p>© 2026 B.L. Verdantix Agri Technologies. All Rights Reserved.</p>
+                <p>Smart Farming · Sustainable Future</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ═══════════════ SCRIPTS ═══════════════ -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
+    <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
+    <script>
+        // ─────────────────────────────────────────────
+        // SERVICE PANEL SWITCHER
+        // ─────────────────────────────────────────────
+        function switchService(id) {
+            document.querySelectorAll('.service-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.service-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById('panel-' + id).classList.add('active');
+            document.getElementById('tab-' + id).classList.add('active');
+            if (id === 'gps' && !mapInitialized) initMap();
+        }
+
+        // ─────────────────────────────────────────────
+        // GPS / LEAFLET MAP
+        // ─────────────────────────────────────────────
+        let map, drawnItems, drawControl, currentPolygon, mapInitialized = false;
+
+        function initMap() {
+            if (mapInitialized) return;
+            map = L.map('map').setView([20.5937, 78.9629], 5);
+            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                attribution: 'Tiles © Esri', maxZoom: 19
+            }).addTo(map);
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png', {
+                attribution: '', maxZoom: 19, subdomains: 'abcd'
+            }).addTo(map);
+            drawnItems = new L.FeatureGroup();
+            map.addLayer(drawnItems);
+
+            map.on(L.Draw.Event.CREATED, function (e) {
+                drawnItems.addLayer(e.layer);
+                currentPolygon = e.layer;
+                calculateGPSArea(e.layer);
+                document.getElementById('polygonInfo').classList.remove('show');
+            });
+            map.on(L.Draw.Event.EDITED, function (e) {
+                e.layers.eachLayer(layer => calculateGPSArea(layer));
+            });
+            mapInitialized = true;
+        }
+
+        // Auto-init map when page loads (GPS panel is active by default)
+        window.onload = function () {
+            initMap();
+            loadStates();
+            loadCrops();
+            loadSoilTypes();
+            loadTrees();
+        };
+
+        function getCurrentLocation() {
+            document.getElementById('loading').classList.add('show');
+            if (!navigator.geolocation) { alert('❌ आपका ब्राउज़र GPS सपोर्ट नहीं करता'); return; }
+            navigator.geolocation.getCurrentPosition(
+                pos => {
+                    map.setView([pos.coords.latitude, pos.coords.longitude], 16);
+                    L.marker([pos.coords.latitude, pos.coords.longitude], {
+                        icon: L.divIcon({ className: '', html: '📍', iconSize: [30, 30] })
+                    }).addTo(map).bindPopup('आपकी स्थिति').openPopup();
+                    document.getElementById('loading').classList.remove('show');
+                },
+                () => { alert('❌ लोकेशन नहीं मिली'); document.getElementById('loading').classList.remove('show'); },
+                { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+            );
+        }
+
+        async function searchLocation() {
+            const q = document.getElementById('searchLocation').value;
+            if (!q) { alert('कृपया स्थान का नाम डालें'); return; }
+            document.getElementById('loading').classList.add('show');
+            try {
+                const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q + ', India')}&limit=1`);
+                const data = await res.json();
+                if (data && data.length) {
+                    const lat = parseFloat(data[0].lat), lon = parseFloat(data[0].lon);
+                    map.setView([lat, lon], 15);
+                    L.marker([lat, lon], { icon: L.divIcon({ className: '', html: '📍', iconSize: [30, 30] }) })
+                        .addTo(map).bindPopup(data[0].display_name).openPopup();
+                } else alert('❌ स्थान नहीं मिला। कृपया दूसरा नाम try करें');
+            } catch (e) { alert('❌ खोज में समस्या आई'); }
+            document.getElementById('loading').classList.remove('show');
+        }
+
+        function startDrawing() {
+            document.getElementById('polygonInfo').classList.add('show');
+            if (drawControl) map.removeControl(drawControl);
+            drawControl = new L.Control.Draw({
+                draw: {
+                    polygon: {
+                        allowIntersection: false, showArea: true, metric: true,
+                        shapeOptions: { color: '#FF6B6B', fillColor: '#4ECDC4', fillOpacity: 0.4, weight: 3 }
+                    },
+                    polyline: false, rectangle: false, circle: false, marker: false, circlemarker: false
+                },
+                edit: { featureGroup: drawnItems, remove: true }
+            });
+            map.addControl(drawControl);
+            new L.Draw.Polygon(map, drawControl.options.draw.polygon).enable();
+        }
+
+        function calculateGPSArea(layer) {
+            const latlngs = layer.getLatLngs()[0];
+            const coords = latlngs.map(ll => [ll.lng, ll.lat]);
+            coords.push(coords[0]);
+            const poly = turf.polygon([coords]);
+            const area = turf.area(poly);
+            const perimeter = turf.length(poly, { units: 'meters' }) * 1000;
+
+            document.getElementById('areaSqM').textContent = area.toFixed(2);
+            document.getElementById('areaAcre').textContent = (area / 4046.86).toFixed(4);
+            document.getElementById('areaHectare').textContent = (area / 10000).toFixed(4);
+            document.getElementById('areaBigha').textContent = (area / 2529.29).toFixed(4);
+            document.getElementById('perimeter').textContent = perimeter.toFixed(2);
+            document.getElementById('resultCard').classList.add('show');
+
+            layer.bindPopup(`<strong>जमीन का क्षेत्रफल:</strong><br>
+        ${area.toFixed(2)} वर्ग मीटर<br>
+        ${(area / 4046.86).toFixed(4)} एकड़<br>
+        ${(area / 10000).toFixed(4)} हेक्टेयर<br>
+        ${(area / 2529.29).toFixed(4)} बीघा`).openPopup();
+        }
+
+        function clearAll() {
+            drawnItems.clearLayers();
+            document.getElementById('resultCard').classList.remove('show');
+            document.getElementById('polygonInfo').classList.remove('show');
+            if (drawControl) map.removeControl(drawControl);
+        }
+
+        // ─────────────────────────────────────────────
+        // AGRI INNER TABS
+        // ─────────────────────────────────────────────
+        function openAgriTab(name, btn) {
+            document.querySelectorAll('.agri-tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.agri-tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(name).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        // ─────────────────────────────────────────────
+        // AGRICULTURE DATA & LOGIC (same as original)
+        // ─────────────────────────────────────────────
+        const agriData = {
+            states: {
+                "Uttar Pradesh": ["Meerut", "Lucknow", "Kanpur", "Ghaziabad", "Agra", "Varanasi", "Prayagraj", "Bareilly", "Moradabad", "Aligarh", "Gorakhpur", "Saharanpur", "Noida", "Mathura", "Firozabad", "Bijnor", "Etawah", "Jhansi", "Rampur", "Shahjahanpur", "Ayodhya", "Bulandshahr", "Muzaffarnagar", "Sitapur", "Chandauli", "Amroha", "Lakhimpur Kheri", "Budaun", "Farrukhabad", "Hardoi", "Sultanpur", "Hapur", "Bahraich", "Kushinagar", "Deoria", "Gonda", "Sant Kabir Nagar", "Balrampur", "Barabanki", "Azamgarh", "Mirzapur", "Sonbhadra", "Kaushambi", "Pratapgarh", "Ambedkar Nagar", "Fatehpur", "Jalaun", "Mahoba", "Hamirpur", "Chitrakoot", "Hathras", "Kasganj", "Etah", "Mainpuri", "Jyotiba Phule Nagar", "Shamli", "Sambhal", "Amethi", "Sant Ravidas Nagar", "Banda", "Ghazipur", "Jaunpur", "Lalitpur", "Mau", "Pilibhit", "Shrawasti", "Unnao"],
+                "Punjab": ["Ludhiana", "Amritsar", "Jalandhar", "Patiala", "Bathinda", "Mohali", "Hoshiarpur", "Gurdaspur", "Ferozepur", "Sangrur", "Moga", "Barnala", "Pathankot", "Kapurthala", "Tarn Taran", "Rupnagar", "Fazilka", "Mansa", "SBS Nagar", "Malerkotla"],
+                "Haryana": ["Faridabad", "Gurgaon", "Hisar", "Rohtak", "Panipat", "Karnal", "Sonipat", "Yamunanagar", "Ambala", "Kurukshetra", "Jind", "Bhiwani", "Rewari", "Jhajjar", "Panchkula", "Kaithal", "Fatehabad", "Sirsa", "Charkhi Dadri", "Palwal", "Nuh", "Mahendragarh"],
+                "Maharashtra": ["Mumbai", "Pune", "Nagpur", "Nashik", "Aurangabad", "Solapur", "Kolhapur", "Ahmednagar", "Jalgaon", "Satara", "Amravati", "Latur", "Dhule", "Akola", "Chandrapur", "Parbhani", "Jalna", "Beed", "Buldhana", "Yavatmal", "Washim", "Hingoli", "Nanded", "Gondia", "Wardha", "Ratnagiri", "Sindhudurg", "Palghar", "Raigad", "Thane"],
+                "Madhya Pradesh": ["Indore", "Bhopal", "Jabalpur", "Gwalior", "Ujjain", "Sagar", "Ratlam", "Satna", "Dewas", "Rewa", "Chhindwara", "Bhind", "Vidisha", "Sehore", "Hoshangabad", "Damoh", "Shivpuri", "Mandsaur", "Neemuch", "Ashoknagar", "Burhanpur", "Dindori", "Alirajpur", "Anuppur", "Balaghat", "Betul", "Chhatarpur", "Datia", "Dhar", "Guna", "Harda", "Jhabua", "Katni", "Khandwa", "Khargone", "Mandla", "Morena", "Narsinghpur", "Panna", "Raisen", "Rajgarh", "Shahdol", "Shajapur", "Sheopur", "Sidhi", "Singrauli", "Tikamgarh"],
+                "Gujarat": ["Ahmedabad", "Surat", "Vadodara", "Rajkot", "Bhavnagar", "Jamnagar", "Junagadh", "Gandhinagar", "Anand", "Mehsana", "Nadiad", "Navsari", "Patan", "Porbandar", "Surendranagar", "Valsad", "Bharuch", "Dahod", "Dang", "Kheda", "Mahisagar", "Narmada", "Panchmahal", "Sabarkantha", "Tapi", "Aravalli", "Botad"],
+                "Rajasthan": ["Jaipur", "Jodhpur", "Kota", "Udaipur", "Ajmer", "Bikaner", "Alwar", "Bharatpur", "Sikar", "Pali", "Bhilwara", "Chittorgarh", "Dausa", "Dholpur", "Dungarpur", "Hanumangarh", "Jaisalmer", "Jalore", "Jhalawar", "Jhunjhunu", "Karauli", "Nagaur", "Pratapgarh", "Rajsamand", "Sawai Madhopur", "Tonk", "Baran", "Barmer", "Churu", "Ganganagar", "Sirohi"],
+                "Bihar": ["Patna", "Gaya", "Bhagalpur", "Muzaffarpur", "Purnia", "Darbhanga", "Arrah", "Begusarai", "Katihar", "Munger", "Saharsa", "Sitamarhi", "Siwan", "Nalanda", "Samastipur", "Buxar", "Chhapra", "Jehanabad", "Kishanganj", "Lakhisarai", "Madhepura", "Madhubani", "Nawada", "Rohtas", "Saran", "Sheikhpura", "Sheohar", "Vaishali"],
+                "West Bengal": ["Kolkata", "Howrah", "Durgapur", "Siliguri", "Asansol", "Bardhaman", "Malda", "Kharagpur", "Jalpaiguri", "Cooch Behar", "Darjeeling", "Bankura", "Birbhum", "Hooghly", "Nadia", "Murshidabad", "North 24 Parganas", "South 24 Parganas", "Purulia", "Paschim Medinipur", "Purba Medinipur", "Uttar Dinajpur", "Dakshin Dinajpur"],
+                "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai", "Tiruchirappalli", "Salem", "Erode", "Tiruppur", "Vellore", "Thoothukudi", "Dindigul", "Nagercoil", "Kanchipuram", "Thanjavur", "Cuddalore", "Nagapattinam", "Ramanathapuram", "Sivaganga", "Tirunelveli", "Viluppuram", "Virudhunagar"],
+                "Karnataka": ["Bengaluru", "Mysuru", "Hubli-Dharwad", "Mangalore", "Belagavi", "Davangere", "Ballari", "Vijayapura", "Tumakuru", "Kalaburagi", "Udupi", "Chikkamagaluru", "Mandya", "Chitradurga", "Hassan", "Raichur", "Bidar", "Shimoga", "Kolar", "Bagalkot", "Yadgir", "Chamarajanagar"],
+                "Andhra Pradesh": ["Visakhapatnam", "Vijayawada", "Guntur", "Nellore", "Kurnool", "Tirupati", "Rajahmundry", "Anantapur", "Kadapa", "Eluru", "Ongole", "Chittoor", "Srikakulam", "Vizianagaram", "Amaravati", "Nandyal", "Machilipatnam", "Tenali", "Proddatur", "Hindupur"],
+                "Telangana": ["Hyderabad", "Warangal", "Nizamabad", "Karimnagar", "Khammam", "Ramagundam", "Mahbubnagar", "Suryapet", "Adilabad", "Jagtial", "Siddipet", "Medak", "Nalgonda", "Bhadradri Kothagudem", "Mancherial", "Vikarabad", "Jangaon", "Yadadri Bhuvanagiri", "Nagarkurnool", "Wanaparthy"],
+                "Odisha": ["Bhubaneswar", "Cuttack", "Rourkela", "Berhampur", "Sambalpur", "Puri", "Balasore", "Bhadrak", "Baripada", "Koraput", "Jeypore", "Dhenkanal", "Keonjhar", "Jagatsinghpur", "Nayagarh", "Kendrapara", "Malkangiri", "Rayagada", "Sundargarh"],
+                "Chhattisgarh": ["Raipur", "Bhilai", "Bilaspur", "Durg", "Korba", "Rajnandgaon", "Jagdalpur", "Ambikapur", "Raigarh", "Dhamtari", "Kanker", "Mahasamund", "Jashpur", "Surguja", "Balod", "Bastar", "Dantewada", "Gariaband", "Kondagaon", "Mungeli", "Narayanpur", "Sukma"],
+                "Jharkhand": ["Ranchi", "Jamshedpur", "Dhanbad", "Bokaro", "Deoghar", "Hazaribagh", "Giridih", "Ramgarh", "Godda", "Dumka", "Pakur", "Saraikela-Kharsawan", "East Singhbhum", "West Singhbhum", "Lohardaga", "Latehar", "Chatra", "Palamu", "Garhwa", "Simdega", "Khunti", "Jamtara", "Sahebganj", "Koderma"],
+                "Assam": ["Guwahati", "Silchar", "Dibrugarh", "Jorhat", "Tezpur", "Nagaon", "Tinsukia", "Bongaigaon", "Barpeta", "Lakhimpur", "Cachar", "Dhemaji", "Dhubri", "Goalpara", "Hailakandi", "Karimganj", "Kamrup", "Morigaon", "Sivasagar", "Sonitpur", "Udalguri", "Chirang", "Baksa", "Darrang", "Golaghat", "Hojai", "Majuli", "Nalbari"],
+                "Himachal Pradesh": ["Shimla", "Dharamshala", "Mandi", "Solan", "Kullu", "Chamba", "Una", "Bilaspur", "Hamirpur", "Kangra", "Sirmaur", "Lahaul and Spiti", "Kinnaur"],
+                "Jammu & Kashmir": ["Srinagar", "Jammu", "Anantnag", "Baramulla", "Udhampur", "Kathua", "Rajouri", "Poonch", "Kupwara", "Kulgam", "Bandipora", "Ganderbal", "Doda", "Reasi", "Samba", "Kishtwar", "Leh", "Kargil"],
+                "Kerala": ["Thiruvananthapuram", "Kochi", "Kozhikode", "Thrissur", "Alappuzha", "Palakkad", "Kannur", "Malappuram", "Kollam", "Ernakulam", "Wayanad", "Idukki", "Pathanamthitta", "Kasargod", "Kottayam"],
+                "Goa": ["Panaji", "Margao", "Vasco da Gama", "Mapusa", "Ponda", "Bicholim", "Curchorem", "Canacona", "Sanguem", "Quepem", "North Goa", "South Goa"],
+                "Uttarakhand": ["Dehradun", "Haridwar", "Roorkee", "Nainital", "Haldwani", "Rishikesh", "Pauri", "Almora", "Rudrapur", "Kashipur", "Bageshwar", "Chamoli", "Champawat", "Pithoragarh", "Tehri", "Udham Singh Nagar", "Uttarkashi"],
+                "Tripura": ["Agartala", "Udaipur", "Dharmanagar", "Kailasahar", "Belonia", "Ambassa", "Khowai", "Sabroom", "Sonamura", "Dhalai"],
+                "Mizoram": ["Aizawl", "Lunglei", "Serchhip", "Champhai", "Kolasib", "Mamit", "Saiha", "Lawngtlai", "Hnahthial", "Saitual", "Khawzawl"],
+                "Nagaland": ["Kohima", "Dimapur", "Mokokchung", "Tuensang", "Wokha", "Zunheboto", "Phek", "Mon", "Kiphire", "Longleng", "Noklak"],
+                "Arunachal Pradesh": ["Itanagar", "Tawang", "Ziro", "Pasighat", "Bomdila", "Roing", "Naharlagun", "Seppa", "Daporijo", "Yingkiong", "Changlang", "Khonsa", "Namsai", "Anini", "Hayuliang", "Rupa", "Basar"],
+                "Manipur": ["Imphal", "Thoubal", "Churachandpur", "Bishnupur", "Senapati", "Ukhrul", "Tamenglong", "Chandel", "Jiribam", "Kakching", "Kamjong", "Noney", "Pherzawl"],
+                "Sikkim": ["Gangtok", "Namchi", "Geyzing", "Mangan", "Rangpo", "Pakyong", "Yuksom", "Soreng", "Rhenock"],
+                "Meghalaya": ["Shillong", "Tura", "Nongpoh", "Williamnagar", "Baghmara", "Resubelpara", "Jowai", "Nongstoin", "Ranikor", "Dawki", "Mawkyrwat", "Ampati"]
+            },
+            crops: {
+                "Wheat": { urea: 260, dap: 130, npk: 50 },
+                "Rice": { urea: 220, dap: 110, npk: 60 },
+                "Cotton": { urea: 325, dap: 130, npk: 75 },
+                "Sugarcane": { urea: 435, dap: 175, npk: 100 },
+                "Maize": { urea: 260, dap: 130, npk: 50 },
+                "Soybean": { urea: 65, dap: 175, npk: 50 },
+                "Potato": { urea: 325, dap: 175, npk: 125 },
+                "Tomato": { urea: 260, dap: 130, npk: 100 }
+            },
+            soilTypes: { "Loamy": 1.0, "Clay": 1.15, "Sandy": 1.25, "Silt": 1.1, "Red Soil": 1.2, "Black Soil": 0.95, "Alluvial": 1.0 },
+            prices: { urea: 6.5, dap: 27, npk: 18, pesticide: 350 },
+            trees: [
+                { name: "Mango", icon: "🥭", sn: "Mangifera indica" }, { name: "Apple", icon: "🍎", sn: "Malus domestica" }, { name: "Orange", icon: "🍊", sn: "Citrus sinensis" },
+                { name: "Banana", icon: "🍌", sn: "Musa" }, { name: "Guava", icon: "🍐", sn: "Psidium guajava" }, { name: "Papaya", icon: "🍈", sn: "Carica papaya" },
+                { name: "Coconut", icon: "🥥", sn: "Cocos nucifera" }, { name: "Lemon", icon: "🍋", sn: "Citrus limon" }, { name: "Pomegranate", icon: "🍒", sn: "Punica granatum" },
+                { name: "Grapes", icon: "🍇", sn: "Vitis vinifera" }, { name: "Litchi", icon: "🍑", sn: "Litchi chinensis" }, { name: "Jackfruit", icon: "🥝", sn: "Artocarpus heterophyllus" },
+                { name: "Neem", icon: "🌿", sn: "Azadirachta indica" }, { name: "Teak", icon: "🌳", sn: "Tectona grandis" }, { name: "Bamboo", icon: "🎋", sn: "Bambusoideae" },
+                { name: "Cashew", icon: "🌰", sn: "Anacardium occidentale" }, { name: "Almond", icon: "🥜", sn: "Prunus dulcis" }, { name: "Walnut", icon: "🌰", sn: "Juglans regia" },
+                { name: "Date Palm", icon: "🌴", sn: "Phoenix dactylifera" }, { name: "Olive", icon: "🫒", sn: "Olea europaea" }, { name: "Peach", icon: "🍑", sn: "Prunus persica" },
+                { name: "Plum", icon: "🍑", sn: "Prunus domestica" }, { name: "Cherry", icon: "🍒", sn: "Prunus avium" }, { name: "Apricot", icon: "🍑", sn: "Prunus armeniaca" },
+                { name: "Pear", icon: "🍐", sn: "Pyrus" }, { name: "Avocado", icon: "🥑", sn: "Persea americana" }, { name: "Fig", icon: "🍈", sn: "Ficus carica" },
+                { name: "Mulberry", icon: "🍇", sn: "Morus" }, { name: "Custard Apple", icon: "🍏", sn: "Annona" }, { name: "Sandalwood", icon: "🌲", sn: "Santalum album" },
+                { name: "Eucalyptus", icon: "🌲", sn: "Eucalyptus" }, { name: "Pine", icon: "🌲", sn: "Pinus" }, { name: "Mahogany", icon: "🌳", sn: "Swietenia" },
+                { name: "Rosewood", icon: "🌳", sn: "Dalbergia" }, { name: "Sal", icon: "🌳", sn: "Shorea robusta" }, { name: "Areca Nut", icon: "🥥", sn: "Areca catechu" },
+                { name: "Tamarind", icon: "🌳", sn: "Tamarindus indica" }, { name: "Amla", icon: "🍈", sn: "Phyllanthus emblica" }, { name: "Jamun", icon: "🍇", sn: "Syzygium cumini" },
+                { name: "Moringa", icon: "🌿", sn: "Moringa oleifera" }, { name: "Curry Leaf", icon: "🌿", sn: "Murraya koenigii" }, { name: "Drumstick", icon: "🥒", sn: "Moringa oleifera" },
+                { name: "Sapota", icon: "🥝", sn: "Manilkara zapota" }, { name: "Wood Apple", icon: "🍏", sn: "Limonia acidissima" }, { name: "Star Fruit", icon: "⭐", sn: "Averrhoa carambola" },
+                { name: "Dragon Fruit", icon: "🐉", sn: "Hylocereus undatus" }, { name: "Passion Fruit", icon: "🍈", sn: "Passiflora edulis" }
+            ]
+        };
+
+        let selectedTree = null;
+
+        function loadStates() {
+            const sel = document.getElementById('state');
+            for (let s in agriData.states) { sel.innerHTML += `<option value="${s}">${s}</option>`; }
+        }
+        function loadDistricts() {
+            const state = document.getElementById('state').value;
+            const sel = document.getElementById('district');
+            sel.innerHTML = '<option value="">-- Choose District --</option>';
+            if (state && agriData.states[state])
+                agriData.states[state].forEach(d => sel.innerHTML += `<option value="${d}">${d}</option>`);
+        }
+        function loadCrops() {
+            const sel = document.getElementById('crop');
+            for (let c in agriData.crops) sel.innerHTML += `<option value="${c}">${c}</option>`;
+        }
+        function loadSoilTypes() {
+            const sel = document.getElementById('soil');
+            for (let s in agriData.soilTypes) sel.innerHTML += `<option value="${s}">${s}</option>`;
+        }
+        function loadTrees() {
+            const grid = document.getElementById('treeGrid');
+            agriData.trees.forEach((t, i) => {
+                grid.innerHTML += `<div class="tree-card" onclick="selectTree(${i},this)">
+            <div class="t-icon">${t.icon}</div><div class="t-name">${t.name}</div></div>`;
+            });
+        }
+        function selectTree(i, el) {
+            document.querySelectorAll('.tree-card').forEach(c => c.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedTree = agriData.trees[i];
+        }
+
+        // Area helpers (fertilizer tab)
+        function convertArea(from) {
+            const a = parseFloat(document.getElementById('acres').value) || 0;
+            const h = parseFloat(document.getElementById('hectares').value) || 0;
+            const b = parseFloat(document.getElementById('bigha').value) || 0;
+            if (from === 'acres') { document.getElementById('hectares').value = (a * 0.404686).toFixed(4); document.getElementById('bigha').value = (a * 1.613).toFixed(4); }
+            if (from === 'hectares') { document.getElementById('acres').value = (h * 2.47105).toFixed(4); document.getElementById('bigha').value = (h * 3.986).toFixed(4); }
+            if (from === 'bigha') { document.getElementById('acres').value = (b * 0.62).toFixed(4); document.getElementById('hectares').value = (b * 0.2508).toFixed(4); }
+        }
+
+        // ─── 1. FERTILIZER ───
+        function calculateFertilizer() {
+            const state = document.getElementById('state').value, district = document.getElementById('district').value;
+            const crop = document.getElementById('crop').value, soil = document.getElementById('soil').value;
+            const acres = parseFloat(document.getElementById('acres').value) || 0;
+            if (!state || !district || !crop || !soil || acres <= 0) { alert('Please fill all required fields!'); return; }
+            const cd = agriData.crops[crop], sa = agriData.soilTypes[soil], p = agriData.prices;
+            const uK = (cd.urea * acres * sa).toFixed(2), dK = (cd.dap * acres * sa).toFixed(2), nK = (cd.npk * acres * sa).toFixed(2);
+            const pCost = (p.pesticide * acres).toFixed(2);
+            const uC = (uK * p.urea).toFixed(2), dC = (dK * p.dap).toFixed(2), nC = (nK * p.npk).toFixed(2);
+            const total = (+uC + +dC + +nC + +pCost).toFixed(2);
+            const box = document.getElementById('fertilizerResult');
+            box.innerHTML = `<h3>📋 Fertilizer Requirement for ${crop}</h3>
+        <div class="result-item"><span class="result-label">Location</span><span class="result-value">${district}, ${state}</span></div>
+        <div class="result-item"><span class="result-label">Soil Type</span><span class="result-value">${soil}</span></div>
+        <div class="result-item"><span class="result-label">Field Area</span><span class="result-value">${acres} Acres</span></div>
+        <div class="result-item"><span class="result-label">🌾 Urea Required</span><span class="result-value">${uK} kg @ ₹${uC}</span></div>
+        <div class="result-item"><span class="result-label">💎 DAP Required</span><span class="result-value">${dK} kg @ ₹${dC}</span></div>
+        <div class="result-item"><span class="result-label">🧪 NPK Required</span><span class="result-value">${nK} kg @ ₹${nC}</span></div>
+        <div class="result-item"><span class="result-label">🐛 Pesticide Cost</span><span class="result-value">₹${pCost}</span></div>
+        <div class="total-cost">💰 Total Cost: ₹${total}</div>
+        <div class="info-note"><strong>Note:</strong> Approximate values. Actual requirements may vary based on soil tests.</div>`;
+            box.classList.add('show');
+        }
+
+        // ─── 2. IRRIGATION ───
+        function calculateIrrigation() {
+            const crop = document.getElementById('irrigCrop').value, method = document.getElementById('irrigMethod').value;
+            const area = parseFloat(document.getElementById('irrigArea').value) || 0;
+            const soilType = document.getElementById('soilType').value;
+            if (!crop || !method || area <= 0) { alert('Please fill all required fields!'); return; }
+            const iD = { wheat: { drip: 400, sprinkler: 500, flood: 800, furrow: 750 }, rice: { drip: 1200, sprinkler: 1400, flood: 1800, furrow: 1600 }, cotton: { drip: 600, sprinkler: 750, flood: 1000, furrow: 900 }, sugarcane: { drip: 1500, sprinkler: 1800, flood: 2500, furrow: 2200 }, maize: { drip: 500, sprinkler: 600, flood: 900, furrow: 800 }, vegetables: { drip: 400, sprinkler: 500, flood: 700, furrow: 650 } };
+            const sF = { sandy: 1.2, loamy: 1.0, clay: 0.9 };
+            const total = (iD[crop][method] * area * sF[soilType]).toFixed(2);
+            const freq = method === 'drip' ? 'Daily' : method === 'sprinkler' ? '2-3 days' : '7-10 days';
+            const eff = method === 'drip' ? '90-95%' : method === 'sprinkler' ? '75-85%' : '40-60%';
+            const rec = method === 'drip' ? 'Drip irrigation is highly efficient and recommended for water conservation.' : method === 'sprinkler' ? 'Sprinkler provides good coverage with moderate efficiency.' : 'Consider modern irrigation methods to save water.';
+            const box = document.getElementById('irrigationResult');
+            box.innerHTML = `<h3>💧 Irrigation Requirement</h3>
+        <div class="result-item"><span class="result-label">Crop</span><span class="result-value">${crop.charAt(0).toUpperCase() + crop.slice(1)}</span></div>
+        <div class="result-item"><span class="result-label">Method</span><span class="result-value">${method.charAt(0).toUpperCase() + method.slice(1)}</span></div>
+        <div class="result-item"><span class="result-label">Field Area</span><span class="result-value">${area} Acres</span></div>
+        <div class="result-item"><span class="result-label">Soil Type</span><span class="result-value">${soilType.charAt(0).toUpperCase() + soilType.slice(1)}</span></div>
+        <div class="result-item"><span class="result-label">💦 Water (Per Season)</span><span class="result-value">${total} mm</span></div>
+        <div class="result-item"><span class="result-label">⏰ Frequency</span><span class="result-value">${freq}</span></div>
+        <div class="result-item"><span class="result-label">⚡ Efficiency</span><span class="result-value">${eff}</span></div>
+        <div class="info-note"><strong>Recommendation:</strong> ${rec}</div>`;
+            box.classList.add('show');
+        }
+
+        // ─── 3. BULK DENSITY ───
+        function calculateBulkDensity() {
+            const w = parseFloat(document.getElementById('soilWeight').value) || 0;
+            const v = parseFloat(document.getElementById('soilVolume').value) || 0;
+            if (w <= 0 || v <= 0) { alert('Please enter valid weight and volume!'); return; }
+            const bd = (w / v).toFixed(3);
+            let q = '', r = '';
+            if (bd < 1.0) { q = 'Very Loose (Excellent for roots)'; r = 'Ideal for most crops. Good porosity and aeration.'; }
+            else if (bd < 1.4) { q = 'Loose to Medium (Good)'; r = 'Suitable for most crops with good drainage.'; }
+            else if (bd < 1.6) { q = 'Medium to Compact (Moderate)'; r = 'May need organic matter to improve structure.'; }
+            else { q = 'Compacted (Poor)'; r = 'Requires deep tillage and organic amendments.'; }
+            const box = document.getElementById('bulkDensityResult');
+            box.innerHTML = `<h3>📊 Bulk Density Analysis</h3>
+        <div class="result-item"><span class="result-label">Soil Weight</span><span class="result-value">${w} g</span></div>
+        <div class="result-item"><span class="result-label">Soil Volume</span><span class="result-value">${v} cm³</span></div>
+        <div class="result-item"><span class="result-label">🎯 Bulk Density</span><span class="result-value">${bd} g/cm³</span></div>
+        <div class="result-item"><span class="result-label">Soil Quality</span><span class="result-value">${q}</span></div>
+        <div class="info-note"><strong>Recommendation:</strong> ${r}</div>`;
+            box.classList.add('show');
+        }
+
+        // ─── 4. TREE DOSE ───
+        function calculateTreeDose() {
+            if (!selectedTree) { alert('Please select a tree type!'); return; }
+            const age = parseInt(document.getElementById('treeAge').value) || 0;
+            const cnt = parseInt(document.getElementById('treeCount').value) || 1;
+            if (age <= 0) { alert('Please enter valid tree age!'); return; }
+            let stage = '', N = 0, P = 0, K = 0, M = 0, wR = '', cI = '';
+            if (age < 30) { stage = 'Seedling (0-30 days)'; N = 10; P = 15; K = 10; M = 2; wR = 'Light watering daily (200-300 ml)'; cI = 'Keep in shade, use vermicompost.'; }
+            else if (age < 180) { stage = 'Early Growth (1-6 months)'; N = 50; P = 40; K = 30; M = 5; wR = '2-3 liters every 2 days'; cI = 'Apply NPK 10:26:26. Mulching recommended.'; }
+            else if (age < 365) { stage = 'Vegetative (6-12 months)'; N = 100; P = 75; K = 75; M = 10; wR = '5-7 liters twice weekly'; cI = 'Apply NPK 19:19:19. Pruning if needed.'; }
+            else if (age < 730) { stage = 'Juvenile (1-2 years)'; N = 200; P = 150; K = 150; M = 20; wR = '10-15 liters weekly'; cI = 'Apply NPK 17:17:17. Training & staking.'; }
+            else if (age < 1825) { stage = 'Young Tree (2-5 years)'; N = 400; P = 300; K = 300; M = 40; wR = '20-30 liters weekly'; cI = 'Full dose NPK + zinc, boron.'; }
+            else { stage = 'Mature / Fruit Bearing (5+)'; N = 600; P = 450; K = 450; M = 60; wR = '40-60 liters weekly'; cI = 'Split application. Harvest & pest management.'; }
+            const box = document.getElementById('treeDoseResult');
+            box.innerHTML = `<h3>🌳 ${selectedTree.name} Fertilizer Dose</h3>
+        <div class="result-item"><span class="result-label">Tree Type</span><span class="result-value">${selectedTree.icon} ${selectedTree.name}</span></div>
+        <div class="result-item"><span class="result-label">Scientific Name</span><span class="result-value">${selectedTree.sn}</span></div>
+        <div class="result-item"><span class="result-label">Age</span><span class="result-value">${age} days (${(age / 30).toFixed(1)} months)</span></div>
+        <div class="result-item"><span class="result-label">Trees</span><span class="result-value">${cnt}</span></div>
+        <div class="result-item"><span class="result-label">Growth Stage</span><span class="result-value">${stage}</span></div>
+        <div class="result-item"><span class="result-label">🌿 Nitrogen (N)</span><span class="result-value">${(N * cnt)} g</span></div>
+        <div class="result-item"><span class="result-label">💎 Phosphorus (P₂O₅)</span><span class="result-value">${(P * cnt)} g</span></div>
+        <div class="result-item"><span class="result-label">🧪 Potassium (K₂O)</span><span class="result-value">${(K * cnt)} g</span></div>
+        <div class="result-item"><span class="result-label">🍂 Organic Manure</span><span class="result-value">${(M * cnt)} kg</span></div>
+        <div class="result-item"><span class="result-label">💧 Water Req.</span><span class="result-value">${wR}</span></div>
+        <div class="info-note"><strong>Care:</strong> ${cI}</div>`;
+            box.classList.add('show');
+        }
+
+        // ─── 5. AREA CONVERTER ───
+        function convertAllAreas() {
+            const val = parseFloat(document.getElementById('areaValue').value) || 0;
+            const from = document.getElementById('fromUnit').value;
+            if (val <= 0) { document.getElementById('areaResult').classList.remove('show'); return; }
+            const toSqM = { acre: 4046.86, hectare: 10000, bigha: 1008.38, sqmeter: 1, sqfoot: 0.092903, katha: 126.45, guntha: 101.17, biswa: 50.42 };
+            const sqM = val * toSqM[from];
+            const res = { 'Acre': (sqM / 4046.86).toFixed(4), 'Hectare': (sqM / 10000).toFixed(4), 'Bigha': (sqM / 1008.38).toFixed(4), 'Square Meter': sqM.toFixed(2), 'Square Feet': (sqM / 0.092903).toFixed(2), 'Katha': (sqM / 126.45).toFixed(4), 'Guntha': (sqM / 101.17).toFixed(4), 'Biswa': (sqM / 50.42).toFixed(4) };
+            let html = '<h3>📏 Area Conversion Results</h3>';
+            for (let u in res) html += `<div class="result-item"><span class="result-label">${u}</span><span class="result-value">${res[u]}</span></div>`;
+            const box = document.getElementById('areaResult');
+            box.innerHTML = html;
+            box.classList.add('show');
+        }
+    </script>
+</body>
+
+</html>

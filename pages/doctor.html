@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Crop Doctor – B.L. Verdantix</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Hind:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --green: #2d7a3a;
+            --green-light: #4caf50;
+            --green-pale: #e8f5e9;
+            --gold: #f9a825;
+            --gold-light: #fff9c4;
+            --soil: #795548;
+            --sky: #e3f2fd;
+            --text: #1b2e1c;
+            --text-muted: #5a6e5b;
+            --white: #ffffff;
+            --card-shadow: 0 4px 20px rgba(45, 122, 58, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hind', sans-serif;
+            background: #f4f9f4;
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background: linear-gradient(135deg, #1a4d24 0%, #2d7a3a 60%, #4caf50 100%);
+            color: white;
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 24px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        .logo-text h1 {
+            font-family: 'Baloo 2', cursive;
+            font-size: 1.4rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .logo-text span {
+            font-size: 0.7rem;
+            opacity: 0.85;
+            letter-spacing: 1px;
+        }
+
+        .header-badge {
+            background: var(--gold);
+            color: #1b2e1c;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            font-family: 'Baloo 2', cursive;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.04);
+            }
+        }
+
+        nav {
+            background: rgba(0, 0, 0, 0.15);
+            display: flex;
+            gap: 0;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        nav a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            padding: 10px 18px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            white-space: nowrap;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: var(--gold);
+            border-bottom-color: var(--gold);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: linear-gradient(160deg, #1a4d24 0%, #2d7a3a 40%, #388e3c 100%);
+            color: white;
+            padding: 50px 24px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .hero-emoji {
+            font-size: 4rem;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .hero h2 {
+            font-family: 'Baloo 2', cursive;
+            font-size: clamp(1.6rem, 5vw, 2.4rem);
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1rem;
+            opacity: 0.9;
+            max-width: 500px;
+            margin: 0 auto 28px;
+            line-height: 1.6;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--gold);
+            color: #1b2e1c;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-family: 'Baloo 2', cursive;
+            font-size: 1.05rem;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 4px 16px rgba(249, 168, 37, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(249, 168, 37, 0.5);
+        }
+
+        /* ===== MAIN CONTAINER ===== */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* ===== SECTION TITLES ===== */
+        .section-title {
+            font-family: 'Baloo 2', cursive;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--green);
+            margin-bottom: 6px;
+        }
+
+        .section-sub {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            margin-bottom: 20px;
+        }
+
+        /* ===== ADVISOR FORM ===== */
+        .advisor-section {
+            padding: 36px 0;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid #d4edda;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        @media(max-width:600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            letter-spacing: 0.3px;
+        }
+
+        .form-group select,
+        .form-group input {
+            padding: 12px 14px;
+            border: 1.5px solid #c8e6c9;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-family: 'Hind', sans-serif;
+            color: var(--text);
+            background: #fafffe;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            outline: none;
+        }
+
+        .form-group select:focus,
+        .form-group input:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
+        }
+
+        .btn-analyze {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--green), var(--green-light));
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-family: 'Baloo 2', cursive;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.2s;
+            box-shadow: 0 4px 16px rgba(45, 122, 58, 0.3);
+            margin-top: 8px;
+        }
+
+        .btn-analyze:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(45, 122, 58, 0.4);
+        }
+
+        /* ===== RESULTS ===== */
+        .results-section {
+            display: none;
+            padding-bottom: 36px;
+        }
+
+        .results-section.visible {
+            display: block;
+        }
+
+        .results-header {
+            background: linear-gradient(135deg, var(--green), #1b5e20);
+            color: white;
+            padding: 20px 24px;
+            border-radius: 16px 16px 0 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .results-header h3 {
+            font-family: 'Baloo 2', cursive;
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        .results-body {
+            background: white;
+            border-radius: 0 0 16px 16px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+
+        .advice-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: #e8f5e9;
+        }
+
+        @media(max-width:600px) {
+            .advice-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .advice-card {
+            background: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .advice-card-icon {
+            font-size: 1.8rem;
+        }
+
+        .advice-card-title {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .advice-card-value {
+            font-family: 'Baloo 2', cursive;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.3;
+        }
+
+        .advice-card-detail {
+            font-size: 0.83rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 700;
+        }
+
+        .badge-ok {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .badge-warn {
+            background: #fff8e1;
+            color: #f57f17;
+        }
+
+        .badge-danger {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .alert-box {
+            margin: 16px;
+            padding: 14px 16px;
+            background: #fff8e1;
+            border: 1.5px solid #ffe082;
+            border-radius: 12px;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .alert-box .alert-icon {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .alert-box p {
+            font-size: 0.88rem;
+            line-height: 1.6;
+            color: #5a4000;
+        }
+
+        /* ===== FEATURES SECTION ===== */
+        .features-section {
+            padding: 36px 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 16px;
+            padding: 22px 18px;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            border: 1px solid #e8f5e9;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 28px rgba(45, 122, 58, 0.18);
+        }
+
+        .feature-card .icon {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .feature-card h3 {
+            font-family: 'Baloo 2', cursive;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--green);
+            margin-bottom: 6px;
+        }
+
+        .feature-card p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* ===== WEATHER STRIP ===== */
+        .weather-strip {
+            background: linear-gradient(135deg, #e3f2fd, #e8f5e9);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            justify-content: space-around;
+            margin: 0 0 32px;
+            flex-wrap: wrap;
+            border: 1px solid #bbdefb;
+        }
+
+        .weather-item {
+            text-align: center;
+        }
+
+        .weather-item .wi {
+            font-size: 1.8rem;
+        }
+
+        .weather-item .wv {
+            font-family: 'Baloo 2', cursive;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--green);
+        }
+
+        .weather-item .wl {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+
+        /* ===== VOICE SECTION ===== */
+        .voice-section {
+            background: linear-gradient(135deg, #1a4d24, #2d7a3a);
+            border-radius: 20px;
+            padding: 28px;
+            color: white;
+            text-align: center;
+            margin-bottom: 36px;
+        }
+
+        .voice-section h3 {
+            font-family: 'Baloo 2', cursive;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .voice-section p {
+            opacity: 0.85;
+            font-size: 0.88rem;
+            margin-bottom: 20px;
+        }
+
+        .voice-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--gold);
+            color: #1b2e1c;
+            padding: 13px 26px;
+            border-radius: 50px;
+            font-family: 'Baloo 2', cursive;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            box-shadow: 0 4px 14px rgba(249, 168, 37, 0.4);
+        }
+
+        .voice-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .voice-btn.recording {
+            background: #ef5350;
+            color: white;
+            animation: recordPulse 1s infinite;
+        }
+
+        @keyframes recordPulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(239, 83, 80, 0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 0 10px rgba(239, 83, 80, 0);
+            }
+        }
+
+        /* ===== TIPS SECTION ===== */
+        .tips-section {
+            padding: 0 0 36px;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        @media(max-width:550px) {
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .tip-card {
+            background: white;
+            border-radius: 14px;
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            box-shadow: 0 2px 10px rgba(45, 122, 58, 0.08);
+            border-left: 4px solid var(--green-light);
+        }
+
+        .tip-card .tip-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .tip-card h4 {
+            font-family: 'Baloo 2', cursive;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--green);
+            margin-bottom: 3px;
+        }
+
+        .tip-card p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: linear-gradient(135deg, #0d2b12, #1a4d24);
+            color: white;
+            padding: 40px 24px 24px;
+        }
+
+        .footer-grid {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        @media(max-width:600px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        .footer-brand .logo-text h1 {
+            font-family: 'Baloo 2', cursive;
+            font-size: 1.2rem;
+        }
+
+        .footer-brand p {
+            font-size: 0.82rem;
+            opacity: 0.7;
+            line-height: 1.6;
+            margin-top: 10px;
+        }
+
+        .footer-col h4 {
+            font-family: 'Baloo 2', cursive;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 12px;
+        }
+
+        .footer-col a,
+        .footer-col p {
+            display: block;
+            font-size: 0.82rem;
+            opacity: 0.75;
+            margin-bottom: 8px;
+            text-decoration: none;
+            color: white;
+            line-height: 1.5;
+        }
+
+        .footer-col a:hover {
+            opacity: 1;
+            color: var(--gold);
+        }
+
+        .footer-bottom {
+            max-width: 900px;
+            margin: 0 auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .footer-bottom p {
+            font-size: 0.78rem;
+            opacity: 0.6;
+        }
+
+        .footer-brand-tag {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-brand-tag .bl {
+            font-family: 'Baloo 2', cursive;
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--gold);
+        }
+
+        .footer-brand-tag .verdantix {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        /* ===== LOADING ===== */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 32px;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            width: 44px;
+            height: 44px;
+            border: 4px solid #e8f5e9;
+            border-top-color: var(--green);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 12px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* ===== SCROLL ANIMATE ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-top">
+            <div class="logo">
+                <span class="logo-icon">🌾</span>
+                <div class="logo-text">
+                    <h1>Live Crop Doctor</h1>
+                    <span>AI किसान सलाहकार • B.L. Verdantix</span>
+                </div>
+            </div>
+            <div class="header-badge">🟢 LIVE</div>
+        </div>
+        <nav>
+            <a href="#advisor" class="active">🌱 फसल जांच</a>
+            <a href="#weather">🌤️ मौसम</a>
+            <a href="#tips">💡 टिप्स</a>
+            <a href="#voice">🎙️ आवाज़</a>
+            <a href="#features">✨ सुविधाएं</a>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <div class="hero">
+        <span class="hero-emoji">🌿</span>
+        <h2>AI से पाएं सटीक खेती की सलाह</h2>
+        <p>अपनी फसल की जानकारी डालें — पानी, खाद, कीट सब कुछ जानें। बिल्कुल मुफ्त, हिंदी में।</p>
+        <button class="hero-cta" onclick="document.getElementById('advisor').scrollIntoView({behavior:'smooth'})">
+            🌾 अभी जांच करें
+        </button>
+    </div>
+
+    <!-- MAIN -->
+    <div class="container">
+
+        <!-- WEATHER STRIP -->
+        <div id="weather" style="padding-top:32px;">
+            <div class="weather-strip fade-in">
+                <div class="weather-item">
+                    <div class="wi">🌡️</div>
+                    <div class="wv" id="w-temp">28°C</div>
+                    <div class="wl">तापमान</div>
+                </div>
+                <div class="weather-item">
+                    <div class="wi">💧</div>
+                    <div class="wv" id="w-humid">72%</div>
+                    <div class="wl">नमी</div>
+                </div>
+                <div class="weather-item">
+                    <div class="wi">🌧️</div>
+                    <div class="wv" id="w-rain">कल बारिश</div>
+                    <div class="wl">वर्षा पूर्वानुमान</div>
+                </div>
+                <div class="weather-item">
+                    <div class="wi">💨</div>
+                    <div class="wv" id="w-wind">12 km/h</div>
+                    <div class="wl">हवा</div>
+                </div>
+                <div class="weather-item">
+                    <div class="wi">☀️</div>
+                    <div class="wv" id="w-uv">मध्यम</div>
+                    <div class="wl">धूप</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADVISOR FORM -->
+        <section class="advisor-section" id="advisor">
+            <div class="section-title">🌱 अपनी फसल की जानकारी भरें</div>
+            <div class="section-sub">सटीक सलाह के लिए सभी जानकारी भरें — बस 1 मिनट लगेगा</div>
+
+            <div class="form-card fade-in">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>📍 राज्य चुनें</label>
+                        <select id="state">
+                            <option value="">-- राज्य --</option>
+                            <option>उत्तर प्रदेश</option>
+                            <option>हरियाणा</option>
+                            <option>पंजाब</option>
+                            <option>मध्य प्रदेश</option>
+                            <option>राजस्थान</option>
+                            <option>महाराष्ट्र</option>
+                            <option>बिहार</option>
+                            <option>गुजरात</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>🏘️ गाँव / तहसील</label>
+                        <input type="text" id="village" placeholder="जैसे: मेरठ, मुज़फ़्फ़रनगर...">
+                    </div>
+                    <div class="form-group">
+                        <label>🌾 फसल का नाम</label>
+                        <select id="crop">
+                            <option value="">-- फसल --</option>
+                            <option>गेहूँ</option>
+                            <option>धान / चावल</option>
+                            <option>गन्ना</option>
+                            <option>सरसों</option>
+                            <option>मक्का</option>
+                            <option>आलू</option>
+                            <option>प्याज</option>
+                            <option>टमाटर</option>
+                            <option>कपास</option>
+                            <option>मूंग</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>📅 फसल की अवस्था</label>
+                        <select id="stage">
+                            <option value="">-- अवस्था --</option>
+                            <option>बुवाई (0–10 दिन)</option>
+                            <option>अंकुरण (10–25 दिन)</option>
+                            <option>बढ़वार (25–60 दिन)</option>
+                            <option>फूल आना (60–90 दिन)</option>
+                            <option>दाना भरना (90–120 दिन)</option>
+                            <option>पकाई (120+ दिन)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>🪨 मिट्टी का प्रकार</label>
+                        <select id="soil">
+                            <option value="">-- मिट्टी --</option>
+                            <option>दोमट (Loamy)</option>
+                            <option>बलुई दोमट (Sandy Loam)</option>
+                            <option>चिकनी मिट्टी (Clay)</option>
+                            <option>काली मिट्टी</option>
+                            <option>लाल मिट्टी</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>⚠️ कोई समस्या दिख रही है?</label>
+                        <select id="problem">
+                            <option value="">-- कोई नहीं --</option>
+                            <option>पत्तियां पीली हो रही हैं</option>
+                            <option>पत्तियों पर धब्बे हैं</option>
+                            <option>फसल मुरझा रही है</option>
+                            <option>कीड़े दिख रहे हैं</option>
+                            <option>जड़ें सड़ रही हैं</option>
+                            <option>बढ़वार रुक गई है</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn-analyze" onclick="analyzeField()">
+                    🔍 AI से सलाह लें — अभी
+                </button>
+            </div>
+
+            <!-- LOADING -->
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>आपकी फसल का विश्लेषण हो रहा है... 🌿</p>
+            </div>
+
+            <!-- RESULTS -->
+            <div class="results-section" id="results" style="margin-top:24px;">
+                <div class="results-header">
+                    <span style="font-size:1.4rem;">📋</span>
+                    <div>
+                        <h3 id="result-title">आज की सलाह</h3>
+                        <p style="font-size:0.78rem;opacity:0.8;" id="result-sub">—</p>
+                    </div>
+                </div>
+                <div class="results-body">
+                    <div class="advice-cards" id="advice-cards"></div>
+                    <div class="alert-box" id="alert-box" style="display:none;">
+                        <span class="alert-icon">⚠️</span>
+                        <p id="alert-text"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VOICE SECTION -->
+        <div id="voice">
+            <div class="voice-section fade-in">
+                <h3>🎙️ बोलकर पूछें — हिंदी में</h3>
+                <p>बटन दबाएं और अपनी फसल की समस्या बोलें। AI आपकी आवाज़ सुनकर सलाह देगा।</p>
+                <button class="voice-btn" id="voiceBtn" onclick="toggleVoice()">
+                    🎤 माइक चालू करें
+                </button>
+                <div id="voiceResult" style="margin-top:14px;font-size:0.88rem;opacity:0.85;min-height:20px;"></div>
+            </div>
+        </div>
+
+        <!-- SEASONAL TIPS -->
+        <section class="tips-section" id="tips">
+            <div class="section-title">💡 आज के ज़रूरी टिप्स</div>
+            <div class="section-sub">फरवरी के लिए विशेष सुझाव</div>
+            <div class="tips-grid">
+                <div class="tip-card fade-in">
+                    <span class="tip-icon">💧</span>
+                    <div>
+                        <h4>पानी कब दें?</h4>
+                        <p>गेहूँ में अभी दूसरी सिंचाई का समय है। सुबह जल्दी या शाम को सिंचाई करें — वाष्पीकरण कम होगा।
+                        </p>
+                    </div>
+                </div>
+                <div class="tip-card fade-in">
+                    <span class="tip-icon">🌿</span>
+                    <div>
+                        <h4>खाद की मात्रा</h4>
+                        <p>बुवाई के 40 दिन बाद यूरिया का छिड़काव करें। 1 एकड़ में 25 किलो यूरिया पर्याप्त है।</p>
+                    </div>
+                </div>
+                <div class="tip-card fade-in">
+                    <span class="tip-icon">🐛</span>
+                    <div>
+                        <h4>कीट रोकथाम</h4>
+                        <p>इस मौसम में माहू (Aphid) का खतरा है। इमिडाक्लोप्रिड 200 SL 0.5 ml प्रति लीटर पानी में मिलाकर
+                            स्प्रे करें।</p>
+                    </div>
+                </div>
+                <div class="tip-card fade-in">
+                    <span class="tip-icon">🌡️</span>
+                    <div>
+                        <h4>मौसम सतर्कता</h4>
+                        <p>अगले 3 दिनों में रात का तापमान 10°C से नीचे जा सकता है। पाला बचाव के लिए हल्की सिंचाई करें।
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FEATURES -->
+        <section class="features-section" id="features">
+            <div class="section-title">✨ हमारी खास सुविधाएं</div>
+            <div class="section-sub">Live Crop Doctor — किसानों के लिए, किसानों की भाषा में</div>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="icon">🗺️</div>
+                    <h3>गाँव स्तरीय सलाह</h3>
+                    <p>आपके गाँव की मिट्टी और मौसम के हिसाब से बिल्कुल सटीक जानकारी</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="icon">🔮</div>
+                    <h3>बीमारी पूर्वानुमान</h3>
+                    <p>बीमारी आने से पहले ही चेतावनी — ताकि नुकसान शून्य रहे</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="icon">🎙️</div>
+                    <h3>आवाज़ में पूछें</h3>
+                    <p>हिंदी और स्थानीय भाषा में बोलकर सवाल पूछें, जवाब पाएं</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="icon">🌤️</div>
+                    <h3>मौसम + फसल AI</h3>
+                    <p>मौसम देखकर तय करेगा — आज सिंचाई करें या नहीं</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="icon">💊</div>
+                    <h3>दवा की सही मात्रा</h3>
+                    <p>कौनसी दवा, कितनी मात्रा, कब डालें — सब AI बताएगा</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="icon">📵</div>
+                    <h3>बिना इंटरनेट भी</h3>
+                    <p>SMS पर भी सलाह मिलेगी — नेट नहीं तो कोई बात नहीं</p>
+                </div>
+            </div>
+        </section>
+
+    </div><!-- /container -->
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="logo" style="margin-bottom:8px;">
+                    <span class="logo-icon">🌾</span>
+                    <div class="logo-text">
+                        <h1>Live Crop Doctor</h1>
+                    </div>
+                </div>
+                <p>किसानों को सही समय पर सही सलाह देने का हमारा प्रयास। AI की शक्ति से खेती को बेहतर बनाएं — बिल्कुल
+                    मुफ्त, हिंदी में।</p>
+                <div style="margin-top:14px;display:flex;gap:10px;">
+                    <span
+                        style="background:rgba(255,255,255,0.1);padding:6px 12px;border-radius:20px;font-size:0.75rem;">🇮🇳
+                        भारत के किसानों के लिए</span>
+                    <span
+                        style="background:rgba(249,168,37,0.2);padding:6px 12px;border-radius:20px;font-size:0.75rem;color:var(--gold);">100%
+                        मुफ्त</span>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>🌱 सुविधाएं</h4>
+                <a href="#">फसल जांच</a>
+                <a href="#">मौसम सलाह</a>
+                <a href="#">कीट पहचान</a>
+                <a href="#">खाद कैलकुलेटर</a>
+                <a href="#">बाज़ार भाव</a>
+            </div>
+            <div class="footer-col">
+                <h4>📞 संपर्क</h4>
+                <p>📱 हेल्पलाइन: 1800-XXX-XXXX</p>
+                <p>✉️ help@blverdantix.com</p>
+                <p>🕐 सोम–शनि, सुबह 6 से शाम 8</p>
+                <p style="margin-top:8px;">🌐 Hindi | English | ਪੰਜਾਬੀ</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2025 Live Crop Doctor. सभी अधिकार सुरक्षित।</p>
+            <div class="footer-brand-tag">
+                <span style="font-size:0.78rem;opacity:0.5;">Powered by</span>
+                <span class="bl">B.L.</span>
+                <span class="verdantix">Verdantix</span>
+                <span style="font-size:0.75rem;opacity:0.5;">AgriTech Solutions</span>
+            </div>
+            <p>किसान की उन्नति, देश की उन्नति 🌾</p>
+        </div>
+    </footer>
+
+    <script>
+        // ===== SCROLL ANIMATIONS =====
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // ===== WEATHER (SIMULATED) =====
+        const weatherData = {
+            "उत्तर प्रदेश": { temp: "27°C", humid: "68%", rain: "2 दिन में", wind: "10 km/h", uv: "अधिक" },
+            "हरियाणा": { temp: "25°C", humid: "60%", rain: "कल", wind: "15 km/h", uv: "मध्यम" },
+            "पंजाब": { temp: "22°C", humid: "75%", rain: "आज शाम", wind: "18 km/h", uv: "कम" },
+            default: { temp: "28°C", humid: "72%", rain: "कल बारिश", wind: "12 km/h", uv: "मध्यम" }
+        };
+
+        document.getElementById('state').addEventListener('change', function () {
+            const d = weatherData[this.value] || weatherData.default;
+            document.getElementById('w-temp').textContent = d.temp;
+            document.getElementById('w-humid').textContent = d.humid;
+            document.getElementById('w-rain').textContent = d.rain;
+            document.getElementById('w-wind').textContent = d.wind;
+            document.getElementById('w-uv').textContent = d.uv;
+        });
+
+        // ===== AI ADVICE ENGINE =====
+        const adviceDB = {
+            "गेहूँ": {
+                "बढ़वार (25–60 दिन)": {
+                    irrigation: { icon: "💧", status: "badge-warn", msg: "हाँ, आज करें", detail: "फसल बढ़वार अवस्था में है। यदि पिछली सिंचाई 10 दिन पहले थी तो आज दूसरी सिंचाई आवश्यक है।" },
+                    disease: { icon: "🔴", risk: "उच्च जोखिम", badge: "badge-warn", detail: "पाउडरी मिल्ड्यू और रस्ट का खतरा है। पत्तियों पर नज़र रखें।" },
+                    spray: { icon: "🧴", name: "Propiconazole 25 EC", dose: "1 ml प्रति लीटर पानी", time: "सुबह 7–9 बजे" },
+                    fertilizer: { icon: "🌿", name: "यूरिया", dose: "25 किग्रा / एकड़", when: "अगले 5 दिन में" },
+                },
+                "फूल आना (60–90 दिन)": {
+                    irrigation: { icon: "💧", status: "badge-ok", msg: "हाँ, ज़रूरी है", detail: "फूल आने के समय पानी देना बेहद ज़रूरी है। कल सुबह हल्की सिंचाई करें।" },
+                    disease: { icon: "🔴", risk: "मध्यम जोखिम", badge: "badge-warn", detail: "इस अवस्था में करनाल बंट का खतरा रहता है। नमी ज़्यादा रही तो सतर्क रहें।" },
+                    spray: { icon: "🧴", name: "Mancozeb 75 WP", dose: "2.5 ग्राम / लीटर", time: "शाम 5–7 बजे" },
+                    fertilizer: { icon: "🌿", name: "DAP + पोटाश", dose: "10+10 किग्रा / एकड़", when: "अभी नहीं — बाद में" },
+                }
+            },
+            "धान / चावल": {
+                "बढ़वार (25–60 दिन)": {
+                    irrigation: { icon: "💧", status: "badge-ok", msg: "खेत गीला रखें", detail: "धान में 5 cm तक पानी बना रहे। रोज़ चेक करें।" },
+                    disease: { icon: "🔴", risk: "उच्च जोखिम", badge: "badge-danger", detail: "Blast disease का खतरा है, खासकर नम मौसम में।" },
+                    spray: { icon: "🧴", name: "Tricyclazole 75 WP", dose: "0.6 ग्राम / लीटर", time: "सुबह छिड़काव करें" },
+                    fertilizer: { icon: "🌿", name: "यूरिया + ZnSO₄", dose: "20+5 किग्रा / एकड़", when: "इस हफ्ते में" },
+                }
+            },
+            "default": {
+                "default": {
+                    irrigation: { icon: "💧", status: "badge-ok", msg: "मौसम देखकर करें", detail: "अगले 2 दिनों में बारिश का पूर्वानुमान है, सिंचाई में देरी करें।" },
+                    disease: { icon: "🟡", risk: "कम जोखिम", badge: "badge-ok", detail: "अभी कोई गंभीर बीमारी का खतरा नहीं। निगरानी जारी रखें।" },
+                    spray: { icon: "🧴", name: "Neem Oil 1500 PPM", dose: "3 ml / लीटर", time: "सुबह या शाम" },
+                    fertilizer: { icon: "🌿", name: "NPK 19:19:19", dose: "5 किग्रा / एकड़", when: "15 दिन में एक बार" },
+                }
+            }
+        };
+
+        function analyzeField() {
+            const state = document.getElementById('state').value;
+            const crop = document.getElementById('crop').value;
+            const stage = document.getElementById('stage').value;
+            const problem = document.getElementById('problem').value;
+
+            if (!state || !crop || !stage) {
+                alert('कृपया राज्य, फसल और अवस्था ज़रूर भरें!');
+                return;
+            }
+
+            document.getElementById('loading').classList.add('show');
+            document.getElementById('results').classList.remove('visible');
+
+            setTimeout(() => {
+                document.getElementById('loading').classList.remove('show');
+                showResults(crop, stage, problem);
+            }, 1800);
+        }
+
+        function showResults(crop, stage, problem) {
+            const db = adviceDB[crop]?.[stage] || adviceDB['default']['default'];
+
+            document.getElementById('result-title').textContent = `${crop} (${stage}) — आज की सलाह`;
+            document.getElementById('result-sub').textContent = `मौसम और स्थान के आधार पर AI विश्लेषण | ${new Date().toLocaleDateString('hi-IN')}`;
+
+            const cards = [
+                `<div class="advice-card">
+      <div class="advice-card-icon">${db.irrigation.icon}</div>
+      <div class="advice-card-title">सिंचाई आज करें?</div>
+      <div class="advice-card-value"><span class="badge ${db.irrigation.status}">${db.irrigation.msg}</span></div>
+      <div class="advice-card-detail">${db.irrigation.detail}</div>
+    </div>`,
+                `<div class="advice-card">
+      <div class="advice-card-icon">${db.disease.icon}</div>
+      <div class="advice-card-title">बीमारी का जोखिम</div>
+      <div class="advice-card-value"><span class="badge ${db.disease.badge}">${db.disease.risk}</span></div>
+      <div class="advice-card-detail">${db.disease.detail}</div>
+    </div>`,
+                `<div class="advice-card">
+      <div class="advice-card-icon">${db.spray.icon}</div>
+      <div class="advice-card-title">स्प्रे / दवाई</div>
+      <div class="advice-card-value">${db.spray.name}</div>
+      <div class="advice-card-detail">मात्रा: ${db.spray.dose}<br>समय: ${db.spray.time}</div>
+    </div>`,
+                `<div class="advice-card">
+      <div class="advice-card-icon">${db.fertilizer.icon}</div>
+      <div class="advice-card-title">खाद / उर्वरक</div>
+      <div class="advice-card-value">${db.fertilizer.name}</div>
+      <div class="advice-card-detail">मात्रा: ${db.fertilizer.dose}<br>कब: ${db.fertilizer.when}</div>
+    </div>`
+            ];
+
+            document.getElementById('advice-cards').innerHTML = cards.join('');
+
+            const alertBox = document.getElementById('alert-box');
+            if (problem && problem !== '') {
+                alertBox.style.display = 'flex';
+                document.getElementById('alert-text').innerHTML =
+                    `<strong>समस्या "${problem}" के लिए:</strong> तुरंत पत्तियों की जांच करें। यदि 20% से अधिक पत्तियां प्रभावित हों, तो कृषि विशेषज्ञ से मिलें या नज़दीकी KVK केंद्र पर जाएं।`;
+            } else {
+                alertBox.style.display = 'none';
+            }
+
+            const resultsEl = document.getElementById('results');
+            resultsEl.classList.add('visible');
+            resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // ===== VOICE FEATURE =====
+        let isRecording = false;
+        let recognition = null;
+
+        function toggleVoice() {
+            const btn = document.getElementById('voiceBtn');
+            const result = document.getElementById('voiceResult');
+
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                result.textContent = '⚠️ आपका ब्राउज़र voice को support नहीं करता। Chrome use करें।';
+                return;
+            }
+
+            if (isRecording) {
+                recognition?.stop();
+                return;
+            }
+
+            const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SR();
+            recognition.lang = 'hi-IN';
+            recognition.interimResults = false;
+
+            isRecording = true;
+            btn.textContent = '⏹️ रिकॉर्डिंग... रोकने के लिए दबाएं';
+            btn.classList.add('recording');
+            result.textContent = '🎤 बोलिए — जैसे "मेरे गेहूँ की पत्तियाँ पीली हो रही हैं"';
+
+            recognition.onresult = (e) => {
+                const text = e.results[0][0].transcript;
+                result.innerHTML = `✅ आपने कहा: "<strong>${text}</strong>"<br><br>🤖 AI सलाह: यह समस्या नाइट्रोजन की कमी या पीला रतुआ रोग हो सकता है। यूरिया स्प्रे (2%) करें और खेत की नमी जाँचें।`;
+            };
+
+            recognition.onerror = () => {
+                result.textContent = '❌ आवाज़ नहीं पकड़ी, दोबारा कोशिश करें।';
+            };
+
+            recognition.onend = () => {
+                isRecording = false;
+                btn.textContent = '🎤 माइक चालू करें';
+                btn.classList.remove('recording');
+            };
+
+            recognition.start();
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>About Us - B.L Verdantix</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            background: #fff;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2e7d32;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #2e7d32;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero-section {
+            margin-top: 80px;
+            padding: 100px 40px 80px;
+            background: linear-gradient(135deg, #f0f9f4 0%, #e8f5e9 100%);
+            text-align: center;
+        }
+
+        .hero-section h1 {
+            font-size: 56px;
+            font-weight: 800;
+            color: #1b5e20;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero-section p {
+            font-size: 20px;
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        /* ===== MISSION SECTION ===== */
+        .mission-section {
+            padding: 100px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .mission-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .mission-text h2 {
+            font-size: 42px;
+            font-weight: 700;
+            color: #1b5e20;
+            margin-bottom: 30px;
+            line-height: 1.3;
+        }
+
+        .mission-text p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .mission-image {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .mission-image img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .mission-image:hover img {
+            transform: scale(1.05);
+        }
+
+        /* ===== VALUES SECTION ===== */
+        .values-section {
+            padding: 100px 40px;
+            background: #f9fafb;
+        }
+
+        .values-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .values-container h2 {
+            font-size: 42px;
+            font-weight: 700;
+            color: #1b5e20;
+            margin-bottom: 20px;
+        }
+
+        .values-subtitle {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 60px;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .value-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .value-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 40px rgba(46, 125, 50, 0.15);
+        }
+
+        .value-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #66bb6a, #2e7d32);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 32px;
+            color: white;
+        }
+
+        .value-card h3 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #1b5e20;
+            margin-bottom: 15px;
+        }
+
+        .value-card p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #666;
+        }
+
+        /* ===== STATS SECTION ===== */
+        .stats-section {
+            padding: 80px 40px;
+            background: linear-gradient(135deg, #2e7d32, #1b5e20);
+            color: white;
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 60px;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .stat-item p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        /* ===== JOURNEY SECTION ===== */
+        .journey-section {
+            padding: 100px 40px;
+            background: white;
+        }
+
+        .journey-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .journey-container h2 {
+            font-size: 42px;
+            font-weight: 700;
+            color: #1b5e20;
+            margin-bottom: 60px;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(180deg, #66bb6a, #2e7d32);
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            grid-column: 2;
+        }
+
+        .timeline-item:nth-child(even) .timeline-year {
+            grid-column: 1;
+            text-align: right;
+        }
+
+        .timeline-year {
+            font-size: 32px;
+            font-weight: 700;
+            color: #2e7d32;
+        }
+
+        .timeline-content {
+            background: #f9fafb;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: left;
+        }
+
+        .timeline-content h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1b5e20;
+            margin-bottom: 10px;
+        }
+
+        .timeline-content p {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: #2e7d32;
+            border: 4px solid white;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.2);
+        }
+
+        /* ===== LEADERSHIP ===== */
+        .leadership {
+            background: linear-gradient(135deg, #cdc3be, #eaf5de);
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .leadership h2 {
+            font-size: 42px;
+            margin-bottom: 15px;
+            color: #2e7d32;
+            font-weight: 700;
+        }
+
+        .leadership-intro {
+            font-size: 18px;
+            color: #000000;
+            margin-bottom: 50px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .leaders {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .leader-card {
+            width: 240px;
+            text-align: center;
+            transition: 0.4s;
+            cursor: pointer;
+        }
+
+        .leader-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .leader-img {
+            width: 220px;
+            height: 260px;
+            border-radius: 15px;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            margin-bottom: 15px;
+            transition: 0.4s;
+        }
+
+        .leader-card:hover .leader-img {
+            box-shadow: 0 12px 30px rgba(46, 125, 50, 0.3);
+        }
+
+        .leader-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2e7d32;
+            margin-bottom: 5px;
+        }
+
+        .leader-title {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* ===== TEAM ===== */
+        .team {
+            padding: 100px 20px;
+            text-align: center;
+            background: #fff;
+        }
+
+        .team h2 {
+            font-size: 42px;
+            margin-bottom: 15px;
+            color: #2e7d32;
+            font-weight: 700;
+        }
+
+        .team-intro {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 50px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 40px;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .team-member {
+            text-align: center;
+            transition: 0.4s;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+        }
+
+        .team-cube {
+            width: 200px;
+            height: 200px;
+            border-radius: 20px;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.18);
+            transition: 0.4s;
+            margin: 0 auto 15px;
+        }
+
+        .team-member:hover .team-cube {
+            transform: rotateY(15deg) rotateX(10deg) scale(1.05);
+            box-shadow: 0 15px 35px rgba(46, 125, 50, 0.3);
+        }
+
+        .team-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2e7d32;
+            margin-bottom: 5px;
+        }
+
+        .team-role {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: linear-gradient(135deg, #1b5e20, #2e7d32);
+            color: #fff;
+            padding: 50px 20px 20px;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto 30px;
+        }
+
+        .footer-logo img {
+            width: 150px;
+            margin-bottom: 15px;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .footer-logo p {
+            font-size: 14px;
+            color: #c8e6c9;
+            line-height: 1.6;
+        }
+
+        footer h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        footer a {
+            display: block;
+            color: #c8e6c9;
+            text-decoration: none;
+            margin-bottom: 10px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        footer a:hover {
+            color: #fff;
+            padding-left: 5px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+
+        .social-icons a:hover {
+            background: #fff;
+            color: #2e7d32;
+            transform: translateY(-5px);
+            padding-left: 0;
+        }
+
+        .copy {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 14px;
+            color: #c8e6c9;
+        }
+
+        /* ===== AI CHATBOT ===== */
+        .ai-chat-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4285f4, #34a853, #fbbc04, #ea4335);
+            color: white;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            animation: pulseGlow 2s infinite;
+        }
+
+        @keyframes pulseGlow {
+
+            0%,
+            100% {
+                box-shadow: 0 6px 20px rgba(66, 133, 244, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 6px 30px rgba(66, 133, 244, 0.7);
+            }
+        }
+
+        .ai-chat-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(66, 133, 244, 0.5);
+        }
+
+        .ai-chat-window {
+            position: fixed;
+            bottom: 115px;
+            right: 30px;
+            width: 380px;
+            height: 550px;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+            display: none;
+            flex-direction: column;
+            z-index: 9998;
+            overflow: hidden;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .ai-chat-window.active {
+            display: flex;
+        }
+
+        .ai-chat-header {
+            background: linear-gradient(135deg, #4285f4, #34a853);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .ai-chat-header h3 {
+            margin: 0;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .ai-header-icon {
+            width: 35px;
+            height: 35px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .ai-close-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .ai-close-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .ai-chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        .ai-message {
+            margin-bottom: 18px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .ai-message.user {
+            text-align: right;
+        }
+
+        .ai-message.bot {
+            text-align: left;
+        }
+
+        .ai-message-bubble {
+            display: inline-block;
+            padding: 14px 18px;
+            border-radius: 18px;
+            max-width: 85%;
+            word-wrap: break-word;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .ai-message.user .ai-message-bubble {
+            background: linear-gradient(135deg, #4285f4, #34a853);
+            color: white;
+            border-radius: 18px 18px 4px 18px;
+        }
+
+        .ai-message.bot .ai-message-bubble {
+            background: white;
+            color: #333;
+            border: 1px solid #e0e0e0;
+            border-radius: 18px 18px 18px 4px;
+        }
+
+        .ai-bot-avatar {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #4285f4, #34a853);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+            color: white;
+            font-size: 16px;
+            vertical-align: middle;
+        }
+
+        .ai-contact-info {
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .ai-contact-info strong {
+            color: #4285f4;
+            display: block;
+            margin-top: 8px;
+            margin-bottom: 4px;
+        }
+
+        .ai-chat-input-area {
+            padding: 18px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 12px;
+        }
+
+        .ai-chat-input {
+            flex: 1;
+            padding: 14px 18px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+            font-size: 15px;
+            transition: border 0.3s ease;
+        }
+
+        .ai-chat-input:focus {
+            border-color: #4285f4;
+        }
+
+        .ai-send-btn {
+            background: linear-gradient(135deg, #4285f4, #34a853);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(66, 133, 244, 0.3);
+        }
+
+        .ai-send-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(66, 133, 244, 0.5);
+        }
+
+        .ai-typing-indicator {
+            display: none;
+            padding: 10px 0;
+        }
+
+        .ai-typing-indicator span {
+            height: 8px;
+            width: 8px;
+            background: #4285f4;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 2px;
+            animation: typing 1.4s infinite;
+        }
+
+        .ai-typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+            background: #34a853;
+        }
+
+        .ai-typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+            background: #fbbc04;
+        }
+
+        @keyframes typing {
+
+            0%,
+            60%,
+            100% {
+                transform: translateY(0);
+            }
+
+            30% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media(max-width: 768px) {
+            .hero-section h1 {
+                font-size: 36px;
+            }
+
+            .mission-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-item {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-item:nth-child(even) .timeline-content,
+            .timeline-item:nth-child(even) .timeline-year {
+                grid-column: 1;
+                text-align: left;
+            }
+
+            .timeline-dot {
+                left: 30px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .ai-chat-window {
+                width: calc(100% - 30px);
+                height: 75vh;
+                bottom: 100px;
+                right: 15px;
+            }
+
+            .ai-chat-button {
+                width: 60px;
+                height: 60px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- NAVIGATION -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <img src="https://img.sanishtech.com/u/93f1fb0a350e8f01025cce71e51db399.png" alt="B.L Verdantix">
+                <span>B.L Verdantix</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+        <h1>Transforming Agriculture<br>for a Sustainable Future</h1>
+        <p>We empower farmers with innovative technology, smart advisory services, and sustainable solutions to build
+            the future of agriculture.</p>
+    </section>
+
+    <!-- MISSION SECTION -->
+    <section class="mission-section">
+        <div class="mission-grid">
+            <div class="mission-text">
+                <h2>Our Mission</h2>
+                <p>At B.L Verdantix Agri Technologies, we are dedicated to revolutionizing agriculture through
+                    innovation, technology, and sustainability.</p>
+                <p>We work closely with farmers to provide smart advisory services, crop protection solutions, and
+                    data-driven insights that improve productivity while protecting our planet's natural resources.</p>
+                <p>Our commitment is to create a sustainable agricultural ecosystem that benefits farmers, consumers,
+                    and the environment for generations to come.</p>
+            </div>
+            <div class="mission-image">
+                <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800" alt="Mission">
+            </div>
+        </div>
+    </section>
+
+    <!-- VALUES SECTION -->
+    <section class="values-section">
+        <div class="values-container">
+            <h2>Our Core Values</h2>
+            <p class="values-subtitle">The principles that guide everything we do</p>
+
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">🌱</div>
+                    <h3>Sustainability</h3>
+                    <p>We prioritize environmental protection and sustainable farming practices in all our solutions.
+                    </p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">💡</div>
+                    <h3>Innovation</h3>
+                    <p>We continuously develop cutting-edge technologies to solve modern agricultural challenges.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">🤝</div>
+                    <h3>Partnership</h3>
+                    <p>We believe in building strong relationships with farmers and stakeholders across the agricultural
+                        value chain.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">📊</div>
+                    <h3>Data-Driven</h3>
+                    <p>We leverage data analytics and AI to provide actionable insights for better farming decisions.
+                    </p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">🌍</div>
+                    <h3>Global Impact</h3>
+                    <p>We aim to create positive change in agricultural communities worldwide.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">✅</div>
+                    <h3>Quality</h3>
+                    <p>We maintain the highest standards in all our products, services, and customer interactions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JOURNEY SECTION -->
+    <section class="journey-section">
+        <div class="journey-container">
+            <h2>Our Journey</h2>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">2000</div>
+                    <div class="timeline-content">
+                        <h3>The Idea</h3>
+                        <p>Idea by Mr. Bajan Lal with a vision to transform agricultural practices and empower farmers.
+                        </p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-year">2024</div>
+                    <div class="timeline-content">
+                        <h3>Legacy Continues</h3>
+                        <p>The company evolved under new leadership, maintaining the founder's vision while embracing
+                            modern technology.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-year">2025</div>
+                    <div class="timeline-content">
+                        <h3>Digital Transformation</h3>
+                        <p>Launched AI-powered crop advisory services and mobile applications to reach farmers directly.
+                        </p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-year">2026</div>
+                    <div class="timeline-content">
+                        <h3>Expanding Horizons</h3>
+                        <p>Scaling operations nationwide with innovative sustainable agriculture solutions and smart
+                            farming technologies.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LEADERSHIP -->
+    <section class="leadership">
+        <h2>Our Leadership</h2>
+        <p class="leadership-intro">Meet the visionary leaders driving innovation and sustainability in agriculture</p>
+
+        <div class="leaders">
+            <div class="leader-card">
+                <div class="leader-img"
+                    style="background-image:url('https://img.sanishtech.com/u/cee79e87490ef0065bf4ee05c359e86b.jpeg')">
+                </div>
+                <div class="leader-name">Mr Bajan lal</div>
+                <div class="leader-title">FOUNDER</div>
+                <div class="leader-title">1945-2000</div>
+                <a
+                    href="https://www.linkedin.com/in/b-l-verdantix-ba21343a9?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i
+                        class="fab fa-linkedin"></i></a>
+            </div>
+
+            <div class="leader-card">
+                <div class="leader-img"
+                    style="background-image:url('https://img.sanishtech.com/u/c56bc0587b77814a8a93259c1eab2a10.jpg')">
+                </div>
+                <div class="leader-name">Mr Karan Kumar</div>
+                <div class="leader-title">B.tech</div>
+                <a
+                    href="https://www.linkedin.com/in/karan-chaudhary-23494a31a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i
+                        class="fab fa-linkedin"></i></a>
+            </div>
+            <div class="leader-card">
+                <div class="leader-img"
+                    style="background-image:url('https://img.sanishtech.com/u/dc7eca1adb8a94afff6e07ad333070ca.jpeg')">
+                </div>
+                <div class="leader-name">Mr Aman Gupt</div>
+                <div class="leader-title">B.tech</div>
+                <a
+                    href="https://www.linkedin.com/in/aman-gupt-b1480a313?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i
+                        class="fab fa-linkedin"></i></a>
+            </div>
+
+            <div class="leader-card">
+                <div class="leader-img"
+                    style="background-image:url('https://img.sanishtech.com/u/ed89f8292bd5f3aee0858850c0787862.jpeg')">
+                </div>
+                <div class="leader-name">Mr Prashant Kumar</div>
+                <div class="leader-title">B.Tech</div>
+                <a
+                    href="https://www.linkedin.com/in/prashant-saini-712759370?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i
+                        class="fab fa-linkedin"></i></a>
+            </div>
+
+
+        </div>
+    </section>
+
+    <!-- TEAM -->
+    <section class="team">
+        <h2>Our Team</h2>
+        <p class="team-intro">Dedicated professionals committed to transforming agriculture</p>
+
+        <div class="team-grid">
+
+
+            <div class="team-member">
+                <div class="team-cube"
+                    style="background-image:url('https://img.sanishtech.com/u/2932f9a9640579142b983757c689f911.jpeg')">
+                </div>
+                <div class="team-name">Mr Harshit chaudhary</div>
+                <div class="team-role">B.tech</div>
+            </div>
+
+            <div class="team-member">
+                <div class="team-cube"
+                    style="background-image:url('https://img.sanishtech.com/u/6cf5a705646e855910f79a8bd975fbf8.jpeg')">
+                </div>
+                <div class="team-name">Mr Nishant chauhan</div>
+                <div class="team-role">B.tech</div>
+                <a
+                    href="https://www.linkedin.com/in/nishant-chauhan-2a7951386?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i
+                        class="fab fa-linkedin"></i></a>
+            </div>
+
+
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-container">
+            <!-- Logo -->
+            <div class="footer-logo">
+                <img src="https://img.sanishtech.com/u/93f1fb0a350e8f01025cce71e51db399.png" alt="B.L Verdantix Logo">
+                <p>Smart • Sustainable • Innovative Agriculture Solutions</p>
+            </div>
+
+            <!-- Navigation -->
+            <div>
+                <h3>Navigation</h3>
+                <a href="home.html">Home</a>
+                <a href="about-us.html">About Us</a>
+                <a href="calculator.html">Calculators</a>
+                <a href="our-services.html">our services</a>
+            </div>
+
+            <!-- Our Services -->
+            <div>
+                <h3>Our Services</h3>
+                <a href="#">Plant Scan Photo</a>
+                <a href="#">Agriculture alculator</a>
+                <a href="#">Irrigation Solutions</a>
+                <a href="#">Agri Solutions</a>
+            </div>
+
+            <!-- Contact Us -->
+            <div>
+                <h3>Contact Us</h3>
+                <a href="tel:+919058545076">📞 +91 90585 45076</a>
+                <a href="mailto:b.l.verdantix2026@gmail.com">✉️ b.l.verdantix2026@gmail.com</a>
+                <a href="https://maps.app.goo.gl/zS5ygzcMFFMb6kZCA">📍 CCS University, Meerut</a>
+            </div>
+
+            <!-- Follow Us -->
+            <div>
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/b.l.verdantixagri2026?igsh=MWFmM3E4NGRwdmZl"><i
+                            class="fab fa-instagram"></i></a>
+                    <a
+                        href="https://www.linkedin.com/in/b-l-verdantix-ba21343a9?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i
+                            class="fab fa-linkedin"></i></a>
+                    <a href="https://x.com/verdantixa97632"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.facebook.com/share/1KC5CAfjHD/"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.youtube.com/@B.LVerdantix"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="copy">
+            © 2026 B.L Verdantix Agri Technologies. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- AI CHATBOT -->
+    <button class="ai-chat-button" id="aiChatButton">
+        <span style="font-size: 40px;">✨</span>
+    </button>
+
+    <div class="ai-chat-window" id="aiChatWindow">
+        <div class="ai-chat-header">
+            <h3>
+                <span class="ai-header-icon">🤖</span>
+                किसान सहायता AI
+            </h3>
+            <button class="ai-close-btn" id="aiCloseChat">&times;</button>
+        </div>
+
+        <div class="ai-chat-messages" id="aiChatMessages">
+            <div class="ai-message bot">
+                <div class="ai-message-bubble">
+                    <span class="ai-bot-avatar">🌾</span>
+                    नमस्ते! 🙏<br>
+                    मैं आपकी सहायता के लिए यहाँ हूँ।<br>
+                    कृपया अपनी समस्या पूछें।
+                </div>
+            </div>
+        </div>
+
+        <div class="ai-typing-indicator" id="aiTypingIndicator">
+            <div class="ai-message bot">
+                <div class="ai-message-bubble">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="ai-chat-input-area">
+            <input type="text" class="ai-chat-input" id="aiChatInput" placeholder="अपनी समस्या यहाँ लिखें..."
+                autocomplete="off">
+            <button class="ai-send-btn" id="aiSendBtn">➤</button>
+        </div>
+    </div>
+
+    <script>
+        // AI CHATBOT SCRIPT
+        const aiChatButton = document.getElementById('aiChatButton');
+        const aiChatWindow = document.getElementById('aiChatWindow');
+        const aiCloseChat = document.getElementById('aiCloseChat');
+        const aiChatInput = document.getElementById('aiChatInput');
+        const aiSendBtn = document.getElementById('aiSendBtn');
+        const aiChatMessages = document.getElementById('aiChatMessages');
+        const aiTypingIndicator = document.getElementById('aiTypingIndicator');
+
+        const AI_RESPONSE = `
+            <div class="ai-contact-info">
+                <strong>📞 संपर्क करें:</strong>
+                <strong>फोन:</strong> 9058545076<br>
+                <strong>📧 ईमेल:</strong>
+                b.l.verdantix2026@gmail.com<br><br>
+                कृपया उपरोक्त नंबर या ईमेल पर संपर्क करें।<br>
+                हमारी टीम जल्द ही आपकी सहायता करेगी! 🌱
+            </div>
+        `;
+
+        aiChatButton.addEventListener('click', () => {
+            aiChatWindow.classList.toggle('active');
+            if (aiChatWindow.classList.contains('active')) {
+                aiChatInput.focus();
+            }
+        });
+
+        aiCloseChat.addEventListener('click', () => {
+            aiChatWindow.classList.remove('active');
+        });
+
+        function sendAIMessage() {
+            const message = aiChatInput.value.trim();
+            if (message === '') return;
+
+            addAIMessage(message, 'user');
+            aiChatInput.value = '';
+
+            aiTypingIndicator.style.display = 'block';
+            scrollAIToBottom();
+
+            setTimeout(() => {
+                aiTypingIndicator.style.display = 'none';
+                addAIMessage(AI_RESPONSE, 'bot');
+                scrollAIToBottom();
+            }, 1200);
+        }
+
+        function addAIMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `ai-message ${sender}`;
+
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = 'ai-message-bubble';
+            bubbleDiv.innerHTML = text;
+
+            messageDiv.appendChild(bubbleDiv);
+            aiChatMessages.appendChild(messageDiv);
+        }
+
+        function scrollAIToBottom() {
+            aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+        }
+
+        aiSendBtn.addEventListener('click', sendAIMessage);
+        aiChatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendAIMessage();
+            }
+        });
+
+        scrollAIToBottom();
+    </script>
+
+</body>
+
+
+</html>

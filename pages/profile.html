@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile Setup | प्रोफाइल</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Noto+Sans+Devanagari:wght@300;400;600&family=Manrope:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #989a9e;
+            --surface: #13161e;
+            --card: #181c27;
+            --border: rgba(255, 255, 255, 0.07);
+            --border2: rgba(255, 255, 255, 0.13);
+            --text: #e8eaf0;
+            --muted: #6b7280;
+            --cyan: #00d4ff;
+            --teal: #00f5c3;
+            --pink: #ff4d8d;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            background: var(--bg);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0, 212, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.04) 1px, transparent 1px);
+            background-size: 44px 44px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            pointer-events: none;
+            z-index: 0;
+            animation: pulse 8s ease-in-out infinite alternate;
+        }
+
+        .orb1 {
+            width: 500px;
+            height: 500px;
+            background: rgba(0, 212, 255, 0.09);
+            top: -200px;
+            left: -150px;
+        }
+
+        .orb2 {
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 77, 141, 0.07);
+            bottom: -150px;
+            right: -100px;
+            animation-delay: 3s;
+        }
+
+        .orb3 {
+            width: 300px;
+            height: 300px;
+            background: rgba(0, 245, 195, 0.06);
+            top: 50%;
+            left: 60%;
+            animation-delay: 6s;
+        }
+
+        @keyframes pulse {
+            from {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+
+            to {
+                transform: scale(1.15);
+                opacity: 1;
+            }
+        }
+
+        .wrapper {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 580px;
+            margin: 36px 16px;
+            animation: rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        @keyframes rise {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .top-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .top-label .line {
+            height: 1px;
+            flex: 1;
+            background: linear-gradient(90deg, var(--cyan), transparent);
+        }
+
+        .top-label span {
+            font-family: 'Syne', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--cyan);
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border2);
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 0 0 1px rgba(0, 212, 255, 0.05), 0 24px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+        }
+
+        .card-head {
+            padding: 36px 44px 28px;
+            background: linear-gradient(160deg, rgba(0, 212, 255, 0.05) 0%, transparent 60%);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .head-text h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 30px;
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1.15;
+            margin-bottom: 6px;
+        }
+
+        .head-text h1 em {
+            font-style: normal;
+            background: linear-gradient(90deg, var(--cyan), var(--teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .head-text p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .lang-pill {
+            display: flex;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border2);
+            border-radius: 100px;
+            padding: 3px;
+            flex-shrink: 0;
+            gap: 2px;
+            margin-top: 4px;
+        }
+
+        .lang-pill button {
+            padding: 6px 14px;
+            border-radius: 100px;
+            border: none;
+            background: transparent;
+            color: var(--muted);
+            font-family: 'Manrope', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.22s;
+        }
+
+        .lang-pill button.active {
+            background: linear-gradient(135deg, var(--cyan), var(--teal));
+            color: #0d0f14;
+        }
+
+        .avatar-row {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 24px 44px 0;
+        }
+
+        .avatar-ring {
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--cyan), var(--teal), var(--pink));
+            padding: 2.5px;
+            cursor: pointer;
+            transition: transform 0.25s, box-shadow 0.25s;
+            flex-shrink: 0;
+        }
+
+        .avatar-ring:hover {
+            transform: scale(1.07);
+            box-shadow: 0 0 28px rgba(0, 212, 255, 0.4);
+        }
+
+        .avatar-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            overflow: hidden;
+            background: var(--surface);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar-inner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .avatar-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            color: var(--muted);
+        }
+
+        .avatar-placeholder svg {
+            width: 22px;
+            height: 22px;
+            opacity: 0.6;
+        }
+
+        .avatar-placeholder span {
+            font-size: 9px;
+            letter-spacing: 0.5px;
+        }
+
+        .avatar-info h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 3px;
+        }
+
+        .avatar-info p {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .upload-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 8px;
+            padding: 4px 12px;
+            background: rgba(0, 212, 255, 0.08);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 100px;
+            color: var(--cyan);
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .upload-chip:hover {
+            background: rgba(0, 212, 255, 0.15);
+        }
+
+        #photoInput {
+            display: none;
+        }
+
+        .form-body {
+            padding: 28px 44px 40px;
+        }
+
+        .sec-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .sec-title span {
+            font-family: 'Syne', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .sec-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .field {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+
+        label .dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--cyan);
+            opacity: 0.6;
+        }
+
+        input[type=text],
+        input[type=email],
+        input[type=tel],
+        input[type=number],
+        textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border2);
+            border-radius: 12px;
+            padding: 13px 16px;
+            color: var(--text);
+            font-family: 'Manrope', sans-serif;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+            -webkit-appearance: none;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: rgba(0, 212, 255, 0.5);
+            background: rgba(0, 212, 255, 0.03);
+            box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.08);
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: rgba(255, 255, 255, 0.18);
+            font-size: 13px;
+        }
+
+        textarea {
+            resize: none;
+            height: 82px;
+            line-height: 1.6;
+        }
+
+        .row2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .btn-wrap {
+            margin-top: 26px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            font-family: 'Syne', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, var(--cyan) 0%, var(--teal) 100%);
+            color: #0d0f14;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.18s, box-shadow 0.18s;
+            box-shadow: 0 4px 24px rgba(0, 212, 255, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--teal) 0%, var(--cyan) 100%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .btn-submit:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 36px rgba(0, 212, 255, 0.35);
+        }
+
+        .btn-submit:hover:not(:disabled)::before {
+            opacity: 1;
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-inner {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .spin {
+            width: 18px;
+            height: 18px;
+            border: 2.5px solid rgba(0, 0, 0, 0.2);
+            border-top-color: #0d0f14;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .progress-dots {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 20px;
+        }
+
+        .pdot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--border2);
+            transition: all 0.3s;
+        }
+
+        .pdot.active {
+            background: var(--cyan);
+            width: 20px;
+            border-radius: 3px;
+            box-shadow: 0 0 8px var(--cyan);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            z-index: 9999;
+            padding: 13px 24px;
+            border-radius: 100px;
+            font-size: 13.5px;
+            font-weight: 600;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.4s;
+            opacity: 0;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            background: linear-gradient(135deg, var(--cyan), var(--teal));
+            color: #0d0f14;
+        }
+
+        .toast.error {
+            background: linear-gradient(135deg, #ff4d4d, #ff8080);
+            color: #fff;
+        }
+
+        .success-screen {
+            display: none;
+            padding: 60px 44px;
+            text-align: center;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .success-screen.show {
+            display: flex;
+        }
+
+        .success-ring {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 2px solid var(--cyan);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.25), inset 0 0 20px rgba(0, 212, 255, 0.05);
+            animation: popIn 0.6s 0.1s both;
+            margin-bottom: 8px;
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0) rotate(-30deg);
+                opacity: 0;
+            }
+
+            70% {
+                transform: scale(1.1) rotate(5deg);
+            }
+
+            100% {
+                transform: scale(1) rotate(0);
+                opacity: 1;
+            }
+        }
+
+        .success-ring svg {
+            width: 42px;
+            height: 42px;
+        }
+
+        .success-screen h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .success-screen h2 em {
+            font-style: normal;
+            background: linear-gradient(90deg, var(--cyan), var(--teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .success-screen p {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.6;
+            max-width: 320px;
+        }
+
+        .profile-preview {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: rgba(0, 212, 255, 0.05);
+            border: 1px solid rgba(0, 212, 255, 0.15);
+            border-radius: 16px;
+            padding: 14px 20px;
+            width: 100%;
+            max-width: 340px;
+            margin: 8px 0;
+        }
+
+        .preview-pic {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--cyan);
+        }
+
+        .preview-info {
+            text-align: left;
+        }
+
+        .preview-info strong {
+            display: block;
+            color: var(--text);
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .preview-info span {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .btn-new {
+            margin-top: 8px;
+            padding: 11px 28px;
+            border-radius: 100px;
+            background: transparent;
+            border: 1.5px solid rgba(0, 212, 255, 0.3);
+            color: var(--cyan);
+            font-family: 'Syne', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-new:hover {
+            background: rgba(0, 212, 255, 0.08);
+            border-color: var(--cyan);
+        }
+
+        @media (max-width:520px) {
+            .card-head {
+                padding: 28px 24px 22px;
+                flex-direction: column;
+            }
+
+            .form-body {
+                padding: 22px 24px 32px;
+            }
+
+            .avatar-row {
+                padding: 20px 24px 0;
+            }
+
+            .success-screen {
+                padding: 48px 24px;
+            }
+
+            .row2 {
+                grid-template-columns: 1fr;
+            }
+
+            .head-text h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="glow-orb orb1"></div>
+    <div class="glow-orb orb2"></div>
+    <div class="glow-orb orb3"></div>
+    <div class="toast" id="toast"></div>
+
+    <div class="wrapper">
+        <div class="top-label">
+            <div class="line"></div>
+            <span id="topLabel">Profile Setup</span>
+            <div class="line" style="background:linear-gradient(90deg,transparent,var(--cyan));transform:scaleX(-1)">
+            </div>
+        </div>
+
+        <div class="card">
+
+            <!-- Success Screen -->
+            <div class="success-screen" id="successScreen">
+                <div class="success-ring">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <defs>
+                            <linearGradient id="cg" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#00d4ff" />
+                                <stop offset="100%" stop-color="#00f5c3" />
+                            </linearGradient>
+                        </defs>
+                        <polyline points="20 6 9 17 4 12" stroke="url(#cg)" />
+                    </svg>
+                </div>
+                <h2 id="s_title">Profile <em>Submitted!</em></h2>
+                <p id="s_desc">Your data has been sent to the admin. You'll receive a confirmation shortly.</p>
+                <div class="profile-preview" id="previewBox">
+                    <img src="" id="previewPic" class="preview-pic" alt="" />
+                    <div class="preview-info">
+                        <strong id="previewName"></strong>
+                        <span id="previewEmail"></span>
+                    </div>
+                </div>
+                <button class="btn-new" onclick="resetForm()" id="s_btn">+ New Profile | नई प्रोफाइल</button>
+            </div>
+
+            <!-- Form Area -->
+            <div id="formArea">
+
+                <!-- Header -->
+                <div class="card-head">
+                    <div class="head-text">
+                        <h1 id="h_title">Create Your <em>Profile</em></h1>
+                        <p id="h_sub">Fill in your details • नीचे जानकारी भरें</p>
+                    </div>
+                    <div class="lang-pill">
+                        <button class="active" id="btnEn" onclick="setLang('en')">EN</button>
+                        <button id="btnHi" onclick="setLang('hi')">हिं</button>
+                    </div>
+                </div>
+
+                <!-- Avatar -->
+                <div class="avatar-row">
+                    <div class="avatar-ring" onclick="document.getElementById('photoInput').click()">
+                        <div class="avatar-inner">
+                            <div class="avatar-placeholder" id="avatarPlaceholder">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                                    <circle cx="12" cy="7" r="4" />
+                                </svg>
+                                <span>PHOTO</span>
+                            </div>
+                            <img id="avatarImg" src="" style="display:none" alt="preview" />
+                        </div>
+                    </div>
+                    <div class="avatar-info">
+                        <h3 id="a_title">Your Photo</h3>
+                        <p id="a_sub">JPG, PNG • Max 5MB</p>
+                        <div class="upload-chip" onclick="document.getElementById('photoInput').click()">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5">
+                                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                                <polyline points="17 8 12 3 7 8" />
+                                <line x1="12" y1="3" x2="12" y2="15" />
+                            </svg>
+                            <span id="a_btn">Upload Photo</span>
+                        </div>
+                    </div>
+                    <input type="file" id="photoInput" accept="image/*" onchange="previewPhoto(event)" />
+                </div>
+
+                <!-- Form Body -->
+                <div class="form-body">
+
+                    <!-- Basic Info -->
+                    <div class="sec-title"><span id="sec1">Basic Info</span></div>
+
+                    <div class="field">
+                        <label><span class="dot"></span><span id="lbl_name">Full Name</span></label>
+                        <input type="text" id="inp_name" placeholder="Enter your full name | पूरा नाम" required />
+                    </div>
+
+                    <div class="row2">
+                        <div class="field">
+                            <label><span class="dot"></span><span id="lbl_age">Age</span></label>
+                            <input type="number" id="inp_age" placeholder="25" min="1" max="120" required />
+                        </div>
+                        <div class="field">
+                            <label><span class="dot"></span><span id="lbl_phone">Phone</span></label>
+                            <input type="tel" id="inp_phone" placeholder="+91 98765 43210" required />
+                        </div>
+                    </div>
+
+                    <!-- Contact Info -->
+                    <div class="sec-title" style="margin-top:8px"><span id="sec2">Contact Info</span></div>
+
+                    <div class="field">
+                        <label><span class="dot"></span><span id="lbl_gmail">Gmail</span></label>
+                        <input type="email" id="inp_email" placeholder="yourname@gmail.com" required />
+                    </div>
+
+                    <div class="field">
+                        <label><span class="dot"></span><span id="lbl_address">Address</span></label>
+                        <textarea id="inp_address" placeholder="Full address | पूरा पता" required></textarea>
+                    </div>
+
+                    <!-- Submit -->
+                    <div class="btn-wrap">
+                        <button class="btn-submit" id="submitBtn" onclick="submitForm()">
+                            <span class="btn-inner">
+                                <div class="spin" id="spinner"></div>
+                                <span id="btnText">Submit Profile | प्रोफाइल जमा करें</span>
+                                <span id="btnArrow">→</span>
+                            </span>
+                        </button>
+                    </div>
+
+                    <div class="progress-dots">
+                        <div class="pdot active" id="pd1"></div>
+                        <div class="pdot" id="pd2"></div>
+                        <div class="pdot" id="pd3"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        // ============================================================
+        // ✅ SIRF YAHAN APNI DETAILS DAALEIN — CLIENT KO NAHI DIKHEGA
+        // ============================================================
+        const W3F_ACCESS_KEY = "73c88023-d817-45a3-89fe-5ddc155e42ac";  // 👈 LINE 1: Web3Forms Access Key
+        // ============================================================
+        // Web3Forms dashboard mein jaake jo email set ki hai
+        // wahi Gmail par data aayega. Koi aur line nahi badalni.
+        // ============================================================
+
+        const T = {
+            en: {
+                topLabel: "Profile Setup", h_title: "Create Your <em>Profile</em>",
+                h_sub: "Fill in your details • नीचे जानकारी भरें",
+                a_title: "Your Photo", a_sub: "JPG, PNG • Max 5MB", a_btn: "Upload Photo",
+                sec1: "Basic Info", sec2: "Contact Info",
+                lbl_name: "Full Name", lbl_age: "Age", lbl_phone: "Phone",
+                lbl_gmail: "Gmail", lbl_address: "Address",
+                btnText: "Submit Profile | प्रोफाइल जमा करें", btnArrow: "→",
+                s_title: "Profile <em>Submitted!</em>",
+                s_desc: "Your data has been sent to the admin. You'll receive a confirmation shortly.",
+                s_btn: "+ New Profile | नई प्रोफाइल",
+            },
+            hi: {
+                topLabel: "प्रोफाइल सेटअप", h_title: "अपनी <em>प्रोफाइल</em> बनाएं",
+                h_sub: "नीचे अपनी जानकारी भरें",
+                a_title: "आपकी फ़ोटो", a_sub: "JPG, PNG • अधिकतम 5MB", a_btn: "फ़ोटो अपलोड करें",
+                sec1: "बुनियादी जानकारी", sec2: "संपर्क जानकारी",
+                lbl_name: "पूरा नाम", lbl_age: "उम्र", lbl_phone: "फ़ोन नंबर",
+                lbl_gmail: "जीमेल पता", lbl_address: "पता",
+                btnText: "प्रोफाइल जमा करें", btnArrow: "✓",
+                s_title: "प्रोफाइल <em>जमा हो गई!</em>",
+                s_desc: "आपकी जानकारी एडमिन के पास पहुंच गई है।",
+                s_btn: "+ नई प्रोफाइल",
+            }
+        };
+
+        let lang = 'en';
+        let photoB64 = null;
+
+        function setLang(l) {
+            lang = l;
+            const c = T[l];
+            document.getElementById('topLabel').textContent = c.topLabel;
+            document.getElementById('h_title').innerHTML = c.h_title;
+            document.getElementById('h_sub').textContent = c.h_sub;
+            document.getElementById('a_title').textContent = c.a_title;
+            document.getElementById('a_sub').textContent = c.a_sub;
+            document.getElementById('a_btn').textContent = c.a_btn;
+            document.getElementById('sec1').textContent = c.sec1;
+            document.getElementById('sec2').textContent = c.sec2;
+            document.getElementById('lbl_name').textContent = c.lbl_name;
+            document.getElementById('lbl_age').textContent = c.lbl_age;
+            document.getElementById('lbl_phone').textContent = c.lbl_phone;
+            document.getElementById('lbl_gmail').textContent = c.lbl_gmail;
+            document.getElementById('lbl_address').textContent = c.lbl_address;
+            document.getElementById('btnText').textContent = c.btnText;
+            document.getElementById('btnArrow').textContent = c.btnArrow;
+            document.getElementById('s_title').innerHTML = c.s_title;
+            document.getElementById('s_desc').textContent = c.s_desc;
+            document.getElementById('s_btn').textContent = c.s_btn;
+            document.getElementById('btnEn').classList.toggle('active', l === 'en');
+            document.getElementById('btnHi').classList.toggle('active', l === 'hi');
+            document.body.style.fontFamily = l === 'hi'
+                ? "'Noto Sans Devanagari','Manrope',sans-serif"
+                : "'Manrope',sans-serif";
+        }
+
+        function previewPhoto(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = ev => {
+                photoB64 = ev.target.result;
+                document.getElementById('avatarImg').src = photoB64;
+                document.getElementById('avatarImg').style.display = 'block';
+                document.getElementById('avatarPlaceholder').style.display = 'none';
+                dot(1);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function dot(n) {
+            ['pd1', 'pd2', 'pd3'].forEach((id, i) =>
+                document.getElementById(id).classList.toggle('active', i <= n)
+            );
+        }
+
+        ['inp_name', 'inp_age', 'inp_phone'].forEach(id =>
+            document.getElementById(id)?.addEventListener('focus', () => dot(1))
+        );
+        ['inp_email', 'inp_address'].forEach(id =>
+            document.getElementById(id)?.addEventListener('focus', () => dot(2))
+        );
+
+        function showToast(msg, type = 'success') {
+            const t = document.getElementById('toast');
+            t.textContent = (type === 'success' ? '✅ ' : '❌ ') + msg;
+            t.className = `toast ${type} show`;
+            setTimeout(() => { t.className = 'toast'; }, 4000);
+        }
+
+        async function submitForm() {
+            const name = document.getElementById('inp_name').value.trim();
+            const age = document.getElementById('inp_age').value.trim();
+            const phone = document.getElementById('inp_phone').value.trim();
+            const email = document.getElementById('inp_email').value.trim();
+            const address = document.getElementById('inp_address').value.trim();
+
+            if (!name || !age || !phone || !email || !address) {
+                showToast(lang === 'hi' ? 'सभी जानकारी भरें!' : 'Please fill all fields!', 'error');
+                return;
+            }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showToast(lang === 'hi' ? 'सही Gmail डालें!' : 'Enter a valid email!', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            document.getElementById('spinner').style.display = 'block';
+            document.getElementById('btnText').textContent = lang === 'hi' ? 'भेज रहे हैं...' : 'Sending...';
+            document.getElementById('btnArrow').textContent = '';
+
+            try {
+                const fd = new FormData();
+                fd.append('access_key', W3F_ACCESS_KEY);
+                fd.append('subject', `New Profile: ${name}`);
+                fd.append('from_name', 'Profile Form');
+                fd.append('Name', name);
+                fd.append('Age', age);
+                fd.append('Phone', phone);
+                fd.append('Email', email);
+                fd.append('Address', address);
+                fd.append('Time', new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }));
+                if (photoB64) fd.append('Photo', 'User uploaded a photo (shown in preview)');
+
+                const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd });
+                const data = await res.json();
+
+                if (data.success) {
+                    document.getElementById('previewName').textContent = name;
+                    document.getElementById('previewEmail').textContent = email;
+                    if (photoB64) {
+                        document.getElementById('previewPic').src = photoB64;
+                    } else {
+                        document.getElementById('previewBox').style.display = 'none';
+                    }
+                    document.getElementById('formArea').style.display = 'none';
+                    document.getElementById('successScreen').classList.add('show');
+                    dot(2);
+                } else {
+                    throw new Error(data.message || 'Failed');
+                }
+            } catch (err) {
+                console.error(err);
+                showToast(lang === 'hi' ? 'कुछ गड़बड़ हुई, दोबारा कोशिश करें।' : 'Something went wrong. Try again.', 'error');
+                btn.disabled = false;
+                document.getElementById('spinner').style.display = 'none';
+                document.getElementById('btnText').textContent = T[lang].btnText;
+                document.getElementById('btnArrow').textContent = T[lang].btnArrow;
+            }
+        }
+
+        function resetForm() {
+            ['inp_name', 'inp_age', 'inp_phone', 'inp_email', 'inp_address'].forEach(id =>
+                document.getElementById(id).value = ''
+            );
+            photoB64 = null;
+            document.getElementById('avatarImg').style.display = 'none';
+            document.getElementById('avatarPlaceholder').style.display = 'flex';
+            document.getElementById('photoInput').value = '';
+            document.getElementById('previewBox').style.display = 'flex';
+            document.getElementById('formArea').style.display = 'block';
+            document.getElementById('successScreen').classList.remove('show');
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = false;
+            document.getElementById('spinner').style.display = 'none';
+            document.getElementById('btnText').textContent = T[lang].btnText;
+            document.getElementById('btnArrow').textContent = T[lang].btnArrow;
+            dot(0);
+        }
+
+    </script>
+</body>
+
+</html>
