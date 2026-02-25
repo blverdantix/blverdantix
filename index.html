@@ -11,16 +11,384 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css" />
-    <link rel="stylesheet" href="css\style.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* ══════════════════════════════════════════════════════
+       RECOGNITION & EXPERT TALKS — PROFESSIONAL GRID DESIGN
+       - NO repeats: 5 unique people displayed once each
+       - CSS Grid layout (not slider)
+       - GitHub avatar as photo for Karan, Aman, BLV org
+       - Hover: green overlay + GitHub button
+       - Footer bar: avatar chip + @username link
+    ══════════════════════════════════════════════════════ */
+
+        .recognition-section {
+            padding: 80px 40px 90px;
+            background: linear-gradient(150deg, #f1faf3 0%, #e8f5e9 45%, #f9fbe7 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .recognition-section::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: -100px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(76, 175, 80, 0.09) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .recognition-section::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            right: -80px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(139, 195, 74, 0.10) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* Section header */
+        .recognition-section .rec-header {
+            text-align: center;
+            margin-bottom: 52px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .recognition-section .rec-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            color: #1b5e20;
+            margin: 10px 0 12px;
+            line-height: 1.2;
+        }
+
+        .recognition-section .rec-header p {
+            color: #558b2f;
+            font-size: 1rem;
+            font-family: 'Manrope', sans-serif;
+            max-width: 520px;
+            margin: 0 auto;
+            opacity: 0.85;
+        }
+
+        /* 5-column grid */
+        .rec-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 26px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        @media (max-width: 1100px) {
+            .rec-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 22px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .rec-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+
+            .recognition-section {
+                padding: 48px 18px 60px;
+            }
+
+            .recognition-section .rec-header h2 {
+                font-size: 1.75rem;
+            }
+        }
+
+        /* Card */
+        .rec-card {
+            background: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 22px rgba(27, 94, 32, 0.09);
+            border: 1.5px solid rgba(76, 175, 80, 0.13);
+            transition: transform 0.38s cubic-bezier(.22, .68, 0, 1.2),
+                box-shadow 0.35s ease,
+                border-color 0.3s ease;
+            cursor: default;
+        }
+
+        .rec-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 22px 58px rgba(27, 94, 32, 0.18);
+            border-color: rgba(76, 175, 80, 0.40);
+        }
+
+        /* Photo wrap */
+        .rec-photo {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 3 / 3.6;
+            overflow: hidden;
+            background: #e8f5e9;
+        }
+
+        .rec-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            display: block;
+            transition: transform 0.52s ease;
+        }
+
+        .rec-card:hover .rec-photo img {
+            transform: scale(1.08);
+        }
+
+        /* Permanent bottom gradient on photo */
+        .rec-photo::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top,
+                    rgba(10, 40, 12, 0.72) 0%,
+                    rgba(10, 40, 12, 0.15) 45%,
+                    transparent 100%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Name pinned at photo bottom */
+        .rec-photo-label {
+            position: absolute;
+            bottom: 12px;
+            left: 13px;
+            right: 13px;
+            z-index: 2;
+        }
+
+        .rec-photo-label .rpl-name {
+            font-family: 'Sora', sans-serif;
+            font-weight: 700;
+            font-size: 0.86rem;
+            color: #fff;
+            margin: 0 0 2px;
+            line-height: 1.25;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .rec-photo-label .rpl-role {
+            font-family: 'Manrope', sans-serif;
+            font-size: 0.69rem;
+            color: rgba(255, 255, 255, 0.80);
+            margin: 0;
+        }
+
+        /* Green hover overlay */
+        .rec-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(155deg,
+                    rgba(27, 94, 32, 0.88) 0%,
+                    rgba(46, 125, 50, 0.92) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 18px 14px;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            z-index: 3;
+        }
+
+        .rec-card:hover .rec-overlay {
+            opacity: 1;
+        }
+
+        .rec-overlay-name {
+            font-family: 'Sora', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #fff;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        .rec-overlay-role {
+            font-family: 'Manrope', sans-serif;
+            font-size: 0.73rem;
+            color: rgba(255, 255, 255, 0.78);
+            text-align: center;
+            margin-top: -4px;
+        }
+
+        .rec-overlay-desc {
+            font-family: 'Manrope', sans-serif;
+            font-size: 0.69rem;
+            color: rgba(255, 255, 255, 0.62);
+            text-align: center;
+            line-height: 1.4;
+            margin-top: 2px;
+        }
+
+        /* GitHub button in overlay */
+        .rec-gh-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.17);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border: 1.5px solid rgba(255, 255, 255, 0.42);
+            color: #fff !important;
+            text-decoration: none !important;
+            font-family: 'Manrope', sans-serif;
+            font-weight: 700;
+            font-size: 0.76rem;
+            padding: 6px 16px;
+            border-radius: 30px;
+            letter-spacing: 0.03em;
+            margin-top: 4px;
+            transition: background 0.22s, border-color 0.22s, transform 0.18s;
+        }
+
+        .rec-gh-btn i {
+            font-size: 0.9rem;
+        }
+
+        .rec-gh-btn:hover {
+            background: rgba(255, 255, 255, 0.28);
+            border-color: rgba(255, 255, 255, 0.75);
+            transform: scale(1.06);
+        }
+
+        /* Badges */
+        .rec-badge {
+            position: absolute;
+            top: 11px;
+            left: 11px;
+            z-index: 4;
+            font-family: 'Manrope', sans-serif;
+            font-weight: 800;
+            font-size: 0.60rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 3px 10px;
+            border-radius: 20px;
+            line-height: 1.4;
+        }
+
+        .rec-badge.founder {
+            background: linear-gradient(135deg, #ff8f00, #ffc107);
+            color: #fff;
+            box-shadow: 0 2px 10px rgba(255, 143, 0, 0.45);
+        }
+
+        .rec-badge.org {
+            background: rgba(46, 125, 50, 0.88);
+            color: #fff;
+            backdrop-filter: blur(4px);
+        }
+
+        /* Card footer */
+        .rec-footer {
+            padding: 11px 13px 13px;
+            background: #fff;
+            border-top: 2px solid #f1f8e9;
+        }
+
+        /* Footer WITH GitHub: avatar + name + chip */
+        .rec-footer-row {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .rec-footer-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #c8e6c9;
+            flex-shrink: 0;
+            display: block;
+        }
+
+        .rec-footer-info {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            gap: 2px;
+        }
+
+        .rec-footer-info strong {
+            font-family: 'Sora', sans-serif;
+            font-size: 0.79rem;
+            color: #1b5e20;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+        }
+
+        .rec-gh-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-family: 'Manrope', sans-serif;
+            font-size: 0.64rem;
+            color: #558b2f;
+            text-decoration: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: color 0.2s;
+        }
+
+        .rec-gh-chip i {
+            font-size: 0.68rem;
+            flex-shrink: 0;
+        }
+
+        .rec-gh-chip:hover {
+            color: #2e7d32;
+            text-decoration: none;
+        }
+
+        /* Footer WITHOUT GitHub: simple text */
+        .rec-footer-simple {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .rec-footer-simple strong {
+            font-family: 'Sora', sans-serif;
+            font-size: 0.82rem;
+            color: #1b5e20;
+        }
+
+        .rec-footer-simple span {
+            font-family: 'Manrope', sans-serif;
+            font-size: 0.70rem;
+            color: #888;
+        }
+    </style>
 </head>
 
 <body>
 
     <div class="toast-global" id="globalToast"></div>
 
-    <!-- ═══════════════════════════════════════
-     STICKY HEADER
-═══════════════════════════════════════ -->
+    <!-- STICKY HEADER -->
     <header id="mainHeader">
         <div class="logo" onclick="navigateTo('home')">
             <img src="https://img.sanishtech.com/u/4b566ef4348b320888dffcf6b3f503a5.png" alt="B.L Verdantix">
@@ -29,9 +397,7 @@
                 <p>Agri Solutions</p>
             </div>
         </div>
-
         <nav id="navMenu">
-
             <a href="home.html">Home</a>
             <a href="pages/about.html">About</a>
             <a href="pages/services.html">Services</a>
@@ -40,17 +406,12 @@
             <a href="pages/contact.html">Contact</a>
             <a href="pages/profile.html">Profile</a>
         </nav>
-
-        <div class="profile-btn" onclick="navigateTo('profile')" title="Profile">
-            <i class="fas fa-user"></i>
-        </div>
+        <div class="profile-btn" onclick="navigateTo('profile')" title="Profile"><i class="fas fa-user"></i></div>
         <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
     </header>
     <div class="overlay" id="overlay"></div>
 
-    <!-- ═══════════════════════════════════════
-     FOOTER TEMPLATE (injected by JS)
-═══════════════════════════════════════ -->
+    <!-- FOOTER TEMPLATE -->
     <template id="footerTemplate">
         <footer class="site-footer">
             <div class="footer-inner">
@@ -60,8 +421,7 @@
                             <img src="https://img.sanishtech.com/u/4b566ef4348b320888dffcf6b3f503a5.png"
                                 alt="B.L Verdantix Logo">
                             <div class="footer-logo-text">
-                                <h3>B.L Verdantix</h3>
-                                <span>Agri Technologies</span>
+                                <h3>B.L Verdantix</h3><span>Agri Technologies</span>
                             </div>
                         </div>
                         <p>Empowering farmers with AI-driven plant care, disease detection, and smart agricultural
@@ -87,19 +447,16 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="footer-grid">
                     <div class="footer-col">
                         <h4>Navigate</h4>
                         <ul>
                             <li><a onclick="navigateTo('home')"><span class="link-arrow">›</span>Home</a></li>
                             <li><a onclick="navigateTo('about')"><span class="link-arrow">›</span>About</a></li>
-                            <li><a onclick="navigateTo('services')"><span class="link-arrow">›</span>Services</a>
-                            </li>
+                            <li><a onclick="navigateTo('services')"><span class="link-arrow">›</span>Services</a></li>
                             <li><a onclick="navigateTo('press')"><span class="link-arrow">›</span>Press</a></li>
                             <li><a onclick="navigateTo('contact')"><span class="link-arrow">›</span>Contact</a></li>
-                            <li><a onclick="navigateTo('profile')"><span class="link-arrow">›</span>Profile</a>
-                            </li>
+                            <li><a onclick="navigateTo('profile')"><span class="link-arrow">›</span>Profile</a></li>
                         </ul>
                     </div>
                     <div class="footer-col">
@@ -167,7 +524,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="footer-bottom">
                     <div class="footer-bottom-left">
                         <div class="footer-leaf-icon">🌿</div>
@@ -179,18 +535,17 @@
                         <a href="#">Disclaimer</a>
                         <a href="#">Sitemap</a>
                     </div>
-                    <div class="footer-bottom-badge">
-                        <i class="fas fa-shield-alt"></i> Secured &amp; Verified
-                    </div>
+                    <div class="footer-bottom-badge"><i class="fas fa-shield-alt"></i> Secured &amp; Verified</div>
                 </div>
             </div>
         </footer>
     </template>
 
-    <!-- ═══════════════════════════════════════
+    <!-- ═══════════════════════════
      PAGE: HOME
-═══════════════════════════════════════ -->
+═══════════════════════════ -->
     <div class="page active" id="page-home">
+
         <section class="hero">
             <div class="hero-bg"></div>
             <div class="hero-content">
@@ -199,8 +554,9 @@
                 <p>Snap a photo and get instant plant identification, disease diagnosis, and expert care advice powered
                     by advanced AI technology.</p>
                 <div class="hero-buttons">
-                    <a href="pages/finder.html" class="btn btn-primary"><i class="fas fa-camera"></i> Pest Finder</a>
-                    <a href="pages/profile.html" class="btn btn-secondary">Create Profile <i class="fas fa-user-plus"></i></a>
+                    <a href="pages/Finder.html" class="btn btn-primary"><i class="fas fa-camera"></i> Pest Finder</a>
+                    <a href="pages/profile.html" class="btn btn-secondary">Create Profile <i
+                            class="fas fa-user-plus"></i></a>
                 </div>
             </div>
         </section>
@@ -366,79 +722,140 @@
             </div>
         </section>
 
+        <!-- ══════════════════════════════════════════════
+         RECOGNITION & EXPERT TALKS
+         5 unique people, CSS grid, no slider, no repeats
+    ══════════════════════════════════════════════ -->
         <section class="recognition-section">
-            <div class="section-header" style="position:relative;z-index:2"><span class="section-badge">Our
-                    Journey</span>
+            <div class="rec-header">
+                <span class="section-badge">Our Journey</span>
                 <h2>Recognition & Expert Talks</h2>
+                <p>The people and places behind B.L Verdantix's mission to transform agriculture</p>
             </div>
-            <div class="slider-container">
-                <div class="slider-track">
-                    <div class="slider-card"><img
-                            src="https://img.sanishtech.com/u/c1aa970a51b0934b737859637462cbcb.jpeg" alt="Bhajan Lal">
-                        <div class="slider-content">
-                            <p><strong>Bhajan Lal (Founder)</strong></p>
-                            <p>1945 – 2002</p>
+
+            <div class="rec-grid">
+
+
+
+                <!-- 2 ── Amarjit Singh · Senior Advisor (no GitHub) -->
+                <div class="rec-card">
+                    <div class="rec-photo">
+                        <img src="" alt="Amarjit Singh">
+                        <div class="rec-photo-label">
+                            <p class="rpl-name">Amarjit Singh</p>
+                            <p class="rpl-role">Senior Advisor</p>
+                        </div>
+                        <div class="rec-overlay">
+                            <div class="rec-overlay-name">Amarjit Singh</div>
+                            <div class="rec-overlay-role">Senior Advisor</div>
+                            <div class="rec-overlay-desc">Strategic guidance & decades of agricultural expertise</div>
                         </div>
                     </div>
-                    <div class="slider-card"><img
-                            src="https://img.sanishtech.com/u/b5e3279bfd6d6a88a057863d25101792.jpeg" alt="Advisor">
-                        <div class="slider-content">
-                            <p><strong>Amarjit Singh</strong></p>
-                            <p>Senior Advisor</p>
-                        </div>
-                    </div>
-                    <div class="slider-card"><img
-                            src="https://img.sanishtech.com/u/232930959f6654010462654b9026b688.jpg" alt="Karan">
-                        <div class="slider-content">
-                            <p><strong>Karan Chaudhary</strong></p>
-                            <p>Head</p>
-                        </div>
-                    </div>
-                    <div class="slider-card"><img
-                            src="https://img.sanishtech.com/u/0f90e2cb50cf4d092bed1d49ce01240d.jpeg" alt="Aman">
-                        <div class="slider-content">
-                            <p><strong>Aman Gupt</strong></p>
-                            <p>Tech Lead</p>
-                        </div>
-                    </div>
-                    <div class="slider-card"><img
-                            src="https://img.sanishtech.com/u/c1aa970a51b0934b737859637462cbcb.jpeg" alt="B2">
-                        <div class="slider-content">
-                            <p><strong>Bhajan Lal</strong></p>
-                            <p>1945 – 2002</p>
-                        </div>
-                    </div>
-                    <div class="slider-card"><img
-                            src="https://img.sanishtech.com/u/9fa761a3f614c221ccccfaf96d07d849.jpeg" alt="Store">
-                        <div class="slider-content">
-                            <p><strong>B.L Verdantix Store</strong></p>
-                            <p>Mawana, Meerut</p>
-                        </div>
-                    </div>
-                    <div class="slider-card"><img
-                            src="https://img.sanishtech.com/u/232930959f6654010462654b9026b688.jpg" alt="K2">
-                        <div class="slider-content">
-                            <p><strong>Karan Chaudhary</strong></p>
-                            <p></p>
-                        </div>
-                    </div>
-                    <div class="slider-card"><img
-                            src="https://img.sanishtech.com/u/0f90e2cb50cf4d092bed1d49ce01240d.jpeg" alt="A2">
-                        <div class="slider-content">
-                            <p><strong>Aman Gupt</strong></p>
-                            <p></p>
-                        </div>
-                    </div>
-                    <div class="slider-card"><img
-                            src="https://img.sanishtech.com/u/c1aa970a51b0934b737859637462cbcb.jpeg" alt="BL">
-                        <div class="slider-content">
-                            <p><strong>Bhajan Lal</strong></p>
-                            <p>1945 – 2002</p>
+                    <div class="rec-footer">
+                        <div class="rec-footer-simple">
+                            <strong>Amarjit Singh</strong>
+                            <span>Senior Advisor</span>
                         </div>
                     </div>
                 </div>
-            </div>
+
+                <!-- 3 ── Karan Chaudhary · Head | GitHub: karanchaudhary1718 -->
+                <div class="rec-card">
+                    <div class="rec-photo">
+                        <img src="https://avatars.githubusercontent.com/karanchaudhary1718?v=4" alt="Karan Chaudhary"
+                            onerror="this.src='https://img.sanishtech.com/u/232930959f6654010462654b9026b688.jpg'">
+                        <div class="rec-photo-label">
+                            <p class="rpl-name">Karan Chaudhary</p>
+                            <p class="rpl-role">Head</p>
+                        </div>
+                        <div class="rec-overlay">
+                            <div class="rec-overlay-name">Karan Chaudhary</div>
+                            <div class="rec-overlay-role">Head · B.L Verdantix</div>
+                            <a href="https://github.com/karanchaudhary1718" target="_blank" class="rec-gh-btn">
+                                <i class="fab fa-github"></i> View GitHub
+                            </a>
+                        </div>
+                    </div>
+                    <div class="rec-footer">
+                        <div class="rec-footer-row">
+                            <img src="https://avatars.githubusercontent.com/karanchaudhary1718?v=4"
+                                class="rec-footer-avatar" alt="Karan" onerror="this.style.display='none'">
+                            <div class="rec-footer-info">
+                                <strong>Karan Chaudhary</strong>
+                                <a href="https://github.com/karanchaudhary1718" target="_blank" class="rec-gh-chip">
+                                    <i class="fab fa-github"></i> karanchaudhary1718
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4 ── Aman Gupt · Tech Lead | GitHub: Its-aman18 -->
+                <div class="rec-card">
+                    <div class="rec-photo">
+                        <img src="https://avatars.githubusercontent.com/Its-aman18?v=4" alt="Aman Gupt"
+                            onerror="this.src='https://img.sanishtech.com/u/0f90e2cb50cf4d092bed1d49ce01240d.jpeg'">
+                        <div class="rec-photo-label">
+                            <p class="rpl-name">Aman Gupt</p>
+                            <p class="rpl-role">Tech Lead</p>
+                        </div>
+                        <div class="rec-overlay">
+                            <div class="rec-overlay-name">Aman Gupt</div>
+                            <div class="rec-overlay-role">Tech Lead · B.Tech (C.S)</div>
+                            <a href="https://github.com/Its-aman18" target="_blank" class="rec-gh-btn">
+                                <i class="fab fa-github"></i> View GitHub
+                            </a>
+                        </div>
+                    </div>
+                    <div class="rec-footer">
+                        <div class="rec-footer-row">
+                            <img src="https://avatars.githubusercontent.com/Its-aman18?v=4" class="rec-footer-avatar"
+                                alt="Aman" onerror="this.style.display='none'">
+                            <div class="rec-footer-info">
+                                <strong>Aman Gupt</strong>
+                                <a href="https://github.com/Its-aman18" target="_blank" class="rec-gh-chip">
+                                    <i class="fab fa-github"></i> Its-aman18
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5 ── B.L Verdantix Org | GitHub: blverdantix -->
+                <div class="rec-card">
+                    <div class="rec-photo">
+                        <span class="rec-badge org">🏪 Store</span>
+                        <img src="https://avatars.githubusercontent.com/blverdantix?v=4" alt="B.L Verdantix"
+                            onerror="this.src='https://img.sanishtech.com/u/9fa761a3f614c221ccccfaf96d07d849.jpeg'">
+                        <div class="rec-photo-label">
+                            <p class="rpl-name">B.L Verdantix</p>
+                            <p class="rpl-role">Mawana, Meerut</p>
+                        </div>
+                        <div class="rec-overlay">
+                            <div class="rec-overlay-name">B.L Verdantix</div>
+                            <div class="rec-overlay-role">Official Organisation · Meerut, U.P.</div>
+                            <a href="https://github.com/blverdantix" target="_blank" class="rec-gh-btn">
+                                <i class="fab fa-github"></i> View GitHub
+                            </a>
+                        </div>
+                    </div>
+                    <div class="rec-footer">
+                        <div class="rec-footer-row">
+                            <img src="https://avatars.githubusercontent.com/blverdantix?v=4" class="rec-footer-avatar"
+                                alt="BLV" onerror="this.style.display='none'">
+                            <div class="rec-footer-info">
+                                <strong>B.L Verdantix Store</strong>
+                                <a href="https://github.com/blverdantix" target="_blank" class="rec-gh-chip">
+                                    <i class="fab fa-github"></i> blverdantix
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /rec-grid -->
         </section>
+        <!-- ── END RECOGNITION ── -->
 
         <section class="map-section">
             <div class="map-container">
@@ -459,15 +876,14 @@
         <div id="footer-home"></div>
     </div>
 
-    <!-- ═══════════════════════════════════════
+    <!-- ═══════════════════════════
      PAGE: ABOUT
-═══════════════════════════════════════ -->
-    <div class="page" href="http://127.0.0.1:5501/about%20us.html" id="page-about ">
+═══════════════════════════ -->
+    <div class="page" id="page-about">
         <div class="about-hero">
             <h1>Transforming Agriculture<br>for a Sustainable Future</h1>
             <p>We empower farmers with innovative technology, smart advisory services, and sustainable solutions.</p>
         </div>
-
         <section class="mission-section">
             <div class="mission-grid">
                 <div class="mission-text">
@@ -484,7 +900,6 @@
                         alt="Mission"></div>
             </div>
         </section>
-
         <section class="values-section">
             <div class="values-container">
                 <h2>Our Core Values</h2>
@@ -528,7 +943,6 @@
                 </div>
             </div>
         </section>
-
         <section class="journey-section">
             <div class="journey-container">
                 <h2>Our Journey</h2>
@@ -572,7 +986,6 @@
                 </div>
             </div>
         </section>
-
         <section class="leadership">
             <h2>Our Leadership</h2>
             <p class="leadership-intro">Meet the visionary leaders driving innovation and sustainability in agriculture
@@ -587,15 +1000,14 @@
                 </div>
                 <div class="leader-card">
                     <div class="leader-img"
-                        style="background-image:url('https://img.sanishtech.com/u/c56bc0587b77814a8a93259c1eab2a10.jpg')">
+                        style="background-image:url('https://avatars.githubusercontent.com/karanchaudhary1718?v=4')">
                     </div>
                     <div class="leader-name">Mr Karan Kumar</div>
                     <div class="leader-title">CEO · B.Tech, Agra</div>
                 </div>
                 <div class="leader-card">
                     <div class="leader-img"
-                        style="background-image:url('https://img.sanishtech.com/u/dc7eca1adb8a94afff6e07ad333070ca.jpeg')">
-                    </div>
+                        style="background-image:url('https://avatars.githubusercontent.com/Its-aman18?v=4')"></div>
                     <div class="leader-name">Mr Aman Gupt</div>
                     <div class="leader-title">B.Tech(C.S), Maharajganj</div>
                 </div>
@@ -608,7 +1020,6 @@
                 </div>
             </div>
         </section>
-
         <section class="team">
             <h2>Our Team</h2>
             <p class="team-intro">Dedicated professionals committed to transforming agriculture</p>
@@ -632,9 +1043,9 @@
         <div id="footer-about"></div>
     </div>
 
-    <!-- ═══════════════════════════════════════
+    <!-- ═══════════════════════════
      PAGE: CONTACT
-═══════════════════════════════════════ -->
+═══════════════════════════ -->
     <div class="page" id="page-contact">
         <div class="contact-bg">
             <div class="contact-header">
@@ -688,10 +1099,9 @@
                             type="text" id="cName" placeholder="Enter your full name" required></div>
                     <div class="form-group"><label for="cEmail">Your Email <span class="required">*</span></label><input
                             type="email" id="cEmail" placeholder="your.email@example.com" required></div>
-                    <div class="form-group">
-                        <label for="cMsg">Your Message <span class="required">*</span></label>
-                        <textarea id="cMsg" placeholder="Tell us how we can help..." required></textarea>
-                    </div>
+                    <div class="form-group"><label for="cMsg">Your Message <span
+                                class="required">*</span></label><textarea id="cMsg"
+                            placeholder="Tell us how we can help..." required></textarea></div>
                     <button class="contact-submit" id="contactSubmitBtn" onclick="submitContact()">Send Message
                         📤</button>
                 </div>
@@ -700,9 +1110,9 @@
         <div id="footer-contact"></div>
     </div>
 
-    <!-- ═══════════════════════════════════════
+    <!-- ═══════════════════════════
      PAGE: SERVICES
-═══════════════════════════════════════ -->
+═══════════════════════════ -->
     <div class="page" id="page-services">
         <div class="services-bg">
             <header class="services-header">
@@ -720,15 +1130,12 @@
                     </div>
                 </div>
             </header>
-
             <nav class="service-nav">
                 <button class="service-tab active" onclick="switchService('gps')" id="tab-gps"><span>🗺️</span> भूमि
                     क्षेत्रफल कैलकुलेटर</button>
                 <button class="service-tab" onclick="switchService('agri')" id="tab-agri"><span>🌱</span> कृषि
                     कैलकुलेटर</button>
             </nav>
-
-            <!-- GPS PANEL -->
             <div class="service-panel active" id="panel-gps">
                 <div class="gps-layout">
                     <aside class="gps-sidebar">
@@ -774,8 +1181,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- AGRI PANEL -->
             <div class="service-panel" id="panel-agri">
                 <div class="agri-inner-tabs">
                     <button class="agri-tab-btn active" onclick="openAgriTab('fertilizer',this)">🌱 Fertilizer</button>
@@ -784,7 +1189,6 @@
                     <button class="agri-tab-btn" onclick="openAgriTab('tree-dose',this)">🌳 Tree Dose</button>
                     <button class="agri-tab-btn" onclick="openAgriTab('area',this)">📏 Area Converter</button>
                 </div>
-
                 <div id="fertilizer" class="agri-tab-content active">
                     <h2 class="calc-title">🌾 Fertilizer Calculator</h2>
                     <div class="form-row">
@@ -815,7 +1219,6 @@
                     <button class="btn-calc" onclick="calculateFertilizer()">Calculate Fertilizer</button>
                     <div id="fertilizerResult" class="result-box"></div>
                 </div>
-
                 <div id="irrigation" class="agri-tab-content">
                     <h2 class="calc-title">💧 Irrigation Calculator</h2>
                     <div class="form-row">
@@ -848,7 +1251,6 @@
                     <button class="btn-calc" onclick="calculateIrrigation()">Calculate Irrigation</button>
                     <div id="irrigationResult" class="result-box"></div>
                 </div>
-
                 <div id="bulk-density" class="agri-tab-content">
                     <h2 class="calc-title">📊 Bulk Density Calculator</h2>
                     <div class="form-row">
@@ -861,7 +1263,6 @@
                     <button class="btn-calc" style="margin-top:18px" onclick="calculateBulkDensity()">Calculate</button>
                     <div id="bulkDensityResult" class="result-box"></div>
                 </div>
-
                 <div id="tree-dose" class="agri-tab-content">
                     <h2 class="calc-title">🌳 Tree Fertilizer Dose</h2>
                     <div class="agri-form-group"><label>Select Tree Type *</label>
@@ -876,7 +1277,6 @@
                     <button class="btn-calc" onclick="calculateTreeDose()">Calculate Tree Dose</button>
                     <div id="treeDoseResult" class="result-box"></div>
                 </div>
-
                 <div id="area" class="agri-tab-content">
                     <h2 class="calc-title">📏 Area Converter</h2>
                     <div class="form-row">
@@ -902,9 +1302,9 @@
         <div id="footer-services"></div>
     </div>
 
-    <!-- ═══════════════════════════════════════
+    <!-- ═══════════════════════════
      PAGE: PRESS
-═══════════════════════════════════════ -->
+═══════════════════════════ -->
     <div class="page" id="page-press">
         <div class="press-bg">
             <section class="press-hero">
@@ -918,9 +1318,9 @@
         <div id="footer-press"></div>
     </div>
 
-    <!-- ═══════════════════════════════════════
+    <!-- ═══════════════════════════
      PAGE: PROFILE
-═══════════════════════════════════════ -->
+═══════════════════════════ -->
     <div class="page" id="page-profile">
         <div class="profile-bg">
             <div class="glow-orb orb1"></div>
@@ -1037,9 +1437,7 @@
         </div>
     </div>
 
-    <!-- ═══════════════════════════════════════
-     AI CHATBOT
-═══════════════════════════════════════ -->
+    <!-- AI CHATBOT -->
     <button class="ai-chat-button" id="aiChatButton"><span style="font-size:40px">✨</span></button>
     <div class="ai-chat-window" id="aiChatWindow">
         <div class="ai-chat-header">
@@ -1064,14 +1462,10 @@
         </div>
     </div>
 
-    <!-- External Libraries -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
     <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
-    <!-- Main Script -->
     <script src="script.js"></script>
 </body>
 
-
 </html>
-
